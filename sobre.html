@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre o Portal - São Gonçalo</title>
+    
+    <!-- Chamada do CSS externo -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Estilos específicos desta página -->
+    <style>
+        .about-wrapper {
+            display: flex;
+            gap: 50px;
+            max-width: 1000px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .about-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .about-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .about-text h2 {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 1.6rem;
+            color: #003366;
+            margin-bottom: 1.5em;
+            border-bottom: 2px solid #87CEFA;
+            padding-bottom: 10px;
+        }
+
+        .about-text p {
+            text-align: justify;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .about-text .contact {
+            margin-top: 2em;
+            font-weight: bold;
+            color: #003366;
+        }
+
+        .about-text .contact a {
+            color: #00BFFF;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .about-text .contact a:hover {
+            color: #FFD700;
+            text-decoration: underline;
+        }
+
+        .author-box {
+            border: 1px solid #cccccc;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fafafa;
+            margin-top: 30px;
+        }
+
+        .author-box h3 {
+            font-size: 1.05rem;
+            color: #003366;
+            margin-bottom: 10px;
+        }
+
+        .author-box h3 a {
+            color: #003366;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .author-box h3 a:hover {
+            color: #FFD700;
+        }
+
+        .about-text .author-box p {
+            font-size: 0.8rem;
+            text-align: justify;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .about-text .author-box .author-contact {
+            margin-bottom: 0;
+            line-height: normal;
+            font-weight: bold;
+            color: #003366;
+        }
+
+        .about-text .author-box .author-contact a {
+            color: #00BFFF;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .about-text .author-box .author-contact a:hover {
+            color: #FFD700;
+            text-decoration: underline;
+        }
+
+        .author-contact-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #003366;
+            font-size: 0.8rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.15);
+        }
+
+        .social-icons img {
+            height: 1.2em;
+            width: auto;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .about-wrapper {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <img src="imagens/logotipo.png" alt="Logotipo de São Gonçalo" class="site-logo">
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">PAINEL</a></li>
+                <li><a href="geografia.html">GEOGRAFIA</a></li>
+                <li><a href="historia.html">HISTÓRIA</a></li>
+                <li><a href="simbolos.html">SÍMBOLOS</a></li>
+            </ul>
+        </nav>
+        
+        <div class="weather-widget">
+            <div class="weather-location">Em São Gonçalo</div>
+            <div class="weather-main-info">
+                <div class="weather-graphic">
+                    <img class="weather-icon" id="weather-icon" src="" alt="Clima">
+                    <span id="condition-text">...</span>
+                </div>
+                <div class="weather-stats">
+                    <span id="temp-value">--°C</span>
+                    <span id="precip-value">Chuva: -- mm</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-area">
+        <div class="about-wrapper">
+            <div class="about-image">
+                <img src="imagens/garoto.webp" alt="Menino representando a educação e pesquisa">
+            </div>
+
+            <div class="about-text">
+                <h2>Sobre o Portal</h2>
+                <p>O município de São Gonçalo, integrante da Região Metropolitana do Estado do Rio de Janeiro, carece de dados geoespaciais reunidos e publicados pela Prefeitura Municipal, estando apenas distribuídos por diversas fontes. Este portal nasceu com o intuito de desenvolver experimentalmente um Web SIG e poder servir a população, principalmente à área da educação, de forma que forneça insumos que sirvam para valorizar a identidade gonçalense, unindo dados geoespaciais, estatísticos, links para estudos de fatos históricos e apresentação dos símbolos municipais.</p>
+                <p>Este portal não possui nenhum vínculo com a Prefeitura Municipal de São Gonçalo, Governo do Estado do Rio de Janeiro, Governo Federal ou qualquer instituto de pesquisa.</p>
+                
+                <div class="author-box">
+                    <h3><a href="https://www.linkedin.com/in/eduardosacramento7/" target="_blank" rel="noopener noreferrer">Desenvolvedor: Eduardo Sacramento</a></h3>
+                    <p>Graduado em Geografia pela FFP/UERJ e Especialista em Análise Ambiental e Gestão do Território (ENCE/INCE) e Geoprocessamento (PUC Minas), um amante de mapas desde a infância e trabalha com dados geoespaciais desde 2010. Atuo como engenheiro e analista de dados utilizando python. Maiores experiências prestando serviços em projetos de empresas públicas federais, como a Rede Hidrometeorológica Nacional (RHN) do SGB/CPRM e ANA, e IS_Agro, parceria do Ministério da Agricultura, Pecuária e Abastecimento, Embrapa Solos e SGB/CPRM.</p>
+                    
+                    <div class="author-contact-wrapper">
+                        <div class="social-icons">
+                            <a href="mailto:eduardomaffia007@yahoo.com.br" title="E-mail">
+                                <img src="imagens/mail.png" alt="E-mail">
+                            </a>
+                            <a href="https://www.linkedin.com/in/eduardosacramento7/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                                <img src="imagens/linkedin.png" alt="LinkedIn">
+                            </a>
+                            <a href="http://lattes.cnpq.br/6065007963517476" target="_blank" rel="noopener noreferrer" title="Currículo Lattes">
+                                <img src="imagens/lattes.png" alt="Lattes">
+                            </a>
+                            <a href="https://orcid.org/0000-0002-8372-8325" target="_blank" rel="noopener noreferrer" title="OrcID">
+                                <img src="imagens/orcid.png" alt="OrcID">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Portal Geoespacial de São Gonçalo. Desenvolvido para pesquisa educacional geográfica e histórica do município.</p>
+        <a href="sobre.html" class="footer-btn">Sobre o Portal</a>
+        <span class="footer-credit">Elaborado por Eduardo Sacramento</span>
+    </footer>
+
+    <!-- CORREÇÃO: O link do script foi restaurado aqui -->
+    <script src="script.js"></script>
+</body>
+</html>

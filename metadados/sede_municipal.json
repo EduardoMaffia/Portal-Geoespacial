@@ -1,0 +1,33 @@
+{
+  "type": "Feature",
+  "geometry": "Multipoint",
+  "title": "Sede municipal de São Gonçalo",
+  "name": "sede_municipal",
+  "year": 2026,
+  "original year": 2026,
+  "author": "Instituto do Meio Ambiente (INEA)",
+  "editor": "Eduardo Sacramento",
+  "category": [
+    "político-administrativo",
+    "gestão territorial"
+  ],
+  "crs": "EPSG:4674",
+  "bbox": [
+    -43.05327756,
+    -22.82832129,
+    -43.05327756,
+    -22.82832129
+  ],
+  "features": 1,
+  "fields": [
+    "id",
+    "nome",
+    "geometry"
+  ],
+  "description": "Camada vetorial representando a sede municipal de São Gonçalo, RJ, obtida a partir da camada geoespacial de sede municipal 50 do Inea \"INEA:gpt_sede_municipal_50_sao_goncalo\" e tendo sua tabela reestruturada.",
+  "keywords": [
+    "São Gonçalo",
+    "sede municipal"
+  ],
+  "language": "Português"
+}

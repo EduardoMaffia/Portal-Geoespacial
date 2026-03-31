@@ -1,0 +1,33 @@
+{
+  "type": "Feature",
+  "geometry": "Multipoint",
+  "title": "Sedes dos distritos de São Gonçalo",
+  "name": "sedes_distritais",
+  "year": 2026,
+  "original year": 2026,
+  "author": "Instituto do Meio Ambiente (INEA)",
+  "editor": "Eduardo Sacramento",
+  "category": [
+    "político-administrativo",
+    "gestão territorial"
+  ],
+  "crs": "EPSG:4674",
+  "bbox": [
+    -43.08562934,
+    -22.86023607,
+    -42.93959566,
+    -22.80561443
+  ],
+  "features": 4,
+  "fields": [
+    "id",
+    "nome",
+    "geometry"
+  ],
+  "description": "Camada vetorial representando as sedes dos distritos do município de São Gonçalo, RJ, obtida a partir da camada geoespacial de sedes distritais 50 do Inea \"INEA:gpt_sede_distrital_50_sao_goncalo\" e tendo sua tabela reestruturada.",
+  "keywords": [
+    "São Gonçalo",
+    "sedes distritais"
+  ],
+  "language": "Português"
+}

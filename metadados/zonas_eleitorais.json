@@ -1,0 +1,36 @@
+{
+  "type": "Feature",
+  "geometry": "Polygon",
+  "title": "Zonas eleitorais do município de São Gonçalo, RJ",
+  "name": "zonas_eleitorais",
+  "year": 2026,
+  "original year": 2026,
+  "author": "Eduardo Sacramento",
+  "editor": "Eduardo Sacramento",
+  "category": [
+    "sistema eleitoral",
+    "gestão territorial"
+  ],
+  "crs": "EPSG:4674",
+  "bbox": [
+    -43.1042729,
+    -22.9092362,
+    -42.8859505,
+    -22.7340701
+  ],
+  "features": 7,
+  "fields": [
+    "id",
+    "zona_eleitoral",
+    "geometry",
+    "area_km2"
+  ],
+  "description": "Camada vetorial representado as áreas estimadas das zonas eleitorais de São Gonçalo, RJ, geradas a partir dos locais de votação, calculados e gerados pelo Diagrama de Voronoi.",
+  "keywords": [
+    "São Gonçalo",
+    "zonas eleitorais",
+    "áreas de votação eleitoral",
+    "eleição"
+  ],
+  "language": "Português"
+}

@@ -1,0 +1,38 @@
+{
+  "type": "Feature",
+  "geometry": "Polygon",
+  "title": "Área do município de São Gonçalo, RJ",
+  "name": "area_municipal",
+  "year": 2026,
+  "original year": 2024,
+  "author": "Instituto Brasileiro de Geografia e Estatística (IBGE)",
+  "editor": "Eduardo Sacramento",
+  "category": [
+    "político-administrativo",
+    "gestão territorial"
+  ],
+  "crs": "EPSG:4674",
+  "bbox": [
+    -43.1209538,
+    -22.9092362,
+    -42.8859505,
+    -22.7340701
+  ],
+  "features": 1,
+  "fields": [
+    "id",
+    "cod_uf",
+    "sig_uf",
+    "cod_munic",
+    "nm_munic",
+    "area_km2",
+    "geometry"
+  ],
+  "description": "Camada vetorial representando apenas a área do município de São Gonçalo, RJ, obtida a partir da camada geoespacial de limites municipais do IBGE \"CGMAT:qg_2024_030_munic\" e posterior tratamento.",
+  "keywords": [
+    "São Gonçalo",
+    "limite municipal",
+    "área municipal"
+  ],
+  "language": "Português"
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "sede_municipal",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4674" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 0, "nome": "São Gonçalo", "imagem": "https://www.saogoncalo.rj.gov.br/wp-content/uploads/2023/12/Imagens-Aereas-Drone-Vista-Alegre-Tacio-Alves-06-12-2023-4.png" }, "geometry": { "type": "MultiPoint", "coordinates": [ [ -43.05327756, -22.82832129 ] ] } }
+]
+}

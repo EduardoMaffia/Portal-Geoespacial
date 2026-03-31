@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>História - São Gonçalo</title>
+    
+    <!-- Chamada das fontes do Google (Incluindo Allura) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Audiowide&family=National+Park:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Chamada do CSS externo -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Estilos específicos desta página -->
+    <style>
+        .history-wrapper {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 50px 60px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #eeeeee;
+        }
+
+        .history-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .history-content h1 {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 2.2rem;
+            color: #003366;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #87CEFA;
+            padding-bottom: 15px;
+        }
+
+        .history-content p {
+            text-align: justify;
+            line-height: 1.5; /* Espaçamento entre linhas aumentado */
+            color: #333333;
+            font-size: 1.05rem;
+        }
+
+        /* Destaque para a primeira letra do artigo (Drop Cap) */
+        .history-content > p:first-of-type::first-letter {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #003366;
+            float: left;
+            margin-right: 8px;
+            line-height: 1;
+            font-family: 'Audiowide', sans-serif;
+        }
+
+        /* --- Estilos do Acordeão de Tópicos --- */
+        .topics-container {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .history-topic {
+            border: 1px solid #eeeeee;
+            border-radius: 8px;
+            background-color: #fafafa;
+            padding: 0 20px;
+            transition: all 0.3s ease;
+        }
+
+        .history-topic summary {
+            font-family: 'Allura', cursive; /* Fonte alterada */
+            font-size: 1.8rem; /* Tamanho compensado para a fonte cursiva */
+            color: #FF0000; /* Cor vermelha */
+            cursor: pointer;
+            list-style: none; /* Remove a seta padrão */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            outline: none;
+            user-select: none;
+            font-weight: bold;
+        }
+
+        .history-topic summary::-webkit-details-marker {
+            display: none; /* Remove a seta no Safari/Chrome mais antigos */
+        }
+
+        .history-topic summary::after {
+            content: '+';
+            font-family: sans-serif;
+            font-weight: normal;
+            font-size: 1.8rem;
+            color: #003366;
+            line-height: 0.5;
+            transition: transform 0.3s ease;
+        }
+
+        .history-topic[open] {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background-color: #ffffff;
+        }
+
+        .history-topic[open] summary {
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .history-topic[open] summary::after {
+            content: '−'; /* Sinal de menos */
+            color: #FF0000;
+        }
+
+        .topic-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 15px 0 20px 0;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .history-wrapper {
+                padding: 30px 20px;
+            }
+            .history-content h1 {
+                font-size: 1.8rem;
+            }
+            .history-topic summary {
+                font-size: 1.8rem;
+            }
+            .history-content > p:first-of-type::first-letter {
+                font-size: 3rem;
+                margin-right: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <img src="imagens/logotipo.png" alt="Logotipo de São Gonçalo" class="site-logo">
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">PAINEL</a></li>
+                <li><a href="geografia.html">GEOGRAFIA</a></li>
+                <li><a href="historia.html" class="active">HISTÓRIA</a></li>
+                <li><a href="simbolos.html">SÍMBOLOS</a></li>
+            </ul>
+        </nav>
+        
+        <div class="weather-widget">
+            <div class="weather-location">Em São Gonçalo</div>
+            <div class="weather-main-info">
+                <div class="weather-graphic">
+                    <img class="weather-icon" id="weather-icon" src="" alt="Clima">
+                    <span id="condition-text">...</span>
+                </div>
+                <div class="weather-stats">
+                    <span id="temp-value">--°C</span>
+                    <span id="precip-value">Chuva: -- mm</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-area">
+        <article class="history-wrapper">
+            <div class="history-content">
+                <h1>História de São Gonçalo</h1>
+                
+                <p>São Gonçalo é uma das cidades mais importantes do Estado do Rio de Janeiro e da Região Metropolitana da capital fluminense. Localizada na margem oriental da Baía de Guanabara, a cidade carrega consigo mais de quatro séculos de história, passando por diversas transformações econômicas, sociais e urbanas que a moldaram até se tornar o município mais populoso do estado, com aproximadamente um milhão de habitantes. Sua história remonta a habitação de tribos indígenas Tamoios e moldada por sesmarias, ciclos econômicos como o de engenhos e a proximidade com Niterói e o Rio de Janeiro, se transformando em um polo industrial conhecido como "Manchester Fluminense" e, atualmente, um centro urbano regional com desafios de mobilidade e expansão comercial, refletindo as dinâmicas metropolitanas fluminenses. O texto encontrado nesta página visa traçar os principais marcos históricos da cidade, desde sua fundação até os processos de emancipação, industrialização, desenvolvimento urbano e o papel de Alcântara como referência comercial, culminando em reflexões sobre seu futuro.</p>
+
+                <div class="topics-container">
+                    <details class="history-topic" name="history-accordion">
+                        <summary>A Fundação e a Origem do Nome</summary>
+                        <div class="topic-content">
+                            <p>A fundação de São Gonçalo ocorreu em 6 de abril de 1579, quando o colonizador português Gonçalo Gonçalves recebeu uma sesmaria da Coroa Portuguesa em uma área que abrangia desde o atual Centro até a área equivalente ao bairro do Gradim, passando por Itaoca. O local exato da primeira capela é debatido: embora se considere ter sido onde hoje está a Igreja Matriz de São Gonçalo, na margem do rio Imboaçu, há relatos descrevendo ter sido às margens do rio Guaxindiba, o que demonstraria que a área da sesmaria era muito mais extensa. Segundo essa hipótese, apenas muitos anos depois houve a construção da capela que se tornou a matriz da cidade, visando facilitar a comunicação e o acesso a região.</p>
+                            <p>Ressalta-se também que a data de fundação é contestada pelo professor e pesquisador (dentre outras competências) Luiz Palmier, contudo não é apresentada em seu livro "São Gonçalo Cinquentinha".</p>
+                            <p>Gonçalo Gonçalves homenageou seu padroeiro natal, São Gonçalo D'Amarante, batizando a capela e a localidade. Essa escolha deu origem ao nome do futuro município: São Gonçalo. A motivação para o nome reflete devoção religiosa comum da colonização portuguesa no Brasil. São Gonçalo do Amarante era um santo português muito reverenciado, conhecido por sua vida de devoção e milagres. Ao dedicar a capela e o povoado a esse santo, Gonçalo Gonçalves estabelecia uma conexão simbólica entre a nova terra e suas origens europeias, prática comum entre os colonizadores da época.</p>
+                            <p>A localização estratégica da sesmaria, próxima à Baía de Guanabara e com acesso ao Rio de Janeiro e a Niterói, foi fundamental para o desenvolvimento inicial da região. As terras eram férteis e propícias para a agricultura, o que atraiu outros colonizadores e permitiu o crescimento gradual do povoado. Em três anos, o representante português deveria construir uma capela e povoado na área recebida. No final do século XVI e início do século XVII, os jesuítas também instalaram uma fazenda na região conhecida como Colubandê, às margens da atual rodovia RJ-104, contribuindo para a organização do espaço produtivo local.</p>
+                            <p>Em 1646, o povoado, com cerca de seis mil habitantes distribuídos em uma área de 52 km², foi elevado à categoria de paróquia, e em 10 de fevereiro de 1647 recebeu a confirmação oficial como freguesia. A criação da freguesia em 1647 foi um marco importante nesse processo de desenvolvimento. Com o status de paróquia, São Gonçalo ganhou maior organização administrativa e religiosa, o que favoreceu o crescimento populacional e a fixação de novos moradores.</p>
+                            <p>Marcos remanescentes incluem a Fazenda Nossa Senhora da Boa Esperança em Ipiíba e propriedades como a do capitão Miguel Frias de Vasconcelos no Engenho Pequeno.</p>
+                        </div>
+                    </details>
+
+                    <details class="history-topic" name="history-accordion">
+                        <summary>O Desenvolvimento da Região</summary>
+                        <div class="topic-content">
+                            <p>O desenvolvimento de São Gonçalo ao longo dos séculos pode ser compreendido através de diferentes fases econômicas que transformaram o perfil produtivo e social da cidade. Desde a economia agrícola colonial até a industrialização do século XX, cada período deixou marcas profundas na configuração urbana e na vida dos moradores.</p>
+                            <p>No século XVII e XVIII, a economia local era baseada principalmente na agricultura de subsistência e na produção de açúcar. Os engenhos de cana-de-açúcar e as destilarias de aguardente eram atividades predominantes, ao lado das lavouras de mandioca, feijão, milho e arroz. O comércio desenvolvia-se em proporção similar às atividades agrícolas, com dezenas de barcos transportando produtos e passageiros pelo litoral, mantendo constante intercâmbio com outros portos da região e com a cidade do Rio de Janeiro. O Leste da Guanabara possuía vários rios navegáveis, o que explica atualmente o grande número de bairros com o nome de porto.</p>
+                            <p>No século XIX, a introdução do café trouxe novas perspectivas econômicas. Embora o cultivo do café não tenha se consolidado de forma expressiva em São Gonçalo devido às características do solo, a cidade teve o mérito histórico de ser o primeiro local do Brasil a receber mudas da planta, vindas da Guiana Francesa. O padre João Lopes foi o responsável por essa iniciativa em 1780, e embora o café não tenha vingado localmente, a experiência de São Gonçalo contribuiu para a expansão do cultivo em direção à Serra do Mar, Minas Gerais e São Paulo, transformando-se posteriormente na maior riqueza agrícola do Brasil Império.</p>
+                        </div>
+                    </details>
+
+                    <details class="history-topic" name="history-accordion">
+                        <summary>Relação com Niterói e Emancipações</summary>
+                        <div class="topic-content">
+                            <p>São Gonçalo manteve estreita relação administrativa com Niterói desde o século XIX, servindo como distrito rural do município vizinho. Em 1819, integrou-se formalmente a Niterói, fornecendo produtos agrícolas via portos como Guaxindiba e Boaçu. Essa dependência facilitou comunicações, mas gerou demandas por autonomia devido ao crescimento populacional e econômico.</p>
+                            <p>A primeira emancipação ocorreu em 22 de setembro de 1890, via Decreto Estadual nº 124, desmembrando São Gonçalo de Niterói. O cônego João Ferreira Goulart, pároco da Igreja Matriz e deputado estadual, articulou junto ao governador Francisco Portela, usando sua influência local. Criava-se, assim, o novo município, composto pelas freguesias de São Gonçalo, Nossa Senhora da Conceição de Cordeiros e São Sebastião de Itaipú. A instalação oficial do município aconteceu em 12 de outubro do mesmo ano, com grande festa e a presença das principais autoridades da região.</p>
+                            <p>Contudo, em 1892, o Decreto nº 1 de 8 de maio extinguiu o município de São Gonçalo, reincorporando-o a Niterói. O período de reincorporação durou apenas sete meses, sendo revogado em 17 de dezembro de 1892 pelo decreto número 34, que restaurou o município. Essa ida e volta na condição administrativa reflete as instabilidades políticas do período republicano inicial no Brasil.</p>
+                            <p>A segunda emancipação definitiva veio em 1929. Após uma breve elevação à categoria de cidade em 1922 (revogada em 1923), a lei número 2.335 de 27 de dezembro de 1929 concedeu definitivamente a categoria de cidade. A partir desse momento, São Gonçalo pôde consolidar sua trajetória como município independente, mantendo até os dias atuais laços econômicos e sociais fortes com Niterói.</p>
+                            <p>Em 1943, uma nova divisão territorial do estado fez com que o distrito de Itaipu passasse a fazer parte de Niterói, redefinindo os limites do município de São Gonçalo. A partir de então, a cidade passou a primeiramente contar com cinco distritos: São Gonçalo (sede), Ipiíba, Monjolos, Neves e Sete Pontes, configuração que permanece até os dias atuais.</p>
+                        </div>
+                    </details>
+
+                    <details class="history-topic" name="history-accordion">
+                        <summary>A Construção Inicial da Cidade</summary>
+                        <div class="topic-content">
+                            <p>No século XIX, trinta engenhos exportavam via portos locais, com fazendas como Engenho Novo e Jacaré do Barão de São Gonçalo. O Cemitério de Pachecos (1842) e propriedade do Conde de Baurepaire Rohan na Covanca (1820) exemplificam a elite rural.</p>
+                            <p>A Segunda Guerra Mundial (1939-1945) acelerou o crescimento, com desmembramento de fazendas em sítios e chácaras, mão de obra abundante e proximidade com o Rio. Governadores como Joaquim de Almeida Lavoura (1955-1959, 1963-1967, 1973-1975) pavimentaram vias ligando Niterói a Alcântara, impulsionando urbanização. A Igreja Matriz consolidou-se como marco zero, núcleo populacional inicial.</p>
+                            <p>Capelas como São João em Porto do Gradim e Fazenda da Luz em Itaóca preservam o legado colonial. A transição agrária para urbana atraiu migrantes, expandindo bairros como Neves e Alcântara. Esse período lançou bases para industrialização, transformando São Gonçalo em polo metropolitano.</p>
+                            <p>A construção de ferrovias no final do século XIX e início do século XX foi outro fator decisivo para o desenvolvimento urbano. O trecho da ferrovia que ligava Porto das Caixas, em Itaboraí, ao Distrito de Neves, em São Gonçalo, foi responsável pela formação de aglomerações humanas e vilas nas proximidades das estações de Guaxindiba, São Gonçalo e Porto da Madama. Essas ferrovias integravam o município ao porto de Niterói e ao interior do estado, facilitando o escoamento da produção local.</p>
+                            <p>Após 1929, São Gonçalo iniciou trajetória de progresso com urbanização e diversificação econômica. Os bondes a vapor da "Tramway Rail Fluminense" passaram a fazer o trajeto entre Neves e Alcântara, contribuindo para a mobilidade urbana e o desenvolvimento dos bairros localizados ao longo do percurso. Na década de 1930, a citricultura (produção de laranjas e limões) surgiu como novo produto de exportação, embora por período relativamente curto.</p>
+                            <p>Durante a Segunda Guerra Mundial (1939-1945), São Gonçalo experimentou um crescimento meteórico. As grandes fazendas foram sendo desmembradas em sítios, chácaras e terrenos de uso urbano, transformando o município em solo fértil para o desenvolvimento. A proximidade com as então capitais federal (Rio de Janeiro) e estadual (Niterói), somada à disponibilidade de mão de obra barata e abundante, criou condições favoráveis para a expansão urbana.</p>
+                        </div>
+                    </details>
+
+                    <details class="history-topic" name="history-accordion">
+                        <summary>Industrialização: a Manchester Fluminense</summary>
+                        <div class="topic-content">
+                            <p>O período de maior transformação econômica de São Gonçalo ocorreu nas décadas de 1940 e 1950, quando o município se consolidou como um dos mais importantes polos industriais do Estado do Rio de Janeiro e do Brasil. Essa fase de industrialização intensa rendeu à cidade o apelido de "Manchester Fluminense", em referência à cidade de Manchester, na Inglaterra, símbolo mundial da Revolução Industrial. O termo foi utilizado por Luiz Palmier na imprensa local em 1940, e rapidamente se popularizou como forma de descrever a pujança industrial de São Gonçalo. O Parque Industrial, iniciado nos anos 1930, concentrou fábricas de metalurgia, cimento, cerâmica e alimentos, próximo à Baía de Guanabara e porto do Rio, sendo que um levantamento estatístico divulgado em 1954 revelou que a cidade possuía 70 fábricas dedicadas a diversas atividades industriais, incluindo também farmacêutica, produção de papel e de fósforo.</p>
+                            <p>Em 1925, instalou-se a Companhia Brasileira de Usinas Metalúrgicas (CBUM), incorporada ao HIME, que produzia fundição, cerâmica, fósforos "SOL" e mantinha escolas e vilas operárias. Em 1931, Companhia Nacional de Cimento Portland e Eletroquímica Fluminense (decreto de Getúlio Vargas) impulsionaram o setor. Neves tornou-se distrito industrial chave com têxteis, fósforos e sabão nos anos 1940.</p>
+                            <p>Outras incluem Vidreira do Brasil (COVIBRA, 1941, maior da América do Sul), Conservas Coqueiro (1937, expandida pela Quaker em 1973), Fábrica de Artefatos de Cimento Armado (1941), Indústria Reunidas Mauá (vidros/porcelanas), Enlatados Netuno (1941) e Fogos Santo Antônio (1942). Cerâmica Fattori, Fiat Lux (fósforos), laboratórios como B. Braun e Herald's, além de conservas como Piracema e Rubi, diversificaram a produção.</p>
+                            <p>Esse ciclo posicionou São Gonçalo como destaque nacional: grandes indústrias se instalaram no município durante esse período, tornando-se símbolos do desenvolvimento local e gerando empregos para milhares de trabalhadores, tornando o município o mais importante do estado em termos econômicos durante várias décadas. A cidade chegou a ser responsável por mais da metade da arrecadação total de impostos do Estado do Rio de Janeiro, consolidando-se como um dos municípios mais bem conceituados do país.</p>
+                            <p>O auge ocorreu até 1970, com exportações e emprego massivo, mas declínio iniciou com esvaziamento industrial. HIME foi adquirido pelo Gerdau; COVIBRA virou Eletrovidro. Muitas das grandes fábricas transferiram-se para outros municípios ou mesmo para fora do estado, criando uma impressão de decadência industrial. Grandes plantas de Neves e do Barreto deram lugar a indústrias menores e médias espalhadas pelo território, com destaque para o ramo têxtil na Grande Alcântara.</p>
+                            <p>Estudos recentes contestam a ideia de uma simples decadência industrial. O professor José Luís Honorato, em sua obra "A indústria gonçalense no século XX: origens e processos", argumenta que o que ocorreu foi uma reestruturação industrial em meio a uma crise econômica sistêmica que atingiu o Brasil na primeira metade dos anos 1970. Segundo essa interpretação, em vez de desaparecer, a indústria gonçalense se transformou, adaptando-se às novas condições econômicas.</p>
+                            <p>Entre 1950 e 1970, a população de São Gonçalo mais que quadruplicou, passando de 107 mil para 430 mil habitantes em apenas 20 anos. Esse crescimento demográfico acelerado fez da cidade palco de um dos maiores movimentos de migração interna do país, com trabalhadores vindos de diversas regiões do Brasil em busca de emprego nas fábricas locais. A tradição de cidade acolhedora começou no final do século XIX e início do século XX, quando São Gonçalo recebeu imigrantes estrangeiros nas instalações da Ilha das Flores, em Neves.</p>
+                        </div>
+                    </details>
+
+                    <details class="history-topic" name="history-accordion">
+                        <summary>A Expansão pela Mobilidade Urbana</summary>
+                        <div class="topic-content">
+                            <p>A distribuição demográfica de São Gonçalo ocorreu principalmente através do loteamento de antigas fazendas, sítios e chácaras. A grande maioria dos bairros se originaram desse processo de divisão de terras rurais. O crescimento acelerado da população e a expansão industrial exigiram transformações significativas na estrutura urbana, tendo o seu desenvolvimento fortemente influenciado pelos meios de transporte disponíveis em cada época, desde os barcos e ferrovias até os automóveis e o transporte coletivo contemporâneo.</p>
+                            <p>A ocupação original da cidade seguiu um padrão típico de assentamentos coloniais, com o desenvolvimento inicial concentrado em torno das capelas e das sedes de engenhos. O primeiro vetor de expansão urbana foi definido pelas ferrovias. Duas estradas de ferro eram operadas na região: a Leopoldina e a Maricá. A primeira, iniciando em Niterói, estendia-se em direção à região serrana, enquanto a segunda, partindo da estação de Neves, seguia em direção a Maricá, quase paralela ao interior, até encontrar o rio Guaxindiba e seguir em direção ao vale do rio Aldeia.</p>
+                            <p>Esses vetores ferroviários definiram o desenho urbano de ocupação observado na cidade, que se iniciou em torno das estações de trem e seguiu por suas margens. Posteriormente, houve um processo de ocupação urbana nas proximidades das estradas que cortam o município. Muitos dos bairros atuais de São Gonçalo têm origem direta nessa dinâmica ferroviária e de loteamento de antigas fazendas.</p>
+                            <p>A gestão de Joaquim de Almeida Lavoura representou um marco no desenvolvimento urbano de São Gonçalo. Eleito prefeito da cidade por três vezes (1955-1959, 1963-1967 e 1973-1975), Lavoura promoveu a grande arrancada para a urbanização do município, com o calçamento e asfaltamento das principais vias que ligam Niterói a Alcântara. Essas obras de infraestrutura viária foram fundamentais para integrar os diferentes bairros e facilitar o deslocamento da população.</p>
+                            <p>A construção da Ponte Rio-Niterói, inaugurada em 1974, e da BR-101 produziram um novo ciclo de expansão dos loteamentos em São Gonçalo. A facilidade de acesso à capital do estado após a construção dessas obras de engenharia estimulou a migração de famílias que trabalhavam no Rio de Janeiro mas preferiam morar em São Gonçalo devido aos menores custos de moradia.</p>
+                        </div>
+                    </details>
+
+                    <details class="history-topic" name="history-accordion">
+                        <summary>Alcântara como Centro Comercial</summary>
+                        <div class="topic-content">
+                            <p>A história de Alcântara está diretamente ligada ao desenvolvimento dos meios de transporte e à expansão urbana da cidade. O nome Alcântara é uma homenagem ao imperador brasileiro Dom Pedro de Alcântara. O bairro surgiu junto a uma estação de trem e se desenvolveu no cruzamento da rodovia estadual RJ-104, construída na década de 1940. Essa via fazia a ligação da capital Niterói com o norte fluminense, utilizando o antigo traçado da Estrada Geral, ferrovia que ligava as antigas fazendas do extremo oeste do município (Pacheco e Santa Isabel) à sede e aos antigos portos.</p>
+                            <p>Na década de 1970, foi construído um viaduto sobre o cruzamento da RJ-104, e logo depois foi instalado o Terminal Rodoviário Jayme Mendonça Campos sob o viaduto. O terminal foi reformado em 2008 e continua sendo um importante ponto de chegada e partida de ônibus intermunicipais e municipais, facilitando o acesso de moradores de outras regiões ao polo comercial.</p>
+                            <p>Alcântara consolidou-se, a partir da segunda metade do século XX, como o principal centro comercial de São Gonçalo, concentrando agências bancárias, supermercados, lojas de eletrodomésticos, lojas de móveis, shopping centers, clínicas, hospitais, escolas e muitos edifícios comerciais. O destaque fica para a Rua João Caetano, mais conhecida como "Rua da Feira", onde existe um forte comércio de têxteis e outros produtos. Sua influência foi além, se tornando um centro regional, exercendo forte influência econômica, social e logística sobre São Gonçalo e seus vizinhos devido a sua localização estratégica, fazendo do bairro um importante entroncamento viário, o que facilita o fluxo de pessoas e mercadorias entre São Gonçalo, Niterói, Itaboraí, Maricá, Tanguá, Rio Bonito, Guapimirim, Magé e a capital fluminense.</p>
+                        </div>
+                    </details>
+
+                    <details class="history-topic" name="history-accordion">
+                        <summary>Considerações Finais</summary>
+                        <div class="topic-content">
+                            <p>A história de São Gonçalo reflete resiliência, de sesmaria colonial a metrópole industrial e comercial. Processos de emancipação múltipla forjaram identidade independente, enquanto industrialização como Manchester Fluminense e expansão de Alcântara moldaram seu perfil atual. O desenvolvimento urbano desordenado e o crescimento populacional acelerado, especialmente entre 1950 e 1970, criaram desafios que persistem até hoje. A mobilidade urbana, a infraestrutura viária, o acesso a serviços públicos de qualidade e a redução das desigualdades sociais são questões que demandam atenção constante dos gestores públicos e da sociedade civil.</p>
+                            <p>A história de mais de quatro séculos de São Gonçalo mostra que o município tem capacidade de superar desafios e se reinventar. Dos engenhos de açúcar às grandes fábricas, dos bondes a vapor ao transporte coletivo contemporâneo, da sesmaria colonial à metrópole moderna, São Gonçalo construiu uma identidade própria, marcada pela trabalho, pela diversidade e pela resiliência de seu povo. Essa herança histórica é o fundamento sobre o qual se constrói o futuro da cidade, que continua sendo uma das mais importantes do Estado do Rio de Janeiro e do Brasil.</p>
+                        </div>
+                    </details>
+
+                    <details class="history-topic" name="history-accordion">
+                        <summary>Bibliografia</summary>
+                        <div class="topic-content">
+                            <p><i>Em construção...</i></p>
+                        </div>
+                    </details>
+                </div>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Portal Geoespacial de São Gonçalo. Desenvolvido para pesquisa educacional geográfica e histórica do município.</p>
+        <a href="sobre.html" class="footer-btn">Sobre o Portal</a>
+        <span class="footer-credit">Elaborado por Eduardo Sacramento</span>
+    </footer>
+
+    <!-- Chamada do JavaScript externo -->
+    <script src="script.js"></script>
+</body>
+</html>

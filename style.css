@@ -1,0 +1,393 @@
+/* Importação centralizada das fontes */
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=National+Park:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffffff;
+    font-family: 'National Park', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- Cabeçalho --- */
+.site-header {
+    background-color: #87CEFA;
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.site-logo {
+    height: 60px;
+    width: auto;
+    margin-right: 30px;
+    border-radius: 4px;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'Audiowide', sans-serif;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+    color: #FFD700;
+}
+
+.main-nav a.active {
+    text-decoration: none;
+    border-bottom: 2px solid #ffffff;
+    padding-bottom: 5px;
+}
+
+/* --- Widget Clima --- */
+.weather-widget {
+    margin-left: auto;
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 6px 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-family: sans-serif;
+    color: #003366;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.weather-location {
+    font-size: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(0, 51, 102, 0.15);
+    width: 100%;
+    text-align: center;
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+}
+
+.weather-main-info {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+}
+
+.weather-graphic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 70px;
+}
+
+.weather-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    display: none;
+}
+
+#condition-text {
+    font-size: 8px;
+    text-transform: capitalize;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.1;
+}
+
+.weather-stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-left: 1px solid rgba(0, 51, 102, 0.15);
+    padding-left: 12px;
+}
+
+#temp-value {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+#precip-value {
+    font-size: 9px;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+/* --- Espaço de Trabalho de Fluxo Livre --- */
+.content-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+}
+
+.workspace {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 8px;
+}
+
+/* Coluna da Esquerda: Imagens */
+.symbols-column {
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 50px;
+    align-items: center;
+    background-color: #fff;
+    border-right: 1px solid #eee;
+    border-radius: 8px 0 0 8px;
+}
+
+.symbol-item {
+    text-align: center;
+    width: 100%;
+}
+
+.symbol-item img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.symbol-item img:hover {
+    transform: scale(1.05);
+}
+
+.symbol-item figcaption {
+    font-weight: bold;
+    font-size: 22px;
+    text-decoration: underline;
+    color: #555;
+}
+
+/* Coluna da Direita: Hino */
+.hymn-column {
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 0 8px 8px 0;
+}
+
+.hymn-column h2 {
+    font-family: 'Audiowide', sans-serif;
+    font-size: 1.4rem;
+    color: #003366;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #87CEFA;
+    padding-bottom: 10px;
+}
+
+.hymn-lyrics {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 25px;
+    white-space: pre-line;
+}
+
+.hymn-credits {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* Reprodutor de Áudio Customizado */
+.floating-player {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border-radius: 30px;
+    padding: 10px 20px;
+    gap: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    margin-top: auto;
+    width: 100%;
+}
+
+.player-btn {
+    background: none;
+    border: none;
+    color: #0000CD;
+    font-size: 18px;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    transition: transform 0.2s;
+}
+
+.player-btn:hover {
+    transform: scale(1.1);
+}
+
+.player-text {
+    font-size: 13px;
+    font-family: sans-serif;
+    font-weight: bold;
+    min-width: 85px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.current-time-text {
+    color: #FF0000;
+}
+
+.total-time-text {
+    color: #0000CD;
+}
+
+/* Estilização dos sliders */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+}
+
+#progress-bar {
+    flex: 1;
+}
+
+#volume-bar {
+    width: 60px;
+}
+
+#progress-bar::-webkit-slider-runnable-track {
+    background: #FF0000;
+    height: 4px;
+    border-radius: 2px;
+}
+
+#progress-bar::-moz-range-track {
+    background: #FF0000;
+    height: 4px;
+    border-radius: 2px;
+}
+
+#volume-bar::-webkit-slider-runnable-track {
+    background: #0000CD;
+    height: 4px;
+    border-radius: 2px;
+}
+
+#volume-bar::-moz-range-track {
+    background: #0000CD;
+    height: 4px;
+    border-radius: 2px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background: #0000CD;
+    margin-top: -5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+input[type="range"]::-moz-range-thumb {
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background: #0000CD;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+    .workspace {
+        grid-template-columns: 1fr;
+    }
+    .symbols-column {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+        border-radius: 8px 8px 0 0;
+    }
+    .hymn-column {
+        border-radius: 0 0 8px 8px;
+    }
+    .floating-player {
+        flex-wrap: wrap;
+        height: auto;
+    }
+    #progress-bar {
+        order: 4;
+        width: 100%;
+        flex: none;
+        margin-top: 5px;
+    }
+}
+
+/* --- Rodapé --- */
+.site-footer {
+    background-color: #87CEFA;
+    color: #ffffff;
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-btn {
+    display: inline-block;
+    padding: 5px 15px;
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.footer-btn:hover {
+    background-color: #FFD700;
+    color: #87CEFA;
+    border-color: #FFD700;
+    font-weight: bold;
+}
+
+.footer-credit {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: 0.3px;
+}

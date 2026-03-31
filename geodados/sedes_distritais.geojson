@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "sedes_distritais",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4674" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 0, "nome": "Neves" }, "geometry": { "type": "MultiPoint", "coordinates": [ [ -43.08562934, -22.84937512 ] ] } },
+{ "type": "Feature", "properties": { "id": 1, "nome": "Sete Pontes" }, "geometry": { "type": "MultiPoint", "coordinates": [ [ -43.06047657, -22.8411449 ] ] } },
+{ "type": "Feature", "properties": { "id": 2, "nome": "Monjolo", "imagem": "https://portalfluminense.com.br/wp-content/uploads/2022/09/novo-eng.jpg" }, "geometry": { "type": "MultiPoint", "coordinates": [ [ -42.93959566, -22.80561443 ] ] } },
+{ "type": "Feature", "properties": { "id": 3, "nome": "Ipiíba" }, "geometry": { "type": "MultiPoint", "coordinates": [ [ -42.94211297, -22.86023607 ] ] } }
+]
+}

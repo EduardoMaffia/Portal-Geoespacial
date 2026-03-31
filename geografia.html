@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geografia - São Gonçalo</title>
+    
+    <!-- Chamada do CSS externo -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="site-header">
+        <img src="imagens/logotipo.png" alt="Logotipo de São Gonçalo" class="site-logo">
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">PAINEL</a></li>
+                <li><a href="geografia.html" class="active">GEOGRAFIA</a></li>
+                <li><a href="historia.html">HISTÓRIA</a></li>
+                <li><a href="simbolos.html">SÍMBOLOS</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Widget Meteorológico -->
+        <div class="weather-widget">
+            <div class="weather-location">Em São Gonçalo:</div>
+            <div class="weather-main-info">
+                <div class="weather-graphic">
+                    <img class="weather-icon" id="weather-icon" src="" alt="Clima">
+                    <span id="condition-text">...</span>
+                </div>
+                <div class="weather-stats">
+                    <span id="temp-value">--°C</span>
+                    <span id="precip-value">Chuva: -- mm</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-area">
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Portal Geoespacial de São Gonçalo. Desenvolvido para pesquisa educacional geográfica e histórica do município.</p>
+        <a href="sobre.html" class="footer-btn">Sobre o Portal</a>
+        <span class="footer-credit">Elaborado por Eduardo Sacramento</span>
+    </footer>
+
+    <!-- Chamada do JavaScript externo -->
+    <script src="script.js"></script>
+</body>
+</html>

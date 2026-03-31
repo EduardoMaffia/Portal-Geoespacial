@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Geoespacial - São Gonçalo</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <style>
+        main.content-area {
+            padding: 0 !important;
+            align-items: stretch !important;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .intro-container {
+            text-align: right;
+            padding: 30px 36px;
+            background: #ffffff;
+            border-bottom: 4px solid #87CEFA;
+            box-shadow: 0 4px 18px rgba(0,51,102,.12);
+        }
+        .page-title {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 12px;
+            color: #000;
+            letter-spacing: .04em;
+        }
+        .page-title span {
+            color: #003366;
+            border-bottom: 3px solid #FFD700;
+            padding-bottom: 4px;
+        }
+        .page-intro {
+            font-family: 'National Park', sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 820px;
+            margin-left: auto;
+            color: #1a1a1a;
+        }
+
+        #map-wrapper {
+            position: relative;
+            width: 100%;
+            height: 520px;
+            box-shadow: 0 6px 24px rgba(0,0,0,.18);
+            z-index: 1;
+        }
+        #map { width: 100%; height: 100%; }
+
+        #map-loader {
+            position: absolute;
+            inset: 0;
+            background: rgba(135,206,250,.88);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9000;
+            gap: 14px;
+            color: #003366;
+            font-family: 'National Park', sans-serif;
+            font-weight: 700;
+            font-size: .85rem;
+            letter-spacing: .05em;
+            transition: opacity .4s ease;
+            pointer-events: none;
+        }
+        #map-loader.oculto { opacity: 0; }
+
+        .loader-ring {
+            width: 42px; height: 42px;
+            border: 4px solid rgba(0,51,102,.2);
+            border-top-color: #003366;
+            border-radius: 50%;
+            animation: girar .75s linear infinite;
+        }
+        @keyframes girar { to { transform: rotate(360deg); } }
+
+        .sig-faixa { background: #87CEFA; height: 5px; width: 100%; flex-shrink: 0; }
+
+        #dashboard { background: #fff; width: 100%; }
+
+        .dash-barra {
+            background: #003366;
+            display: flex;
+            align-items: stretch;
+            padding: 0 30px;
+            height: 48px;
+            gap: 0;
+        }
+        .dash-titulo {
+            display: flex; align-items: center; gap: 10px;
+            color: #fff;
+            font-family: 'Audiowide', sans-serif;
+            font-size: .7rem; letter-spacing: .1em;
+            text-transform: uppercase; white-space: nowrap;
+            margin-right: 24px; flex-shrink: 0;
+        }
+        .dash-titulo svg { opacity: .65; flex-shrink: 0; }
+
+        .dash-tabs { display: flex; align-items: stretch; margin-left: auto; }
+        .dash-tab {
+            display: flex; align-items: center; gap: 7px;
+            padding: 0 22px;
+            font-family: 'Audiowide', sans-serif;
+            font-size: .62rem; letter-spacing: .09em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.5);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            border-top: 3px solid transparent;
+            transition: color .2s, background .2s, border-color .2s;
+            user-select: none; white-space: nowrap;
+        }
+        .dash-tab:hover { color: rgba(255,255,255,.85); background: rgba(255,255,255,.06); }
+        .dash-tab.ativa { color: #FFD700; border-bottom-color: #FFD700; background: rgba(255,255,255,.07); }
+
+        .dash-pagina { display: none; padding: 26px 30px 30px; animation: surgir .22s ease; }
+        .dash-pagina.ativa { display: block; }
+        @keyframes surgir { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+
+        .cards-grade {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px; margin-bottom: 22px;
+        }
+        .card {
+            background: #f4f8fd;
+            border-radius: 10px;
+            padding: 18px 20px 16px;
+            border-top: 4px solid #87CEFA;
+            box-shadow: 0 2px 10px rgba(0,51,102,.06);
+            display: flex; flex-direction: column; gap: 4px;
+            transition: transform .15s, box-shadow .2s;
+        }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,51,102,.1); }
+        .card.ouro  { border-top-color: #FFD700; }
+        .card.verde { border-top-color: #27ae60; }
+        .card.azul  { border-top-color: #2980b9; }
+
+        .card-icone { font-size: 1.2rem; margin-bottom: 2px; }
+        .card-label {
+            font-family: 'National Park', sans-serif;
+            font-size: .63rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .08em; color: #6b8ba4;
+        }
+        .card-valor {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 1.5rem; color: #003366; line-height: 1.15;
+        }
+        .card-sub {
+            font-size: .68rem; color: #95afc0; margin-top: 2px;
+            font-family: 'National Park', sans-serif;
+        }
+
+        .btn-acao {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #003366; color: #fff;
+            font-family: 'Audiowide', sans-serif;
+            font-size: .62rem; letter-spacing: .09em;
+            text-transform: uppercase;
+            padding: 10px 22px; border-radius: 6px;
+            cursor: pointer; border: none;
+            transition: background .2s, color .2s;
+        }
+        .btn-acao:hover { background: #87CEFA; color: #003366; }
+
+        .p2-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr 270px;
+            gap: 20px; align-items: start;
+        }
+
+        .painel-bairro { display: flex; flex-direction: column; gap: 12px; }
+        .campo-label {
+            font-family: 'National Park', sans-serif;
+            font-size: .65rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .08em; color: #6b8ba4;
+        }
+
+        .select-wrap { position: relative; }
+        .select-wrap select {
+            width: 100%;
+            padding: 10px 36px 10px 13px;
+            border-radius: 8px;
+            border: 1.5px solid #c7d5e8;
+            font-family: 'National Park', sans-serif;
+            font-size: .84rem; font-weight: 700;
+            color: #003366; background: #f4f8fd;
+            appearance: none; cursor: pointer; outline: none;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .select-wrap select:focus { border-color: #87CEFA; box-shadow: 0 0 0 3px rgba(135,206,250,.3); }
+        .select-wrap::after {
+            content: '▾'; position: absolute; right: 12px; top: 50%;
+            transform: translateY(-50%); color: #87CEFA;
+            pointer-events: none; font-size: 1.05rem;
+        }
+
+        .btn-limpar {
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            padding: 9px 14px; border-radius: 8px;
+            border: 1.5px solid #dce8f0; background: #fff;
+            color: #6b8ba4;
+            font-family: 'National Park', sans-serif;
+            font-size: .74rem; font-weight: 700;
+            cursor: pointer; transition: all .2s;
+        }
+        .btn-limpar:hover { background: #f4f8fd; border-color: #87CEFA; color: #003366; }
+
+        .dica-mapa {
+            font-size: .68rem;
+            font-family: 'National Park', sans-serif;
+            color: #95afc0; line-height: 1.55; margin-top: 4px;
+        }
+
+        #bairro-placeholder {
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            min-height: 200px; color: #b0c4d8;
+            text-align: center; gap: 12px; grid-column: 2 / 4;
+        }
+        #bairro-placeholder svg { opacity: .28; }
+        #bairro-placeholder p {
+            font-size: .8rem;
+            font-family: 'National Park', sans-serif;
+            color: #95afc0; max-width: 260px; line-height: 1.6;
+        }
+
+        #bairro-dados { 
+            display: none; 
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .card-pop-bairro {
+            background: #003366;
+            border-radius: 12px;
+            padding: 22px 22px 20px;
+            color: #fff;
+            display: flex; flex-direction: column; gap: 5px;
+            box-shadow: 0 4px 16px rgba(0,51,102,.2);
+        }
+        .card-pop-bairro.area-card {
+            background: #2980b9; 
+        }
+        .card-pop-bairro .rotulo {
+            font-family: 'National Park', sans-serif;
+            font-size: .63rem; font-weight: 700;
+            letter-spacing: .1em; text-transform: uppercase; color: #87CEFA;
+        }
+        .card-pop-bairro .numero {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 1.9rem; color: #FFD700; line-height: 1.1;
+        }
+        .card-pop-bairro .sub {
+            font-size: .72rem; color: rgba(135,206,250,.7);
+            font-family: 'National Park', sans-serif;
+        }
+
+        .wrap-chart {
+            background: #f4f8fd;
+            border-radius: 12px;
+            padding: 18px 18px 14px;
+            box-shadow: 0 2px 8px rgba(0,51,102,.06);
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .wrap-chart-titulo {
+            font-family: 'National Park', sans-serif;
+            font-size: .65rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .08em; color: #6b8ba4;
+        }
+        .wrap-chart-canvas { display: flex; justify-content: center; }
+        .wrap-chart-canvas canvas { max-height: 185px; max-width: 185px; }
+        
+        .legenda-sexo { display: flex; flex-direction: column; gap: 5px; }
+        .legenda-item {
+            display: flex; align-items: center; gap: 8px;
+            font-family: 'National Park', sans-serif;
+            font-size: .74rem; font-weight: 700; color: #003366;
+        }
+        .legenda-cor { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+        .legenda-pct { margin-left: auto; font-size: .68rem; color: #6b8ba4; }
+
+        .alerta-cors {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.95);
+            padding: 20px 30px;
+            border-radius: 8px;
+            border: 2px solid red;
+            color: #d32f2f;
+            font-family: sans-serif;
+            font-size: 14px;
+            text-align: center;
+            z-index: 10000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            max-width: 80%;
+            display: none;
+        }
+
+        @media (max-width: 920px) {
+            .p2-layout { grid-template-columns: 1fr; }
+            #bairro-placeholder { grid-column: 1; }
+            #bairro-dados { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+            #map-wrapper { height: 300px; }
+            .dash-barra { padding: 0 14px; }
+            .dash-pagina { padding: 18px 14px 22px; }
+            .cards-grade { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .page-title { font-size: 1.4rem; }
+            .page-intro { font-size: .92rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <img src="imagens/logotipo.png" alt="Logotipo de São Gonçalo" class="site-logo" onerror="this.style.display='none'">
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html" class="active">PAINEL</a></li>
+            <li><a href="geografia.html">GEOGRAFIA</a></li>
+            <li><a href="historia.html">HISTÓRIA</a></li>
+            <li><a href="simbolos.html">SÍMBOLOS</a></li>
+        </ul>
+    </nav>
+    <div class="weather-widget">
+        <div class="weather-location">Em São Gonçalo</div>
+        <div class="weather-main-info">
+            <div class="weather-graphic">
+                <img class="weather-icon" id="weather-icon" src="" alt="Clima">
+                <span id="condition-text">...</span>
+            </div>
+            <div class="weather-stats">
+                <span id="temp-value">--°C</span>
+                <span id="precip-value">Chuva: -- mm</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="content-area">
+
+    <div class="intro-container">
+        <h1 class="page-title">Portal Geoespacial de <span>São Gonçalo</span></h1>
+        <p class="page-intro">Painel interativo para exploração de dados demográficos e territoriais do município. Navegue pelo mapa para visualizar as camadas geoespaciais — bairros, distritos, setores censitários e zonas eleitorais — e utilize o dashboard abaixo para consultar população total, área municipal e a distribuição populacional por bairro e sexo.</p>
+    </div>
+
+    <!-- MAPA LEAFLET -->
+    <div id="map-wrapper">
+        <div id="map"></div>
+        <div id="map-loader">
+            <div class="loader-ring"></div>
+            <span>Carregando camadas geoespaciais…</span>
+        </div>
+        
+        <!-- Aviso de Bloqueio Local (CORS) -->
+        <div id="alerta-cors" class="alerta-cors">
+            <b>Bloqueio de Segurança Identificado</b><br><br>
+            O mapa e os dados não carregaram porque o navegador bloqueou a leitura de arquivos locais (Erro de CORS).<br><br>
+            Diferente do QGIS, que embute os dados no HTML, o portal precisa de um servidor web.<br>
+            Para testar no seu computador, abra o arquivo utilizando a extensão <b>Live Server</b> no VS Code.
+        </div>
+    </div>
+
+    <div class="sig-faixa"></div>
+
+    <!-- DASHBOARD INTERATIVO -->
+    <div id="dashboard">
+        <div class="dash-barra">
+            <div class="dash-titulo">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                </svg>
+                Dashboard Geoespacial
+            </div>
+            <div class="dash-tabs">
+                <div class="dash-tab ativa" id="tab-1" onclick="mostrarPagina(1)">🏛 Município</div>
+                <div class="dash-tab" id="tab-2" onclick="mostrarPagina(2)">🏘 Análise por Bairro</div>
+            </div>
+        </div>
+
+        <!-- ABA 1: Dados do Município -->
+        <div class="dash-pagina ativa" id="pagina-1">
+            <div class="cards-grade">
+                <div class="card ouro">
+                    <div class="card-icone">📐</div>
+                    <div class="card-label">Área do Município</div>
+                    <div class="card-valor" id="card-area">—</div>
+                    <div class="card-sub">km² · area_municipal.geojson</div>
+                </div>
+                <div class="card verde">
+                    <div class="card-icone">👥</div>
+                    <div class="card-label">População Total</div>
+                    <div class="card-valor" id="card-pop">—</div>
+                    <div class="card-sub">habitantes · Soma de setores</div>
+                </div>
+                <div class="card azul">
+                    <div class="card-icone">🗺</div>
+                    <div class="card-label">Camadas disponíveis</div>
+                    <div class="card-valor">6</div>
+                    <div class="card-sub">Controle no mapa (canto sup. direito)</div>
+                </div>
+                <div class="card">
+                    <div class="card-icone">🛰</div>
+                    <div class="card-label">Basemap</div>
+                    <div class="card-valor" style="font-size:.88rem;font-family:'National Park',sans-serif;font-weight:700;">F4 Map 2D</div>
+                    <div class="card-sub">Cartografia limpa, sem ruído textual</div>
+                </div>
+            </div>
+            <button class="btn-acao" onclick="mostrarPagina(2)">🏘 Analisar por Bairro →</button>
+        </div>
+
+        <!-- ABA 2: Análise por Bairro -->
+        <div class="dash-pagina" id="pagina-2">
+            <div class="p2-layout">
+                <div class="painel-bairro">
+                    <div class="campo-label">Selecione o bairro</div>
+                    <div class="select-wrap">
+                        <select id="bairro-select" onchange="aoSelecionarBairro()">
+                            <option value="">— Escolha —</option>
+                        </select>
+                    </div>
+                    <button class="btn-limpar" onclick="limparFiltro()">↩ Limpar &amp; voltar</button>
+                    <div class="dica-mapa">Ou clique diretamente sobre um bairro no mapa com a camada <strong>Bairros</strong> ativa.</div>
+                </div>
+                
+                <div id="bairro-placeholder">
+                    <svg width="54" height="54" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                        <circle cx="12" cy="9" r="2.5"/>
+                    </svg>
+                    <p>Selecione um bairro para ver população, área e distribuição por sexo.</p>
+                </div>
+                
+                <div id="bairro-dados">
+                    <div class="card-pop-bairro">
+                        <div class="rotulo">👥 População do Bairro</div>
+                        <div class="numero" id="bairro-pop-valor">—</div>
+                        <div class="sub" id="bairro-pop-sub">—</div>
+                    </div>
+                    
+                    <div class="card-pop-bairro area-card">
+                        <div class="rotulo">📐 Área do Bairro</div>
+                        <div class="numero" id="bairro-area-valor">—</div>
+                        <div class="sub">km²</div>
+                    </div>
+                </div>
+
+                <div id="bairro-chart-wrap" style="display:none;" class="wrap-chart">
+                    <div class="wrap-chart-titulo">Distribuição por Sexo</div>
+                    <div class="wrap-chart-canvas"><canvas id="chart-sexo"></canvas></div>
+                    <div class="legenda-sexo">
+                        <div class="legenda-item">
+                            <span class="legenda-cor" style="background:#00b4d8;"></span>
+                            Masculino <span class="legenda-pct" id="leg-masc">—</span>
+                        </div>
+                        <div class="legenda-item">
+                            <span class="legenda-cor" style="background:#f06292;"></span>
+                            Feminino <span class="legenda-pct" id="leg-fem">—</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="site-footer">
+    <p>&copy; 2026 Portal Geoespacial de São Gonçalo. Desenvolvido para pesquisa educacional geográfica e histórica do município.</p>
+    <a href="sobre.html" class="footer-btn">Sobre o Portal</a>
+    <span class="footer-credit">Elaborado por Eduardo Sacramento</span>
+</footer>
+
+<!-- Scripts do Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Lógica do SIG Web -->
+<script>
+/* ════ Caminhos dos Arquivos ════ */
+var BASE_GEO = './geodados/';
+var BASE_TAB = './tabelas/';
+
+/* ════ Estado Global ════ */
+var geoAreaMunicipal  = null;
+var geoBairros        = null;
+var geoSetores        = null;
+var dadosPop          = [];
+var layerBairros      = null;
+var graficoSexo       = null;
+
+/* ════ Instância do Mapa ════ */
+var map = L.map('map', {
+    center: [-22.83, -43.05],
+    zoom: 12,
+    zoomControl: true
+});
+
+L.tileLayer('https://tile1.f4map.com/tiles/f4_2d/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.f4map.com/" target="_blank">F4 Map</a> | ' +
+                 '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+    maxZoom: 20
+}).addTo(map);
+
+/* ════ Função Robusta para Encontrar Propriedades ════ */
+// Remove espaços em branco do início e do fim para garantir que espaços invisíveis não quebrem a leitura.
+function getProp(obj, prop) {
+    if (!obj) return undefined;
+    if (obj[prop] !== undefined) return obj[prop];
+    var lowerProp = prop.toLowerCase().trim();
+    for (var key in obj) {
+        if (key.trim().toLowerCase() === lowerProp) return obj[key];
+    }
+    return undefined;
+}
+
+/* ════ Helper Cego para converter sempre em String Limpa ════ */
+// Transforma sempre em string e remove sujeiras caso o QGIS ou Pandas insira.
+function limparCodigo(val) {
+    if (val == null) return '';
+    return String(val).replace(/\.0$/, '').trim();
+}
+
+/* ════ Busca Assíncrona dos Dados ════ */
+function carregarJSON(url) {
+    return fetch(url)
+        .then(function(r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status + ' — ' + url);
+            return r.json();
+        })
+        .catch(function(e) {
+            console.warn('[SIG] Não carregado:', e.message);
+            return null;
+        });
+}
+
+Promise.all([
+    carregarJSON(BASE_GEO + 'area_municipal.geojson'),
+    carregarJSON(BASE_GEO + 'bairros.geojson'),
+    carregarJSON(BASE_GEO + 'setores_censitarios.geojson'),
+    carregarJSON(BASE_GEO + 'zonas_eleitorais.geojson'),
+    carregarJSON(BASE_GEO + 'distritos.geojson'),
+    carregarJSON(BASE_GEO + 'sedes_distritais.geojson'),
+    carregarJSON(BASE_GEO + 'sede_municipal.geojson'),
+    carregarJSON(BASE_TAB + 'dados_populacionais.json')
+])
+.then(function(res) {
+    geoAreaMunicipal = res[0];
+    geoBairros       = res[1];
+    geoSetores       = res[2];
+
+    var geoZonas     = res[3];
+    var geoDistritos = res[4];
+    var geoSedesD    = res[5];
+    var geoSedeM     = res[6];
+    var rawPop       = res[7];
+
+    if (!geoBairros && !geoSetores) {
+        document.getElementById('alerta-cors').style.display = 'block';
+    }
+
+    // --- LEITURA ABSOLUTA DO JSON DO PANDAS ---
+    dadosPop = [];
+    if (Array.isArray(rawPop)) {
+        // Formato orient='records' puro
+        dadosPop = rawPop;
+    } else if (rawPop && Array.isArray(rawPop.features)) {
+        // Se foi exportado como FeatureCollection do GeoJSON acidentalmente
+        dadosPop = rawPop.features.map(function(f){ return f.properties || {}; });
+    } else if (rawPop && typeof rawPop === 'object') {
+        var colunas = Object.keys(rawPop);
+        if (colunas.length > 0) {
+            var primeiraColuna = rawPop[colunas[0]];
+            
+            // O padrão do Pandas quando exporta via to_json() sem orient é orient='columns'.
+            // Exemplo de formato em colunas: {"cod_setor": {"0": "123", "1": "456"}, "populacao": {"0": 5, "1": 10}}
+            // Precisamos pivotar isso para que o Javascript entenda as linhas.
+            if (typeof primeiraColuna === 'object' && !Array.isArray(primeiraColuna)) {
+                var indices = Object.keys(primeiraColuna);
+                indices.forEach(function(idx) {
+                    var linha = {};
+                    colunas.forEach(function(col) {
+                        linha[col] = rawPop[col][idx];
+                    });
+                    dadosPop.push(linha);
+                });
+            } else {
+                // Fallback de contingência caso seja orient='index'
+                colunas.forEach(function(k) {
+                    if (typeof rawPop[k] === 'object') dadosPop.push(rawPop[k]);
+                });
+            }
+        }
+    }
+
+    montarCamadas(geoZonas, geoDistritos, geoSedesD, geoSedeM);
+    iniciarDashboard();
+    ocultarLoader();
+})
+.catch(function(err) {
+    console.error('[SIG] Erro crítico:', err);
+    ocultarLoader();
+});
+
+function ocultarLoader() {
+    var l = document.getElementById('map-loader');
+    l.classList.add('oculto');
+    setTimeout(function() { l.style.display = 'none'; }, 420);
+}
+
+/* ════ Configuração das Camadas Geoespaciais ════ */
+function montarCamadas(geoZonas, geoDistritos, geoSedesD, geoSedeM) {
+    novoPane('pZonas',    402);
+    novoPane('pBairros',  403);
+    novoPane('pDistritos',404);
+    novoPane('pSedesD',   405);
+    novoPane('pSedeM',    406);
+    novoPane('pArea',     407);
+
+    // Limite Municipal: Sem pop-up e Sem interatividade
+    if (geoAreaMunicipal) {
+        L.geoJSON(geoAreaMunicipal, {
+            pane: 'pArea',
+            interactive: false, // <-- Impede cliques ou pop-ups na área principal
+            style: { color: '#00008B', weight: 3, fillOpacity: 0 }
+        }).addTo(map);
+    }
+
+    var overlays = {};
+
+    var lz = camadaPoly(geoZonas, {
+        pane: 'pZonas',
+        estilo: { color: '#232323', weight: 1, fillOpacity: 0 },
+        campos: ['zona_eleitoral', 'area_km2']
+    });
+    if (lz) overlays['Zonas Eleitorais'] = lz;
+
+    layerBairros = criarCamadaBairros();
+    if (layerBairros) {
+        overlays['Bairros'] = layerBairros;
+        layerBairros.addTo(map); 
+    }
+
+    var cDistritos = {
+        'São Gonçalo': { cor: '#00008B', fill: 'rgba(0,0,139,0.12)' },
+        'Ipiíba':      { cor: '#0a6b1c', fill: 'rgba(10,107,28,0.12)' },
+        'Monjolo':     { cor: '#ca8413', fill: 'rgba(202,132,19,0.12)' },
+        'Neves':       { cor: '#686868', fill: 'rgba(104,104,104,0.12)' },
+        'Sete Pontes': { cor: '#e31a1c', fill: 'rgba(227,26,28,0.12)' }
+    };
+    var ld = camadaPoly(geoDistritos, {
+        pane: 'pDistritos',
+        estiloFn: function(f) {
+            var nm = getProp(f.properties, 'nm_distr') || '';
+            var c  = cDistritos[nm] || { cor: '#888', fill: 'rgba(136,136,136,0.12)' };
+            return { pane: 'pDistritos', color: c.cor, weight: 3, fillColor: c.fill, fillOpacity: 1 };
+        },
+        campos: ['nm_distr', 'area_km2', 'nm_munic']
+    });
+    if (ld) overlays['Distritos'] = ld;
+
+    var lsd = camadaPonto(geoSedesD, { pane: 'pSedesD', rExt: 6, rInt: 3,
+        corBorda: '#232323', fillExt: '#fff', campos: ['nome'] });
+    if (lsd) overlays['Sedes Distritais'] = lsd;
+
+    var lsm = camadaPonto(geoSedeM, { pane: 'pSedeM', rExt: 7.5, rInt: 2.5,
+        corBorda: '#000', fillExt: '#fff', campos: ['nome'] });
+    if (lsm) overlays['Sede Municipal'] = lsm;
+
+    L.control.layers(null, overlays, { collapsed: true, position: 'topright' }).addTo(map);
+}
+
+function novoPane(nome, z) {
+    var p = map.createPane(nome);
+    p.style.zIndex = z;
+}
+
+function camadaPoly(data, opts) {
+    if (!data) return null;
+    return L.geoJSON(data, {
+        pane: opts.pane, interactive: true,
+        style: opts.estiloFn
+            ? opts.estiloFn
+            : function() { return Object.assign({ pane: opts.pane }, opts.estilo || {}); },
+        onEachFeature: function(f, l) { bindPopupCampos(f, l, opts.campos); }
+    });
+}
+
+function camadaPonto(data, opts) {
+    if (!data) return null;
+    var grupo = L.layerGroup();
+    L.geoJSON(data, {
+        pane: opts.pane,
+        pointToLayer: function(f, ll) {
+            return L.circleMarker(ll, { pane: opts.pane, radius: opts.rExt,
+                color: opts.corBorda, weight: 1.5, fillColor: opts.fillExt, fillOpacity: 1 });
+        },
+        onEachFeature: function(f, l) { bindPopupCampos(f, l, opts.campos); }
+    }).addTo(grupo);
+    L.geoJSON(data, {
+        pane: opts.pane,
+        pointToLayer: function(f, ll) {
+            return L.circleMarker(ll, { pane: opts.pane, radius: opts.rInt,
+                color: opts.corBorda, weight: 1, fillColor: opts.corBorda, fillOpacity: 1 });
+        }
+    }).addTo(grupo);
+    return grupo;
+}
+
+function bindPopupCampos(feature, layer, campos) {
+    if (!campos || !campos.length) return;
+    var p = feature.properties || {};
+    var html = '<div style="font-family:\'National Park\',sans-serif;font-size:.8rem;line-height:1.5">';
+    campos.forEach(function(c) {
+        var val = getProp(p, c);
+        if (val != null) html += '<b>' + c + '</b>: ' + val + '<br>';
+    });
+    html += '</div>';
+    layer.bindPopup(html, { maxWidth: 240 });
+}
+
+function criarCamadaBairros() {
+    if (!geoBairros) return null;
+
+    return L.geoJSON(geoBairros, {
+        pane: 'pBairros', interactive: true,
+        style: estiloNormal,
+        onEachFeature: function(feature, layer) {
+            var nm = getProp(feature.properties, 'nm_bairro') || '';
+
+            layer.bindTooltip(nm, { sticky: true, direction: 'top', className: 'leaflet-tooltip' });
+
+            layer.on('mouseover', function() {
+                var valSelect = document.getElementById('bairro-select').value;
+                if (nm !== valSelect) layer.setStyle(estiloHover());
+            });
+            layer.on('mouseout', function() {
+                var valSelect = document.getElementById('bairro-select').value;
+                if (nm !== valSelect) layer.setStyle(estiloNormal());
+            });
+            layer.on('click', function() {
+                mostrarPagina(2);
+                selecionarBairro(nm);
+            });
+        }
+    });
+}
+
+var estiloNormal = function() { return { color: '#515151', weight: 2, fillOpacity: 0 }; };
+var estiloHover  = function() { return { color: '#87CEFA', weight: 2.5, fillOpacity: .18, fillColor: '#87CEFA' }; };
+var estiloAtivo  = function() { return { color: '#003366', weight: 3, fillOpacity: .22, fillColor: '#003366' }; };
+
+/* ════ Controle de Abas ════ */
+function mostrarPagina(n) {
+    document.querySelectorAll('.dash-pagina').forEach(function(p) { p.classList.remove('ativa'); });
+    document.querySelectorAll('.dash-tab').forEach(function(t) { t.classList.remove('ativa'); });
+    document.getElementById('pagina-' + n).classList.add('ativa');
+    document.getElementById('tab-' + n).classList.add('ativa');
+}
+
+/* ════ Inicializa os dados da Página 1 ════ */
+function iniciarDashboard() {
+    if (geoAreaMunicipal) {
+        var features = geoAreaMunicipal.features || [geoAreaMunicipal];
+        features.forEach(function(f) {
+            var v = getProp(f.properties, 'area_km2');
+            if (v != null) {
+                document.getElementById('card-area').textContent =
+                    parseFloat(v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+            }
+        });
+    }
+
+    var total = 0;
+    dadosPop.forEach(function(r) {
+        var popValue = getProp(r, 'populacao');
+        total += parseInt(popValue, 10) || 0;
+    });
+    document.getElementById('card-pop').textContent =
+        total > 0 ? total.toLocaleString('pt-BR') : '—';
+
+    var sel = document.getElementById('bairro-select');
+    var nomes = [];
+    if (geoBairros && geoBairros.features) {
+        geoBairros.features.forEach(function(f) {
+            var nm = getProp(f.properties, 'nm_bairro');
+            if (nm && nomes.indexOf(nm) < 0) nomes.push(nm);
+        });
+    }
+    nomes.sort(function(a, b) { return a.localeCompare(b, 'pt-BR'); });
+    nomes.forEach(function(nm) {
+        var o = document.createElement('option');
+        o.value = nm; o.textContent = nm;
+        sel.appendChild(o);
+    });
+}
+
+/* ════ Seleção de Bairros (Múltiplos Polígonos) ════ */
+function aoSelecionarBairro() {
+    var nm = document.getElementById('bairro-select').value;
+    if (!nm) { limparFiltro(); return; }
+    selecionarBairro(nm);
+}
+
+function selecionarBairro(nmBairro) {
+    var sel = document.getElementById('bairro-select');
+    if (sel.value !== nmBairro) sel.value = nmBairro;
+
+    var bounds = L.latLngBounds();
+    var encontrouCamada = false;
+
+    if (layerBairros) {
+        layerBairros.eachLayer(function(l) {
+            var nLayer = getProp(l.feature.properties, 'nm_bairro');
+            if (nLayer === nmBairro) {
+                l.setStyle(estiloAtivo());
+                bounds.extend(l.getBounds());
+                encontrouCamada = true;
+            } else {
+                l.setStyle(estiloNormal());
+            }
+        });
+    }
+
+    if (encontrouCamada) {
+        try { map.fitBounds(bounds, { padding: [40, 40] }); } catch(e) {}
+    }
+
+    document.getElementById('bairro-placeholder').style.display = 'none';
+    document.getElementById('bairro-dados').style.display = 'grid'; 
+    document.getElementById('bairro-chart-wrap').style.display = 'flex';
+    document.getElementById('bairro-chart-wrap').style.flexDirection = 'column';
+
+    calcularBairro(nmBairro);
+}
+
+function limparFiltro() {
+    document.getElementById('bairro-select').value = '';
+    document.getElementById('bairro-placeholder').style.display = 'flex';
+    document.getElementById('bairro-dados').style.display = 'none';
+    document.getElementById('bairro-chart-wrap').style.display = 'none';
+
+    if (layerBairros) {
+        layerBairros.eachLayer(function(l) {
+            l.setStyle(estiloNormal());
+        });
+    }
+    if (graficoSexo) { graficoSexo.destroy(); graficoSexo = null; }
+    mostrarPagina(1);
+}
+
+/* ── LÓGICA DE DADOS OTIMIZADA PARA O JOIN ── */
+function calcularBairro(nmBairro) {
+
+    // 1. ÁREA
+    var areaTotalBairro = 0;
+    if (geoBairros && geoBairros.features) {
+        geoBairros.features.forEach(function(f) {
+            var p = f.properties || {};
+            var nomeFeature = getProp(p, 'nm_bairro');
+            var areaFeature = getProp(p, 'area_km2');
+            
+            if (nomeFeature === nmBairro && areaFeature != null) {
+                areaTotalBairro += parseFloat(areaFeature) || 0;
+            }
+        });
+    }
+    document.getElementById('bairro-area-valor').textContent =
+        areaTotalBairro > 0 ? areaTotalBairro.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}) : '—';
+
+    // 2. O RASTREAMENTO DE SETORES DO BAIRRO (Filtro por Junção Espacial)
+    var codigos = new Set();
+    if (geoSetores && geoSetores.features) {
+        geoSetores.features.forEach(function(f) {
+            var p = f.properties || {};
+            var bSetor = getProp(p, 'nm_bairro');
+            if (bSetor !== nmBairro) return; // Se não for do bairro, descarta.
+
+            // Limpa e armazena o código encontrado.
+            var cod = limparCodigo(getProp(p, 'cod_setor'));
+            if (cod !== '' && cod !== 'undefined' && cod !== 'null') codigos.add(cod);
+        });
+    }
+
+    // 3. O JOIN TABULAR COM SOMA POPULACIONAL 
+    var popT = 0, popM = 0, popF = 0;
+    dadosPop.forEach(function(row) {
+        // Limpa o código da tabela da mesma forma para o cruzamento exato
+        var codRow = limparCodigo(getProp(row, 'cod_setor'));
+        
+        // Verifica se a tabela possui o setor identificado no bairro
+        if (!codigos.has(codRow)) return; 
+
+        // Se houver "match", assegura ser inteiro ignorando textos sujos e realiza a soma
+        popT += parseInt(getProp(row, 'populacao'), 10)     || 0;
+        popM += parseInt(getProp(row, 'pop_masculina'), 10) || 0;
+        popF += parseInt(getProp(row, 'pop_feminina'), 10)  || 0;
+    });
+
+    document.getElementById('bairro-pop-valor').textContent = popT > 0 ? popT.toLocaleString('pt-BR') : '0';
+    document.getElementById('bairro-pop-sub').textContent = nmBairro + ' · ' + codigos.size + ' setor(es) censitário(s)';
+
+    // 4. GRÁFICO 
+    var tot = popT || 1; 
+    document.getElementById('leg-masc').textContent = popM.toLocaleString('pt-BR') + ' hab. (' + ((popM / tot) * 100).toFixed(1) + '%)';
+    document.getElementById('leg-fem').textContent = popF.toLocaleString('pt-BR') + ' hab. (' + ((popF / tot) * 100).toFixed(1) + '%)';
+
+    renderizarPizza(popM, popF);
+}
+
+function renderizarPizza(masc, fem) {
+    if (graficoSexo) { graficoSexo.destroy(); graficoSexo = null; }
+
+    var ctx = document.getElementById('chart-sexo').getContext('2d');
+    var total = masc + fem || 1;
+
+    graficoSexo = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Masculino', 'Feminino'],
+            datasets: [{
+                data: [masc || 0, fem || 0],
+                backgroundColor: ['#00b4d8', '#f06292'],
+                borderColor: ['#0096c7', '#e91e8c'],
+                borderWidth: 2,
+                hoverOffset: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }, 
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) {
+                            var v   = ctx.parsed;
+                            var pct = ((v / total) * 100).toFixed(1);
+                            return '  ' + v.toLocaleString('pt-BR') + ' hab. (' + pct + '%)';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+</script>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Símbolos Municipais - São Gonçalo</title>
+    
+    <!-- Chamada do CSS externo -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="site-header">
+        <img src="imagens/logotipo.png" alt="Logotipo de São Gonçalo" class="site-logo">
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">PAINEL</a></li>
+                <li><a href="geografia.html">GEOGRAFIA</a></li>
+                <li><a href="historia.html">HISTÓRIA</a></li>
+                <li><a href="simbolos.html" class="active">SÍMBOLOS</a></li>
+            </ul>
+        </nav>
+        
+        <div class="weather-widget">
+            <div class="weather-location">Em São Gonçalo:</div>
+            <div class="weather-main-info">
+                <div class="weather-graphic">
+                    <img class="weather-icon" id="weather-icon" src="" alt="Clima">
+                    <span id="condition-text">...</span>
+                </div>
+                <div class="weather-stats">
+                    <span id="temp-value">--°C</span>
+                    <span id="precip-value">Chuva: -- mm</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-area">
+        <div class="workspace">
+            <div class="symbols-column">
+                <figure class="symbol-item">
+                    <img src="imagens/bandeira.webp" alt="Bandeira de São Gonçalo">
+                    <figcaption>Bandeira Municipal</figcaption>
+                </figure>
+                <figure class="symbol-item">
+                    <img src="imagens/brasao.webp" alt="Brasão de São Gonçalo">
+                    <figcaption>Brasão de Armas</figcaption>
+                </figure>
+            </div>
+
+            <div class="hymn-column">
+                <h2>Hino Oficial de São Gonçalo</h2>
+                <div class="hymn-lyrics">
+                    São Gonçalo, cidade mui singela
+                    Erguida nos encantos de aquarela,
+                    Namorada de nós os gonçalense…
+                    Cidade que cresce dia-a-dia,
+                    Monumental eternal, sol de alegria,
+                    Orgulho bem maior dos fluminenses…
+
+                    Teu passado, cidade, foi honroso,
+                    Teu futuro será maravilhoso,
+                    E o teu presente fúlgida verdade…
+                    Teu povo sempre ordeiro e liberal
+                    Semeia no teu seio maternal
+                    As propícias sementes da bondade…
+
+                    Tens usinas com muitas chaminés
+                    Que logo dizem prontas quem tu és;
+                    Oficina onde bate rijo o malho…
+                    Macedo, Palmier, eis o talento,
+                    Estephânia, ó que grande monumento,
+                    Eis homens fortes, prontos ao trabalho…
+
+                    Tens igrejas festivas, cujos sinos
+                    Bimbalham puros sons, bem cristalinos,
+                    Da cidade fazendo pompa e glória…
+                    Em Neves, Alcântara ou Gradim,
+                    Certamente esta graça tu tens sim,
+                    A graça que engalana a tua história…
+
+                    (Estribilho)
+                </div>
+                <div class="hymn-credits">
+                    Letra: Prof. Geraldo Pereira Lemos<br>
+                    Música: Maestro Joyleno dos Santos
+                </div>
+                
+                <div class="floating-player">
+                    <audio id="hino-audio" preload="metadata">
+                        <source src="multimidia/hino.ogg" type="audio/ogg">
+                        Seu navegador não suporta a reprodução de áudio.
+                    </audio>
+                    <button id="play-pause-btn" class="player-btn" title="Reproduzir">▶</button>
+                    <div id="time-display" class="player-text">
+                        <span id="current-time" class="current-time-text">0:00</span>
+                        <span class="total-time-text"> / </span>
+                        <span id="total-time" class="total-time-text">4:32</span>
+                    </div>
+                    <input type="range" id="progress-bar" value="0" max="100">
+                    <button id="mute-btn" class="player-btn" title="Mudo">🔊</button>
+                    <input type="range" id="volume-bar" value="100" max="100">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Portal Geoespacial de São Gonçalo. Desenvolvido para pesquisa educacional geográfica e histórica do município.</p>
+        <a href="sobre.html" class="footer-btn">Sobre o Portal</a>
+        <span class="footer-credit">Elaborado por Eduardo Sacramento</span>
+    </footer>
+
+    <!-- Chamada do JavaScript externo -->
+    <script src="script.js"></script>
+</body>
+</html>
