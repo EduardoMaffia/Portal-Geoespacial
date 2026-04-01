@@ -45,44 +45,110 @@
             color: #1a1a1a;
         }
 
-        /* ── Seção do Mapa e Barra de Camadas Lateral ── */
+        /* ── Seção do Mapa (Overlay) ── */
         .map-section {
-            display: flex;
+            position: relative;
             width: 100%;
-            height: 680px; /* Altura ampliada mantida */
+            height: 680px; 
             box-shadow: 0 6px 24px rgba(0,0,0,.18);
             z-index: 1;
             background: #ffffff;
+            overflow: hidden; 
         }
 
+        #map-wrapper {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; 
+            height: 100%;
+        }
+        
+        #map { width: 100%; height: 100%; background-color: #e5e5e5; }
+
+        /* Botão de Alternar Barra de Camadas */
+        #sidebar-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(0,0,0,0.2);
+            border-radius: 6px;
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            transition: all 0.3s ease; 
+        }
+        
+        #sidebar-toggle:hover, #sidebar-toggle:active { 
+            background: #ffffff; 
+            border-color: #87CEFA;
+            box-shadow: 0 0 15px rgba(135, 206, 250, 0.8); 
+            transform: scale(1.08); 
+        }
+
+        /* Barra de Camadas Flutuante */
         #layer-sidebar {
+            position: absolute;
+            top: 0; left: 0;
             width: 280px;
-            background: #e4edf7; /* Tom ajustado: mais destaque sem poluir a visão */
+            max-width: 85vw;
+            height: 100%;
+            background: rgba(228, 237, 247, 0.96); 
             border-right: 3px solid #87CEFA;
             display: flex;
             flex-direction: column;
-            overflow-y: auto; /* Adiciona rolagem se tivermos muitas camadas no futuro */
-            flex-shrink: 0; /* Evita que a barra esmague ao reduzir a tela */
+            z-index: 1000;
+            transform: translateX(0);
+            transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 4px 0 25px rgba(0,0,0,0.15);
         }
 
-        #layer-sidebar h3 {
+        #layer-sidebar.closed {
+            transform: translateX(-105%); 
+            box-shadow: none;
+        }
+
+        .sidebar-header {
             background: #003366;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header h3 {
             color: #ffffff;
             font-family: 'Audiowide', sans-serif;
             font-size: 1.1rem;
-            padding: 15px 20px;
             margin: 0;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            flex-shrink: 0;
         }
+
+        #close-sidebar {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 1.8rem;
+            line-height: 1;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        #close-sidebar:hover { color: #FFD700; }
 
         #layer-sidebar-content {
             padding: 20px;
             flex: 1;
+            overflow-y: auto; 
+            overflow-x: hidden;
         }
 
-        /* Sobrescrevendo o estilo padrão do Leaflet para integrar ao nosso layout lateral */
         #layer-sidebar-content .leaflet-control-layers {
             box-shadow: none;
             border: none;
@@ -92,11 +158,7 @@
             padding: 0;
             color: #003366;
         }
-
-        #layer-sidebar-content .leaflet-control-layers-list {
-            display: block !important;
-        }
-
+        #layer-sidebar-content .leaflet-control-layers-list { display: block !important; }
         #layer-sidebar-content .leaflet-control-layers-overlays label {
             display: flex;
             align-items: center;
@@ -108,11 +170,7 @@
             cursor: pointer;
             transition: color 0.2s;
         }
-
-        #layer-sidebar-content .leaflet-control-layers-overlays label:hover {
-            color: #87CEFA;
-        }
-
+        #layer-sidebar-content .leaflet-control-layers-overlays label:hover { color: #87CEFA; }
         #layer-sidebar-content .leaflet-control-layers-overlays input[type="checkbox"] {
             width: 18px;
             height: 18px;
@@ -120,14 +178,45 @@
             accent-color: #003366;
         }
 
-        /* Área restrita apenas ao mapa */
-        #map-wrapper {
-            position: relative;
-            flex: 1; /* Ocupa o resto do espaço ao lado da barra lateral */
-            height: 100%;
+        /* ── Controle de Mapas Base Customizado ── */
+        #basemap-container {
+            padding: 15px 20px;
+            background: #d4e3f3; 
+            border-top: 2px solid #87CEFA;
+            flex-shrink: 0;
+        }
+
+        #basemap-container h4 {
+            margin: 0 0 12px 0;
+            color: #003366;
+            font-family: 'Audiowide', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .basemap-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'National Park', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #003366;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: color 0.2s;
         }
         
-        #map { width: 100%; height: 100%; }
+        .basemap-option:hover { color: #007bb5; }
+
+        .basemap-option input[type="radio"] {
+            accent-color: #003366;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin: 0;
+        }
 
         /* ── Controles Customizados no Mapa ── */
         .compass-container {
@@ -267,9 +356,10 @@
         }
         .btn-acao:hover { background: #87CEFA; color: #003366; }
 
+        /* ── PÁGINA 2: Análise por Bairro ── */
         .p2-layout {
             display: grid;
-            grid-template-columns: 250px 1fr 270px;
+            grid-template-columns: 250px 1fr 300px; /* Layout ajustado em 3 colunas */
             gap: 20px; align-items: start;
         }
 
@@ -329,8 +419,15 @@
             color: #95afc0; max-width: 260px; line-height: 1.6;
         }
 
+        /* Container central para os cartões e o gráfico de barras racial */
+        #p2-col-center {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+        }
+
         #bairro-dados { 
-            display: none; 
+            display: grid; 
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
@@ -371,18 +468,34 @@
             font-family: 'National Park', sans-serif;
             font-size: .65rem; font-weight: 700;
             text-transform: uppercase; letter-spacing: .08em; color: #6b8ba4;
+            border-bottom: 1px solid #dce8f0;
+            padding-bottom: 8px;
         }
+        
         .wrap-chart-canvas { display: flex; justify-content: center; }
         .wrap-chart-canvas canvas { max-height: 185px; max-width: 185px; }
         
+        /* ── Estilos da Nova Diversidade Racial ── */
+        .diversidade-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            padding: 15px 0;
+        }
+
+        .legenda-raca { display: flex; flex-direction: column; gap: 8px; }
         .legenda-sexo { display: flex; flex-direction: column; gap: 5px; }
+
         .legenda-item {
             display: flex; align-items: center; gap: 8px;
             font-family: 'National Park', sans-serif;
-            font-size: .74rem; font-weight: 700; color: #003366;
+            font-size: .85rem; font-weight: 700; color: #003366;
         }
+        .emoji { font-size: 1.3rem; margin-right: 5px; line-height: 1;}
         .legenda-cor { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
-        .legenda-pct { margin-left: auto; font-size: .68rem; color: #6b8ba4; }
+        .legenda-pct { margin-left: auto; font-size: .78rem; color: #6b8ba4; font-weight: normal; }
 
         .alerta-cors {
             position: absolute;
@@ -403,27 +516,18 @@
         }
 
         @media (max-width: 920px) {
-            .map-section { 
-                flex-direction: column; 
-                height: auto;
-            }
-            #layer-sidebar {
-                width: 100%;
-                height: 200px;
-                border-right: none;
-                border-bottom: 3px solid #87CEFA;
-            }
-            #map-wrapper { height: 450px; }
-            .p2-layout { grid-template-columns: 1fr; }
+            .map-section { height: 550px; }
+            .p2-layout { grid-template-columns: 1fr; } /* Empilha tudo na mobile */
             #bairro-placeholder { grid-column: 1; }
-            #bairro-dados { grid-template-columns: 1fr; }
         }
         @media (max-width: 600px) {
+            .map-section { height: 480px; }
             .dash-barra { padding: 0 14px; }
             .dash-pagina { padding: 18px 14px 22px; }
             .cards-grade { grid-template-columns: 1fr 1fr; gap: 10px; }
             .page-title { font-size: 1.4rem; }
             .page-intro { font-size: .92rem; }
+            #bairro-dados { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -458,16 +562,46 @@
 
     <div class="intro-container">
         <h1 class="page-title">Portal Geoespacial de <span>São Gonçalo</span></h1>
-        <p class="page-intro">Painel interativo para exploração de dados demográficos e territoriais do município. Navegue pelo mapa para visualizar as camadas geoespaciais — bairros, distritos, setores censitários e zonas eleitorais — e utilize o dashboard abaixo para consultar população total, área municipal e a distribuição populacional por bairro e sexo.</p>
+        <p class="page-intro">Painel interativo para exploração de dados demográficos e territoriais do município. Navegue pelo mapa para visualizar as camadas geoespaciais — bairros, distritos, setores censitários e zonas eleitorais — e utilize o dashboard abaixo para consultar população total, área municipal e a distribuição populacional por bairro, sexo e raça/cor.</p>
     </div>
 
-    <!-- MAPA LEAFLET E BARRA DE CAMADAS EXTERNA -->
+    <!-- MAPA LEAFLET E OVERLAY DE CAMADAS -->
     <div class="map-section">
+        
+        <!-- Botão de abrir/fechar a barra -->
+        <button id="sidebar-toggle" title="Abrir Camadas">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#003366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 12 12 17 22 12"></polyline>
+                <polyline points="2 17 12 22 22 17"></polyline>
+            </svg>
+        </button>
+
+        <!-- Barra flutuante -->
         <aside id="layer-sidebar">
-            <h3>Camadas</h3>
-            <div id="layer-sidebar-content"></div>
+            <div class="sidebar-header">
+                <h3>Camadas</h3>
+                <button id="close-sidebar" title="Ocultar">&times;</button>
+            </div>
+            
+            <div id="layer-sidebar-content"></div> 
+            
+            <!-- Controle de Mapas Base Integrado -->
+            <div id="basemap-container">
+                <h4>Mapa Base</h4>
+                <label class="basemap-option">
+                    <input type="radio" name="basemap" value="carto" checked> CARTO Light
+                </label>
+                <label class="basemap-option">
+                    <input type="radio" name="basemap" value="f4"> F4 Map 2D
+                </label>
+                <label class="basemap-option">
+                    <input type="radio" name="basemap" value="esri"> ESRI Satélite
+                </label>
+            </div>
         </aside>
 
+        <!-- Container total do mapa -->
         <div id="map-wrapper">
             <div id="map"></div>
             <div id="map-loader">
@@ -501,6 +635,7 @@
             </div>
         </div>
 
+        <!-- PÁGINA 1: Município -->
         <div class="dash-pagina ativa" id="pagina-1">
             <div class="cards-grade">
                 <div class="card ouro">
@@ -517,22 +652,42 @@
                 </div>
                 <div class="card azul">
                     <div class="card-icone">🗺</div>
-                    <div class="card-label">Camadas disponíveis</div>
-                    <div class="card-valor">6</div>
-                    <div class="card-sub">Ative no menu de Camadas lateral</div>
+                    <div class="card-label">Camadas Ativas</div>
+                    <div class="card-valor" id="card-camadas-ativas">0</div>
+                    <div class="card-sub" id="card-camadas-total">de 0 camadas disponíveis</div>
                 </div>
                 <div class="card">
                     <div class="card-icone">🛰</div>
                     <div class="card-label">Basemap</div>
-                    <div class="card-valor" style="font-size:.88rem;font-family:'National Park',sans-serif;font-weight:700;">F4 Map 2D</div>
-                    <div class="card-sub">Cartografia limpa, sem ruído textual</div>
+                    <div class="card-valor" id="card-basemap-name" style="font-size:.88rem;font-family:'National Park',sans-serif;font-weight:700;">CARTO Light</div>
+                    <div class="card-sub">Alterado no menu de camadas lateral</div>
                 </div>
             </div>
-            <button class="btn-acao" onclick="mostrarPagina(2)">🏘 Analisar por Bairro →</button>
+
+            <!-- Novo Gráfico de Diversidade Racial do Município -->
+            <div class="wrap-chart" style="margin-top: 20px; max-width: 900px;">
+                <div class="wrap-chart-titulo">Diversidade Racial Municipal</div>
+                <div class="diversidade-box">
+                    <div style="position: relative; height: 220px; width: 220px;">
+                        <canvas id="chart-racial-municipio"></canvas>
+                    </div>
+                    <div class="legenda-raca">
+                        <div class="legenda-item"><span class="emoji">🧑🏻</span> Brancos <span class="legenda-pct" id="muni-pct-b">—</span></div>
+                        <div class="legenda-item"><span class="emoji">🧑🏿</span> Pretos <span class="legenda-pct" id="muni-pct-p">—</span></div>
+                        <div class="legenda-item"><span class="emoji">🧑</span> Amarelos <span class="legenda-pct" id="muni-pct-a">—</span></div>
+                        <div class="legenda-item"><span class="emoji">🧑🏽</span> Pardos <span class="legenda-pct" id="muni-pct-pa">—</span></div>
+                        <div class="legenda-item"><span class="emoji">🧑🏾</span> Indígenas <span class="legenda-pct" id="muni-pct-i">—</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-acao" style="margin-top: 20px;" onclick="mostrarPagina(2)">🏘 Analisar por Bairro →</button>
         </div>
 
+        <!-- PÁGINA 2: Análise por Bairro -->
         <div class="dash-pagina" id="pagina-2">
             <div class="p2-layout">
+                <!-- Coluna 1: Ferramenta de Seleção -->
                 <div class="painel-bairro">
                     <div class="campo-label">Selecione o bairro</div>
                     <div class="select-wrap">
@@ -544,28 +699,40 @@
                     <div class="dica-mapa">Ou clique diretamente sobre um bairro no mapa com a camada <strong>Bairros</strong> ativa.</div>
                 </div>
                 
+                <!-- Placeholder de Estado Inicial -->
                 <div id="bairro-placeholder">
                     <svg width="54" height="54" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
                         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
                         <circle cx="12" cy="9" r="2.5"/>
                     </svg>
-                    <p>Selecione um bairro para ver população, área e distribuição por sexo.</p>
+                    <p>Selecione um bairro para ver população, área e distribuição por sexo e cor/raça.</p>
                 </div>
                 
-                <div id="bairro-dados">
-                    <div class="card-pop-bairro">
-                        <div class="rotulo">👥 População do Bairro</div>
-                        <div class="numero" id="bairro-pop-valor">—</div>
-                        <div class="sub" id="bairro-pop-sub">—</div>
+                <!-- Coluna 2: Cartões de Área/População + Gráfico Racial -->
+                <div id="p2-col-center">
+                    <div id="bairro-dados">
+                        <div class="card-pop-bairro">
+                            <div class="rotulo">👥 População do Bairro</div>
+                            <div class="numero" id="bairro-pop-valor">—</div>
+                            <div class="sub" id="bairro-pop-sub">—</div>
+                        </div>
+                        
+                        <div class="card-pop-bairro area-card">
+                            <div class="rotulo">📐 Área do Bairro</div>
+                            <div class="numero" id="bairro-area-valor">—</div>
+                            <div class="sub">km²</div>
+                        </div>
                     </div>
-                    
-                    <div class="card-pop-bairro area-card">
-                        <div class="rotulo">📐 Área do Bairro</div>
-                        <div class="numero" id="bairro-area-valor">—</div>
-                        <div class="sub">km²</div>
+
+                    <div class="wrap-chart" id="wrap-chart-raca">
+                        <div class="wrap-chart-titulo">População por Raça/Cor (Absoluto)</div>
+                        <div class="wrap-chart-canvas" style="height: 220px; width: 100%; display: block;">
+                            <canvas id="chart-racial-bairro"></canvas>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Coluna 3: Gráfico de Pizza de Gênero -->
                 <div id="bairro-chart-wrap" style="display:none;" class="wrap-chart">
                     <div class="wrap-chart-titulo">Distribuição por Sexo</div>
                     <div class="wrap-chart-canvas"><canvas id="chart-sexo"></canvas></div>
@@ -594,65 +761,76 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-/* ════ Caminhos dos Arquivos ════ */
+/* ════ Controle de Interface da Barra Flutuante ════ */
+const sidebar = document.getElementById('layer-sidebar');
+const toggleBtn = document.getElementById('sidebar-toggle');
+const closeBtn = document.getElementById('close-sidebar');
+
+if (window.innerWidth <= 920) {
+    sidebar.classList.add('closed');
+}
+
+toggleBtn.addEventListener('click', () => { sidebar.classList.remove('closed'); });
+closeBtn.addEventListener('click', () => { sidebar.classList.add('closed'); });
+
+/* ════ Caminhos e Estado Global ════ */
 var BASE_GEO = './geodados/';
 var BASE_TAB = './tabelas/';
 
-/* ════ Estado Global ════ */
 var geoAreaMunicipal  = null;
 var geoBairros        = null;
 var geoSetores        = null;
-var dadosPop          = [];
+
+var dadosPop          = []; // Dados Populacionais
+var dadosRaciais      = []; // Novos Dados Raciais
+
 var layerBairros      = null;
 var graficoSexo       = null;
+var graficoRacaMuni   = null;
+var graficoRacaBairro = null;
+var mapOverlays       = {}; 
+
+// Cores Padronizadas para o Gráfico de Raça
+var coresRaca = {
+    branco: '#fcdfb6', // Bege claro
+    preto: '#4e342e',  // Marrom escuro
+    amarelo: '#fff59d',// Amarelo pálido
+    pardo: '#8d6e63',  // Marrom médio
+    indigena: '#c62828'// Vermelho terracota
+};
 
 /* ════ Instância do Mapa ════ */
 var map = L.map('map', {
     center: [-22.83, -43.05],
     zoom: 12,
-    zoomControl: true
+    zoomControl: false 
 });
 
-L.tileLayer('https://tile1.f4map.com/tiles/f4_2d/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://www.f4map.com/" target="_blank">F4 Map</a> | ' +
-                 '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
-    maxZoom: 20
-}).addTo(map);
+L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-/* ════ Controles do Mapa (Escala e Rosa dos Ventos) ════ */
-
-// Adicionando a barra de escala no canto inferior esquerdo
 L.control.scale({
     position: 'bottomleft',
-    metric: true, // Mostra em Quilômetros/Metros
-    imperial: false, // Esconde as Milhas/Pés
+    metric: true, 
+    imperial: false, 
     maxWidth: 200
 }).addTo(map);
 
-// Criando controle customizado para a Rosa dos Ventos
 var RosaDosVentosControl = L.Control.extend({
     options: { position: 'topright' },
     onAdd: function (map) {
         var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control compass-container');
-        // SVG vetorial puro da Rosa dos Ventos com o "N"
         container.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="compass-svg">
-                <!-- Seta Norte (Vermelha) -->
                 <polygon points="50,15 58,45 50,50" fill="#d32f2f"/>
                 <polygon points="50,15 42,45 50,50" fill="#b71c1c"/>
-                <!-- Seta Sul -->
                 <polygon points="50,85 58,55 50,50" fill="#cfd8dc"/>
                 <polygon points="50,85 42,55 50,50" fill="#b0bec5"/>
-                <!-- Seta Leste -->
                 <polygon points="85,50 55,42 50,50" fill="#cfd8dc"/>
                 <polygon points="85,50 55,58 50,50" fill="#b0bec5"/>
-                <!-- Seta Oeste -->
                 <polygon points="15,50 45,42 50,50" fill="#cfd8dc"/>
                 <polygon points="15,50 45,58 50,50" fill="#b0bec5"/>
-                <!-- Detalhes Centrais -->
                 <circle cx="50" cy="50" r="6" fill="#003366"/>
                 <circle cx="50" cy="50" r="2" fill="#FFD700"/>
-                <!-- Letra N -->
                 <text x="50" y="11" font-family="'Audiowide', sans-serif" font-size="14" font-weight="bold" fill="#003366" text-anchor="middle">N</text>
             </svg>
         `;
@@ -661,7 +839,50 @@ var RosaDosVentosControl = L.Control.extend({
 });
 map.addControl(new RosaDosVentosControl());
 
-/* ════ Função Robusta para Encontrar Propriedades ════ */
+/* ════ MAPAS BASE ════ */
+var basemaps = {
+    carto: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap | &copy; CARTO', maxZoom: 20
+    }),
+    f4: L.tileLayer('https://tile1.f4map.com/tiles/f4_2d/{z}/{x}/{y}.png', {
+        attribution: '&copy; F4 Map | &copy; OpenStreetMap', maxZoom: 20
+    }),
+    esri: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '&copy; Esri, Maxar, Earthstar Geographics', maxZoom: 19
+    })
+};
+
+var currentBasemap = basemaps.carto;
+currentBasemap.addTo(map);
+
+document.querySelectorAll('input[name="basemap"]').forEach(function(radio) {
+    radio.addEventListener('change', function(e) {
+        map.removeLayer(currentBasemap);
+        currentBasemap = basemaps[e.target.value];
+        currentBasemap.addTo(map);
+        document.getElementById('card-basemap-name').textContent = e.target.parentElement.textContent.trim();
+    });
+});
+
+if (window.ResizeObserver) {
+    new ResizeObserver(function() { if (map) map.invalidateSize(); }).observe(document.getElementById('map-wrapper'));
+}
+
+map.on('layeradd layerremove', atualizarContadorCamadas);
+
+function atualizarContadorCamadas() {
+    if (Object.keys(mapOverlays).length === 0) return;
+    var total = Object.keys(mapOverlays).length;
+    var ativas = 0;
+    for (var key in mapOverlays) { if (map.hasLayer(mapOverlays[key])) ativas++; }
+
+    var elAtivas = document.getElementById('card-camadas-ativas');
+    var elTotal = document.getElementById('card-camadas-total');
+    if (elAtivas) elAtivas.textContent = ativas;
+    if (elTotal) elTotal.textContent = 'de ' + total + ' camadas disponíveis';
+}
+
+/* ════ Funções de Helper e Tratamento Pandas ════ */
 function getProp(obj, prop) {
     if (!obj) return undefined;
     if (obj[prop] !== undefined) return obj[prop];
@@ -672,25 +893,49 @@ function getProp(obj, prop) {
     return undefined;
 }
 
-/* ════ Helper Cego para converter sempre em String Limpa ════ */
 function limparCodigo(val) {
     if (val == null) return '';
     return String(val).replace(/\.0$/, '').trim();
 }
 
-/* ════ Busca Assíncrona dos Dados ════ */
 function carregarJSON(url) {
     return fetch(url)
         .then(function(r) {
             if (!r.ok) throw new Error('HTTP ' + r.status + ' — ' + url);
             return r.json();
-        })
-        .catch(function(e) {
+        }).catch(function(e) {
             console.warn('[SIG] Não carregado:', e.message);
             return null;
         });
 }
 
+// Otimizador: Lê qualquer JSON exportado do Pandas e o transforma em array de objetos limpos
+function parsePandasJSON(raw) {
+    var arr = [];
+    if (Array.isArray(raw)) {
+        arr = raw;
+    } else if (raw && Array.isArray(raw.features)) {
+        arr = raw.features.map(function(f){ return f.properties || {}; });
+    } else if (raw && typeof raw === 'object') {
+        var colunas = Object.keys(raw);
+        if (colunas.length > 0) {
+            var primeiraColuna = raw[colunas[0]];
+            if (typeof primeiraColuna === 'object' && !Array.isArray(primeiraColuna)) {
+                var indices = Object.keys(primeiraColuna);
+                indices.forEach(function(idx) {
+                    var linha = {};
+                    colunas.forEach(function(col) { linha[col] = raw[col][idx]; });
+                    arr.push(linha);
+                });
+            } else {
+                colunas.forEach(function(k) { if (typeof raw[k] === 'object') arr.push(raw[k]); });
+            }
+        }
+    }
+    return arr;
+}
+
+/* ════ Busca Assíncrona ════ */
 Promise.all([
     carregarJSON(BASE_GEO + 'area_municipal.geojson'),
     carregarJSON(BASE_GEO + 'bairros.geojson'),
@@ -699,7 +944,8 @@ Promise.all([
     carregarJSON(BASE_GEO + 'distritos.geojson'),
     carregarJSON(BASE_GEO + 'sedes_distritais.geojson'),
     carregarJSON(BASE_GEO + 'sede_municipal.geojson'),
-    carregarJSON(BASE_TAB + 'dados_populacionais.json')
+    carregarJSON(BASE_TAB + 'dados_populacionais.json'),
+    carregarJSON(BASE_TAB + 'dados_raciais.json') // Novo arquivo carregado
 ])
 .then(function(res) {
     geoAreaMunicipal = res[0];
@@ -710,39 +956,14 @@ Promise.all([
     var geoDistritos = res[4];
     var geoSedesD    = res[5];
     var geoSedeM     = res[6];
-    var rawPop       = res[7];
-
+    
     if (!geoBairros && !geoSetores) {
         document.getElementById('alerta-cors').style.display = 'block';
     }
 
-    // --- LEITURA ABSOLUTA DO JSON DO PANDAS ---
-    dadosPop = [];
-    if (Array.isArray(rawPop)) {
-        dadosPop = rawPop;
-    } else if (rawPop && Array.isArray(rawPop.features)) {
-        dadosPop = rawPop.features.map(function(f){ return f.properties || {}; });
-    } else if (rawPop && typeof rawPop === 'object') {
-        var colunas = Object.keys(rawPop);
-        if (colunas.length > 0) {
-            var primeiraColuna = rawPop[colunas[0]];
-            if (typeof primeiraColuna === 'object' && !Array.isArray(primeiraColuna)) {
-                var indices = Object.keys(primeiraColuna);
-                indices.forEach(function(idx) {
-                    var linha = {};
-                    colunas.forEach(function(col) {
-                        linha[col] = rawPop[col][idx];
-                    });
-                    dadosPop.push(linha);
-                });
-            } else {
-                colunas.forEach(function(k) {
-                    if (typeof rawPop[k] === 'object') dadosPop.push(rawPop[k]);
-                });
-            }
-        }
-    }
-    if (!dadosPop) dadosPop = [];
+    // Leitura inteligente dos dataframes do Pandas
+    dadosPop = parsePandasJSON(res[7]);
+    dadosRaciais = parsePandasJSON(res[8]);
 
     montarCamadas(geoZonas, geoDistritos, geoSedesD, geoSedeM);
     iniciarDashboard();
@@ -756,41 +977,28 @@ Promise.all([
 function ocultarLoader() {
     var l = document.getElementById('map-loader');
     l.classList.add('oculto');
-    setTimeout(function() { l.style.display = 'none'; }, 420);
+    setTimeout(function() { l.style.display = 'none'; map.invalidateSize(); }, 420);
 }
 
-/* ════ Configuração das Camadas Geoespaciais ════ */
+/* ════ Configuração das Camadas ════ */
 function montarCamadas(geoZonas, geoDistritos, geoSedesD, geoSedeM) {
-    novoPane('pZonas',    402);
-    novoPane('pBairros',  403);
-    novoPane('pDistritos',404);
-    novoPane('pSedesD',   405);
-    novoPane('pSedeM',    406);
-    novoPane('pArea',     407);
+    novoPane('pZonas', 402); novoPane('pBairros', 403); novoPane('pDistritos', 404);
+    novoPane('pSedesD', 405); novoPane('pSedeM', 406); novoPane('pArea', 407);
 
-    // Limite Municipal: Sem pop-up e Sem interatividade
     if (geoAreaMunicipal) {
         L.geoJSON(geoAreaMunicipal, {
-            pane: 'pArea',
-            interactive: false,
+            pane: 'pArea', interactive: false,
             style: { color: '#00008B', weight: 3, fillOpacity: 0 }
         }).addTo(map);
     }
 
-    var overlays = {};
+    mapOverlays = {};
 
-    var lz = camadaPoly(geoZonas, {
-        pane: 'pZonas',
-        estilo: { color: '#232323', weight: 1, fillOpacity: 0 },
-        campos: ['zona_eleitoral', 'area_km2']
-    });
-    if (lz) overlays['Zonas Eleitorais'] = lz;
+    var lz = camadaPoly(geoZonas, { pane: 'pZonas', estilo: { color: '#232323', weight: 1, fillOpacity: 0 }, campos: ['zona_eleitoral', 'area_km2'] });
+    if (lz) mapOverlays['Zonas Eleitorais'] = lz;
 
     layerBairros = criarCamadaBairros();
-    if (layerBairros) {
-        overlays['Bairros'] = layerBairros;
-        layerBairros.addTo(map); 
-    }
+    if (layerBairros) { mapOverlays['Bairros'] = layerBairros; layerBairros.addTo(map); }
 
     var cDistritos = {
         'São Gonçalo': { cor: '#00008B', fill: 'rgba(0,0,139,0.12)' },
@@ -808,37 +1016,28 @@ function montarCamadas(geoZonas, geoDistritos, geoSedesD, geoSedeM) {
         },
         campos: ['nm_distr', 'area_km2', 'nm_munic']
     });
-    if (ld) overlays['Distritos'] = ld;
+    if (ld) mapOverlays['Distritos'] = ld;
 
-    var lsd = camadaPonto(geoSedesD, { pane: 'pSedesD', rExt: 6, rInt: 3,
-        corBorda: '#232323', fillExt: '#fff', campos: ['nome'] });
-    if (lsd) overlays['Sedes Distritais'] = lsd;
+    var lsd = camadaPonto(geoSedesD, { pane: 'pSedesD', rExt: 6, rInt: 3, corBorda: '#232323', fillExt: '#fff', campos: ['nome'] });
+    if (lsd) mapOverlays['Sedes Distritais'] = lsd;
 
-    var lsm = camadaPonto(geoSedeM, { pane: 'pSedeM', rExt: 7.5, rInt: 2.5,
-        corBorda: '#000', fillExt: '#fff', campos: ['nome'] });
-    if (lsm) overlays['Sede Municipal'] = lsm;
+    var lsm = camadaPonto(geoSedeM, { pane: 'pSedeM', rExt: 7.5, rInt: 2.5, corBorda: '#000', fillExt: '#fff', campos: ['nome'] });
+    if (lsm) mapOverlays['Sede Municipal'] = lsm;
 
-    // Criar o controle do Leaflet descolapsado e sem adicionar a posição padrão
-    var layerControl = L.control.layers(null, overlays, { collapsed: false });
+    var layerControl = L.control.layers(null, mapOverlays, { collapsed: false });
     layerControl.addTo(map);
 
-    // Extrair o painel HTML gerado pelo Leaflet e movê-lo para o nosso sidebar customizado
-    var containerCamadas = layerControl.getContainer();
-    document.getElementById('layer-sidebar-content').appendChild(containerCamadas);
+    document.getElementById('layer-sidebar-content').appendChild(layerControl.getContainer());
+    atualizarContadorCamadas();
 }
 
-function novoPane(nome, z) {
-    var p = map.createPane(nome);
-    p.style.zIndex = z;
-}
+function novoPane(nome, z) { map.createPane(nome).style.zIndex = z; }
 
 function camadaPoly(data, opts) {
     if (!data) return null;
     return L.geoJSON(data, {
         pane: opts.pane, interactive: true,
-        style: opts.estiloFn
-            ? opts.estiloFn
-            : function() { return Object.assign({ pane: opts.pane }, opts.estilo || {}); },
+        style: opts.estiloFn || function() { return Object.assign({ pane: opts.pane }, opts.estilo || {}); },
         onEachFeature: function(f, l) { bindPopupCampos(f, l, opts.campos); }
     });
 }
@@ -848,28 +1047,21 @@ function camadaPonto(data, opts) {
     var grupo = L.layerGroup();
     L.geoJSON(data, {
         pane: opts.pane,
-        pointToLayer: function(f, ll) {
-            return L.circleMarker(ll, { pane: opts.pane, radius: opts.rExt,
-                color: opts.corBorda, weight: 1.5, fillColor: opts.fillExt, fillOpacity: 1 });
-        },
+        pointToLayer: function(f, ll) { return L.circleMarker(ll, { pane: opts.pane, radius: opts.rExt, color: opts.corBorda, weight: 1.5, fillColor: opts.fillExt, fillOpacity: 1 }); },
         onEachFeature: function(f, l) { bindPopupCampos(f, l, opts.campos); }
     }).addTo(grupo);
     L.geoJSON(data, {
         pane: opts.pane,
-        pointToLayer: function(f, ll) {
-            return L.circleMarker(ll, { pane: opts.pane, radius: opts.rInt,
-                color: opts.corBorda, weight: 1, fillColor: opts.corBorda, fillOpacity: 1 });
-        }
+        pointToLayer: function(f, ll) { return L.circleMarker(ll, { pane: opts.pane, radius: opts.rInt, color: opts.corBorda, weight: 1, fillColor: opts.corBorda, fillOpacity: 1 }); }
     }).addTo(grupo);
     return grupo;
 }
 
 function bindPopupCampos(feature, layer, campos) {
     if (!campos || !campos.length) return;
-    var p = feature.properties || {};
     var html = '<div style="font-family:\'National Park\',sans-serif;font-size:.8rem;line-height:1.5">';
     campos.forEach(function(c) {
-        var val = getProp(p, c);
+        var val = getProp(feature.properties || {}, c);
         if (val != null) html += '<b>' + c + '</b>: ' + val + '<br>';
     });
     html += '</div>';
@@ -878,27 +1070,14 @@ function bindPopupCampos(feature, layer, campos) {
 
 function criarCamadaBairros() {
     if (!geoBairros) return null;
-
     return L.geoJSON(geoBairros, {
-        pane: 'pBairros', interactive: true,
-        style: estiloNormal,
+        pane: 'pBairros', interactive: true, style: estiloNormal,
         onEachFeature: function(feature, layer) {
             var nm = getProp(feature.properties, 'nm_bairro') || '';
-
             layer.bindTooltip(nm, { sticky: true, direction: 'top', className: 'leaflet-tooltip' });
-
-            layer.on('mouseover', function() {
-                var valSelect = document.getElementById('bairro-select').value;
-                if (nm !== valSelect) layer.setStyle(estiloHover());
-            });
-            layer.on('mouseout', function() {
-                var valSelect = document.getElementById('bairro-select').value;
-                if (nm !== valSelect) layer.setStyle(estiloNormal());
-            });
-            layer.on('click', function() {
-                mostrarPagina(2);
-                selecionarBairro(nm);
-            });
+            layer.on('mouseover', function() { if (nm !== document.getElementById('bairro-select').value) layer.setStyle(estiloHover()); });
+            layer.on('mouseout', function() { if (nm !== document.getElementById('bairro-select').value) layer.setStyle(estiloNormal()); });
+            layer.on('click', function() { mostrarPagina(2); selecionarBairro(nm); });
         }
     });
 }
@@ -909,32 +1088,37 @@ var estiloAtivo  = function() { return { color: '#003366', weight: 3, fillOpacit
 
 /* ════ Controle de Abas ════ */
 function mostrarPagina(n) {
-    document.querySelectorAll('.dash-pagina').forEach(function(p) { p.classList.remove('ativa'); });
-    document.querySelectorAll('.dash-tab').forEach(function(t) { t.classList.remove('ativa'); });
+    document.querySelectorAll('.dash-pagina').forEach(p => p.classList.remove('ativa'));
+    document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('ativa'));
     document.getElementById('pagina-' + n).classList.add('ativa');
     document.getElementById('tab-' + n).classList.add('ativa');
 }
 
-/* ════ Inicializa os dados da Página 1 ════ */
+/* ════ Inicializa Dados ════ */
 function iniciarDashboard() {
     if (geoAreaMunicipal) {
         var features = geoAreaMunicipal.features || [geoAreaMunicipal];
         features.forEach(function(f) {
             var v = getProp(f.properties, 'area_km2');
-            if (v != null) {
-                document.getElementById('card-area').textContent =
-                    parseFloat(v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
-            }
+            if (v != null) document.getElementById('card-area').textContent = parseFloat(v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
         });
     }
 
-    var total = 0;
-    dadosPop.forEach(function(r) {
-        var popValue = getProp(r, 'populacao');
-        total += parseInt(popValue, 10) || 0;
+    var popTot = 0;
+    dadosPop.forEach(function(r) { popTot += parseInt(getProp(r, 'populacao'), 10) || 0; });
+    document.getElementById('card-pop').textContent = popTot > 0 ? popTot.toLocaleString('pt-BR') : '—';
+
+    // --- Cálculo Diversidade Racial Municipal ---
+    var totB = 0, totP = 0, totA = 0, totPa = 0, totI = 0;
+    dadosRaciais.forEach(function(row) {
+        totB  += parseInt(getProp(row, 'brancos'), 10) || 0;
+        totP  += parseInt(getProp(row, 'pretos'), 10) || 0;
+        totA  += parseInt(getProp(row, 'amarelos'), 10) || 0;
+        totPa += parseInt(getProp(row, 'pardos'), 10) || 0;
+        totI  += parseInt(getProp(row, 'indigenas'), 10) || 0;
     });
-    document.getElementById('card-pop').textContent =
-        total > 0 ? total.toLocaleString('pt-BR') : '—';
+    
+    renderizarDiversidadeMunicipal(totB, totP, totA, totPa, totI);
 
     var sel = document.getElementById('bairro-select');
     var nomes = [];
@@ -946,11 +1130,57 @@ function iniciarDashboard() {
     }
     nomes.sort(function(a, b) { return a.localeCompare(b, 'pt-BR'); });
     nomes.forEach(function(nm) {
-        var o = document.createElement('option');
-        o.value = nm; o.textContent = nm;
-        sel.appendChild(o);
+        var o = document.createElement('option'); o.value = nm; o.textContent = nm; sel.appendChild(o);
     });
 }
+
+/* ════ Gráfico Diversidade Racial (Município) ════ */
+function renderizarDiversidadeMunicipal(brancos, pretos, amarelos, pardos, indigenas) {
+    if (graficoRacaMuni) { graficoRacaMuni.destroy(); }
+
+    var total = (brancos + pretos + amarelos + pardos + indigenas) || 1;
+    
+    // Atualização dos textos da legenda (com % formatado)
+    document.getElementById('muni-pct-b').textContent = ((brancos / total) * 100).toFixed(1) + '%';
+    document.getElementById('muni-pct-p').textContent = ((pretos / total) * 100).toFixed(1) + '%';
+    document.getElementById('muni-pct-a').textContent = ((amarelos / total) * 100).toFixed(1) + '%';
+    document.getElementById('muni-pct-pa').textContent = ((pardos / total) * 100).toFixed(1) + '%';
+    document.getElementById('muni-pct-i').textContent = ((indigenas / total) * 100).toFixed(1) + '%';
+
+    var ctx = document.getElementById('chart-racial-municipio').getContext('2d');
+    
+    graficoRacaMuni = new Chart(ctx, {
+        type: 'doughnut', // Gráfico tipo Rosca (Donut)
+        data: {
+            labels: ['Brancos', 'Pretos', 'Amarelos', 'Pardos', 'Indígenas'],
+            datasets: [{
+                data: [brancos, pretos, amarelos, pardos, indigenas],
+                backgroundColor: [coresRaca.branco, coresRaca.preto, coresRaca.amarelo, coresRaca.pardo, coresRaca.indigena],
+                borderWidth: 2,
+                borderColor: '#ffffff',
+                hoverOffset: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '68%', // Define a espessura do "anel"
+            plugins: {
+                legend: { display: false }, // A legenda HTML customizada cuidará disso
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) {
+                            var val = ctx.parsed;
+                            var pct = ((val / total) * 100).toFixed(1) + '%';
+                            return ` ${val.toLocaleString('pt-BR')} habitantes (${pct})`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
 
 /* ════ Seleção de Bairros ════ */
 function aoSelecionarBairro() {
@@ -963,10 +1193,7 @@ function selecionarBairro(nmBairro) {
     var sel = document.getElementById('bairro-select');
     if (sel.value !== nmBairro) sel.value = nmBairro;
 
-    // Regra: Ligar a camada de bairros caso esteja desligada pelo usuário
-    if (layerBairros && !map.hasLayer(layerBairros)) {
-        map.addLayer(layerBairros);
-    }
+    if (layerBairros && !map.hasLayer(layerBairros)) map.addLayer(layerBairros);
 
     var bounds = L.latLngBounds();
     var encontrouCamada = false;
@@ -984,14 +1211,11 @@ function selecionarBairro(nmBairro) {
         });
     }
 
-    if (encontrouCamada) {
-        try { map.fitBounds(bounds, { padding: [40, 40] }); } catch(e) {}
-    }
+    if (encontrouCamada) { try { map.fitBounds(bounds, { padding: [40, 40] }); } catch(e) {} }
 
     document.getElementById('bairro-placeholder').style.display = 'none';
-    document.getElementById('bairro-dados').style.display = 'grid'; 
+    document.getElementById('p2-col-center').style.display = 'flex'; 
     document.getElementById('bairro-chart-wrap').style.display = 'flex';
-    document.getElementById('bairro-chart-wrap').style.flexDirection = 'column';
 
     calcularBairro(nmBairro);
 }
@@ -999,52 +1223,45 @@ function selecionarBairro(nmBairro) {
 function limparFiltro() {
     document.getElementById('bairro-select').value = '';
     document.getElementById('bairro-placeholder').style.display = 'flex';
-    document.getElementById('bairro-dados').style.display = 'none';
+    document.getElementById('p2-col-center').style.display = 'none';
     document.getElementById('bairro-chart-wrap').style.display = 'none';
 
-    if (layerBairros) {
-        layerBairros.eachLayer(function(l) {
-            l.setStyle(estiloNormal());
-        });
-    }
+    if (layerBairros) { layerBairros.eachLayer(function(l) { l.setStyle(estiloNormal()); }); }
     if (graficoSexo) { graficoSexo.destroy(); graficoSexo = null; }
+    if (graficoRacaBairro) { graficoRacaBairro.destroy(); graficoRacaBairro = null; }
     mostrarPagina(1);
 }
 
-/* ── LÓGICA DE DADOS ── */
+/* ── LÓGICA E CÁLCULO POR BAIRRO ── */
 function calcularBairro(nmBairro) {
 
+    // Área do Bairro
     var areaTotalBairro = 0;
     if (geoBairros && geoBairros.features) {
         geoBairros.features.forEach(function(f) {
             var p = f.properties || {};
-            var nomeFeature = getProp(p, 'nm_bairro');
-            var areaFeature = getProp(p, 'area_km2');
-            
-            if (nomeFeature === nmBairro && areaFeature != null) {
-                areaTotalBairro += parseFloat(areaFeature) || 0;
+            if (getProp(p, 'nm_bairro') === nmBairro && getProp(p, 'area_km2') != null) {
+                areaTotalBairro += parseFloat(getProp(p, 'area_km2')) || 0;
             }
         });
     }
-    document.getElementById('bairro-area-valor').textContent =
-        areaTotalBairro > 0 ? areaTotalBairro.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}) : '—';
+    document.getElementById('bairro-area-valor').textContent = areaTotalBairro > 0 ? areaTotalBairro.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}) : '—';
 
+    // Filtro (Lista de Setores do Bairro)
     var codigos = new Set();
     if (geoSetores && geoSetores.features) {
         geoSetores.features.forEach(function(f) {
             var p = f.properties || {};
-            var bSetor = getProp(p, 'nm_bairro');
-            if (bSetor !== nmBairro) return; 
-
+            if (getProp(p, 'nm_bairro') !== nmBairro) return; 
             var cod = limparCodigo(getProp(p, 'cod_setor'));
             if (cod !== '' && cod !== 'undefined' && cod !== 'null') codigos.add(cod);
         });
     }
 
+    // Soma População (Gênero)
     var popT = 0, popM = 0, popF = 0;
     dadosPop.forEach(function(row) {
         var codRow = limparCodigo(getProp(row, 'cod_setor'));
-        
         if (!codigos.has(codRow)) return; 
 
         popT += parseInt(getProp(row, 'populacao'), 10)     || 0;
@@ -1059,12 +1276,26 @@ function calcularBairro(nmBairro) {
     document.getElementById('leg-masc').textContent = popM.toLocaleString('pt-BR') + ' hab. (' + ((popM / tot) * 100).toFixed(1) + '%)';
     document.getElementById('leg-fem').textContent = popF.toLocaleString('pt-BR') + ' hab. (' + ((popF / tot) * 100).toFixed(1) + '%)';
 
-    renderizarPizza(popM, popF);
+    renderizarPizzaGeral(popM, popF);
+
+    // Soma e Gráfico Racial do Bairro (Números Absolutos)
+    var bB = 0, bP = 0, bA = 0, bPa = 0, bI = 0;
+    dadosRaciais.forEach(function(row) {
+        var codRow = limparCodigo(getProp(row, 'cod_setor'));
+        if (!codigos.has(codRow)) return; 
+
+        bB  += parseInt(getProp(row, 'brancos'), 10) || 0;
+        bP  += parseInt(getProp(row, 'pretos'), 10) || 0;
+        bA  += parseInt(getProp(row, 'amarelos'), 10) || 0;
+        bPa += parseInt(getProp(row, 'pardos'), 10) || 0;
+        bI  += parseInt(getProp(row, 'indigenas'), 10) || 0;
+    });
+
+    renderizarBarrasRacaBairro(bB, bP, bA, bPa, bI);
 }
 
-function renderizarPizza(masc, fem) {
+function renderizarPizzaGeral(masc, fem) {
     if (graficoSexo) { graficoSexo.destroy(); graficoSexo = null; }
-
     var ctx = document.getElementById('chart-sexo').getContext('2d');
     var total = masc + fem || 1;
 
@@ -1076,23 +1307,45 @@ function renderizarPizza(masc, fem) {
                 data: [masc || 0, fem || 0],
                 backgroundColor: ['#00b4d8', '#f06292'],
                 borderColor: ['#0096c7', '#e91e8c'],
-                borderWidth: 2,
-                hoverOffset: 8
+                borderWidth: 2, hoverOffset: 8
             }]
         },
         options: {
             responsive: true,
             plugins: {
                 legend: { display: false }, 
+                tooltip: { callbacks: { label: function(ctx) { return '  ' + ctx.parsed.toLocaleString('pt-BR') + ' hab. (' + ((ctx.parsed / total) * 100).toFixed(1) + '%)'; } } }
+            }
+        }
+    });
+}
+
+function renderizarBarrasRacaBairro(brancos, pretos, amarelos, pardos, indigenas) {
+    if (graficoRacaBairro) { graficoRacaBairro.destroy(); graficoRacaBairro = null; }
+    var ctx = document.getElementById('chart-racial-bairro').getContext('2d');
+
+    graficoRacaBairro = new Chart(ctx, {
+        type: 'bar', // Gráfico de barras verticais para exibir totais absolutos
+        data: {
+            labels: ['Brancos', 'Pretos', 'Amarelos', 'Pardos', 'Indígenas'],
+            datasets: [{
+                data: [brancos, pretos, amarelos, pardos, indigenas],
+                backgroundColor: [coresRaca.branco, coresRaca.preto, coresRaca.amarelo, coresRaca.pardo, coresRaca.indigena],
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }, // Esconde a legenda pois os eixos já têm nomes
                 tooltip: {
-                    callbacks: {
-                        label: function(ctx) {
-                            var v   = ctx.parsed;
-                            var pct = ((v / total) * 100).toFixed(1);
-                            return '  ' + v.toLocaleString('pt-BR') + ' hab. (' + pct + '%)';
-                        }
-                    }
+                    callbacks: { label: function(ctx) { return ' ' + ctx.parsed.y.toLocaleString('pt-BR') + ' habitantes'; } }
                 }
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { display: true, color: '#e0e0e0' } },
+                x: { grid: { display: false } }
             }
         }
     });
