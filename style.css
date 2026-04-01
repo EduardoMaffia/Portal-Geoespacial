@@ -391,3 +391,36 @@ input[type="range"]::-moz-range-thumb {
     color: rgba(255, 255, 255, 0.75);
     letter-spacing: 0.3px;
 }
+
+/* =========================================
+   RESPONSIVIDADE DO CABEÇALHO (CELULARES)
+   ========================================= */
+@media (max-width: 768px) {
+    .site-header {
+        flex-direction: column; /* Transforma a linha horizontal em coluna vertical */
+        justify-content: center;
+        padding: 15px;
+        gap: 15px; /* Cria um espaço uniforme entre logotipo, menu e widget */
+    }
+
+    .site-logo {
+        margin-right: 0; /* Remove a margem direita que empurrava o menu no computador */
+        height: 50px; /* Reduz levemente o logotipo para economizar espaço de tela */
+    }
+
+    .main-nav ul {
+        flex-wrap: wrap; /* Permite que os links do menu pulem para a linha de baixo se faltar espaço */
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .main-nav a {
+        font-size: 13px; /* Reduz levemente a fonte dos botões no celular */
+    }
+
+    .weather-widget {
+        margin-left: 0; /* Remove o alinhamento forçado à direita (auto) */
+        width: 100%;
+        max-width: 280px; /* Impede que a caixa do clima estique por toda a tela */
+    }
+}

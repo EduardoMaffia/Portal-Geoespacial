@@ -1,0 +1,41 @@
+{
+  "tipo": "Feature",
+  "geometria": "Polygon",
+  "título": "Área dos bairros do município de São Gonçalo, RJ",
+  "nome": "distritos",
+  "última atualização": "2026-03-31",
+  "ano original": 2026,
+  "autor": "Eduardo Sacramento",
+  "edição": "Eduardo Sacramento",
+  "categoria": [
+    "político-administrativo",
+    "gestão territorial"
+  ],
+  "crs": "EPSG:4674",
+  "área": [
+    -43.1209538,
+    -22.9092362,
+    -42.8859505,
+    -22.7340701
+  ],
+  "vetores": 5,
+  "campos": [
+    "id",
+    "cod_distr",
+    "ord_distr",
+    "nm_distr",
+    "area_km2",
+    "cod_munic",
+    "nm_munic",
+    "cod_uf",
+    "sig_uf",
+    "geometry"
+  ],
+  "descrição": "Camada vetorial representando os distritos do município de São Gonçalo, RJ, gerados a partir da dissolução da camada setores_censitarios.geojson.",
+  "palavras-chave": [
+    "São Gonçalo",
+    "distrito municipal",
+    "censo 2022"
+  ],
+  "língua": "Português"
+}

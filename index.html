@@ -45,14 +45,109 @@
             color: #1a1a1a;
         }
 
-        #map-wrapper {
-            position: relative;
+        /* ── Seção do Mapa e Barra de Camadas Lateral ── */
+        .map-section {
+            display: flex;
             width: 100%;
-            height: 520px;
+            height: 680px; /* Altura ampliada mantida */
             box-shadow: 0 6px 24px rgba(0,0,0,.18);
             z-index: 1;
+            background: #ffffff;
         }
+
+        #layer-sidebar {
+            width: 280px;
+            background: #e4edf7; /* Tom ajustado: mais destaque sem poluir a visão */
+            border-right: 3px solid #87CEFA;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; /* Adiciona rolagem se tivermos muitas camadas no futuro */
+            flex-shrink: 0; /* Evita que a barra esmague ao reduzir a tela */
+        }
+
+        #layer-sidebar h3 {
+            background: #003366;
+            color: #ffffff;
+            font-family: 'Audiowide', sans-serif;
+            font-size: 1.1rem;
+            padding: 15px 20px;
+            margin: 0;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        #layer-sidebar-content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* Sobrescrevendo o estilo padrão do Leaflet para integrar ao nosso layout lateral */
+        #layer-sidebar-content .leaflet-control-layers {
+            box-shadow: none;
+            border: none;
+            background: transparent;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            color: #003366;
+        }
+
+        #layer-sidebar-content .leaflet-control-layers-list {
+            display: block !important;
+        }
+
+        #layer-sidebar-content .leaflet-control-layers-overlays label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-family: 'National Park', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        #layer-sidebar-content .leaflet-control-layers-overlays label:hover {
+            color: #87CEFA;
+        }
+
+        #layer-sidebar-content .leaflet-control-layers-overlays input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #003366;
+        }
+
+        /* Área restrita apenas ao mapa */
+        #map-wrapper {
+            position: relative;
+            flex: 1; /* Ocupa o resto do espaço ao lado da barra lateral */
+            height: 100%;
+        }
+        
         #map { width: 100%; height: 100%; }
+
+        /* ── Controles Customizados no Mapa ── */
+        .compass-container {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 50% !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px !important;
+            margin-right: 20px !important;
+            border: none !important;
+        }
+
+        .compass-svg {
+            width: 100%;
+            height: 100%;
+        }
 
         #map-loader {
             position: absolute;
@@ -308,12 +403,22 @@
         }
 
         @media (max-width: 920px) {
+            .map-section { 
+                flex-direction: column; 
+                height: auto;
+            }
+            #layer-sidebar {
+                width: 100%;
+                height: 200px;
+                border-right: none;
+                border-bottom: 3px solid #87CEFA;
+            }
+            #map-wrapper { height: 450px; }
             .p2-layout { grid-template-columns: 1fr; }
             #bairro-placeholder { grid-column: 1; }
             #bairro-dados { grid-template-columns: 1fr; }
         }
         @media (max-width: 600px) {
-            #map-wrapper { height: 300px; }
             .dash-barra { padding: 0 14px; }
             .dash-pagina { padding: 18px 14px 22px; }
             .cards-grade { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -356,26 +461,31 @@
         <p class="page-intro">Painel interativo para exploração de dados demográficos e territoriais do município. Navegue pelo mapa para visualizar as camadas geoespaciais — bairros, distritos, setores censitários e zonas eleitorais — e utilize o dashboard abaixo para consultar população total, área municipal e a distribuição populacional por bairro e sexo.</p>
     </div>
 
-    <!-- MAPA LEAFLET -->
-    <div id="map-wrapper">
-        <div id="map"></div>
-        <div id="map-loader">
-            <div class="loader-ring"></div>
-            <span>Carregando camadas geoespaciais…</span>
-        </div>
-        
-        <!-- Aviso de Bloqueio Local (CORS) -->
-        <div id="alerta-cors" class="alerta-cors">
-            <b>Bloqueio de Segurança Identificado</b><br><br>
-            O mapa e os dados não carregaram porque o navegador bloqueou a leitura de arquivos locais (Erro de CORS).<br><br>
-            Diferente do QGIS, que embute os dados no HTML, o portal precisa de um servidor web.<br>
-            Para testar no seu computador, abra o arquivo utilizando a extensão <b>Live Server</b> no VS Code.
+    <!-- MAPA LEAFLET E BARRA DE CAMADAS EXTERNA -->
+    <div class="map-section">
+        <aside id="layer-sidebar">
+            <h3>Camadas</h3>
+            <div id="layer-sidebar-content"></div>
+        </aside>
+
+        <div id="map-wrapper">
+            <div id="map"></div>
+            <div id="map-loader">
+                <div class="loader-ring"></div>
+                <span>Carregando camadas geoespaciais…</span>
+            </div>
+            
+            <div id="alerta-cors" class="alerta-cors">
+                <b>Bloqueio de Segurança Identificado</b><br><br>
+                O mapa e os dados não carregaram porque o navegador bloqueou a leitura de arquivos locais (Erro de CORS).<br><br>
+                Diferente do QGIS, que embute os dados no HTML, o portal precisa de um servidor web.<br>
+                Para testar no seu computador, abra o arquivo utilizando a extensão <b>Live Server</b> no VS Code.
+            </div>
         </div>
     </div>
 
     <div class="sig-faixa"></div>
 
-    <!-- DASHBOARD INTERATIVO -->
     <div id="dashboard">
         <div class="dash-barra">
             <div class="dash-titulo">
@@ -391,7 +501,6 @@
             </div>
         </div>
 
-        <!-- ABA 1: Dados do Município -->
         <div class="dash-pagina ativa" id="pagina-1">
             <div class="cards-grade">
                 <div class="card ouro">
@@ -410,7 +519,7 @@
                     <div class="card-icone">🗺</div>
                     <div class="card-label">Camadas disponíveis</div>
                     <div class="card-valor">6</div>
-                    <div class="card-sub">Controle no mapa (canto sup. direito)</div>
+                    <div class="card-sub">Ative no menu de Camadas lateral</div>
                 </div>
                 <div class="card">
                     <div class="card-icone">🛰</div>
@@ -422,7 +531,6 @@
             <button class="btn-acao" onclick="mostrarPagina(2)">🏘 Analisar por Bairro →</button>
         </div>
 
-        <!-- ABA 2: Análise por Bairro -->
         <div class="dash-pagina" id="pagina-2">
             <div class="p2-layout">
                 <div class="painel-bairro">
@@ -483,10 +591,8 @@
     <span class="footer-credit">Elaborado por Eduardo Sacramento</span>
 </footer>
 
-<!-- Scripts do Leaflet -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- Lógica do SIG Web -->
 <script>
 /* ════ Caminhos dos Arquivos ════ */
 var BASE_GEO = './geodados/';
@@ -513,8 +619,49 @@ L.tileLayer('https://tile1.f4map.com/tiles/f4_2d/{z}/{x}/{y}.png', {
     maxZoom: 20
 }).addTo(map);
 
+/* ════ Controles do Mapa (Escala e Rosa dos Ventos) ════ */
+
+// Adicionando a barra de escala no canto inferior esquerdo
+L.control.scale({
+    position: 'bottomleft',
+    metric: true, // Mostra em Quilômetros/Metros
+    imperial: false, // Esconde as Milhas/Pés
+    maxWidth: 200
+}).addTo(map);
+
+// Criando controle customizado para a Rosa dos Ventos
+var RosaDosVentosControl = L.Control.extend({
+    options: { position: 'topright' },
+    onAdd: function (map) {
+        var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control compass-container');
+        // SVG vetorial puro da Rosa dos Ventos com o "N"
+        container.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="compass-svg">
+                <!-- Seta Norte (Vermelha) -->
+                <polygon points="50,15 58,45 50,50" fill="#d32f2f"/>
+                <polygon points="50,15 42,45 50,50" fill="#b71c1c"/>
+                <!-- Seta Sul -->
+                <polygon points="50,85 58,55 50,50" fill="#cfd8dc"/>
+                <polygon points="50,85 42,55 50,50" fill="#b0bec5"/>
+                <!-- Seta Leste -->
+                <polygon points="85,50 55,42 50,50" fill="#cfd8dc"/>
+                <polygon points="85,50 55,58 50,50" fill="#b0bec5"/>
+                <!-- Seta Oeste -->
+                <polygon points="15,50 45,42 50,50" fill="#cfd8dc"/>
+                <polygon points="15,50 45,58 50,50" fill="#b0bec5"/>
+                <!-- Detalhes Centrais -->
+                <circle cx="50" cy="50" r="6" fill="#003366"/>
+                <circle cx="50" cy="50" r="2" fill="#FFD700"/>
+                <!-- Letra N -->
+                <text x="50" y="11" font-family="'Audiowide', sans-serif" font-size="14" font-weight="bold" fill="#003366" text-anchor="middle">N</text>
+            </svg>
+        `;
+        return container;
+    }
+});
+map.addControl(new RosaDosVentosControl());
+
 /* ════ Função Robusta para Encontrar Propriedades ════ */
-// Remove espaços em branco do início e do fim para garantir que espaços invisíveis não quebrem a leitura.
 function getProp(obj, prop) {
     if (!obj) return undefined;
     if (obj[prop] !== undefined) return obj[prop];
@@ -526,7 +673,6 @@ function getProp(obj, prop) {
 }
 
 /* ════ Helper Cego para converter sempre em String Limpa ════ */
-// Transforma sempre em string e remove sujeiras caso o QGIS ou Pandas insira.
 function limparCodigo(val) {
     if (val == null) return '';
     return String(val).replace(/\.0$/, '').trim();
@@ -573,19 +719,13 @@ Promise.all([
     // --- LEITURA ABSOLUTA DO JSON DO PANDAS ---
     dadosPop = [];
     if (Array.isArray(rawPop)) {
-        // Formato orient='records' puro
         dadosPop = rawPop;
     } else if (rawPop && Array.isArray(rawPop.features)) {
-        // Se foi exportado como FeatureCollection do GeoJSON acidentalmente
         dadosPop = rawPop.features.map(function(f){ return f.properties || {}; });
     } else if (rawPop && typeof rawPop === 'object') {
         var colunas = Object.keys(rawPop);
         if (colunas.length > 0) {
             var primeiraColuna = rawPop[colunas[0]];
-            
-            // O padrão do Pandas quando exporta via to_json() sem orient é orient='columns'.
-            // Exemplo de formato em colunas: {"cod_setor": {"0": "123", "1": "456"}, "populacao": {"0": 5, "1": 10}}
-            // Precisamos pivotar isso para que o Javascript entenda as linhas.
             if (typeof primeiraColuna === 'object' && !Array.isArray(primeiraColuna)) {
                 var indices = Object.keys(primeiraColuna);
                 indices.forEach(function(idx) {
@@ -596,13 +736,13 @@ Promise.all([
                     dadosPop.push(linha);
                 });
             } else {
-                // Fallback de contingência caso seja orient='index'
                 colunas.forEach(function(k) {
                     if (typeof rawPop[k] === 'object') dadosPop.push(rawPop[k]);
                 });
             }
         }
     }
+    if (!dadosPop) dadosPop = [];
 
     montarCamadas(geoZonas, geoDistritos, geoSedesD, geoSedeM);
     iniciarDashboard();
@@ -632,7 +772,7 @@ function montarCamadas(geoZonas, geoDistritos, geoSedesD, geoSedeM) {
     if (geoAreaMunicipal) {
         L.geoJSON(geoAreaMunicipal, {
             pane: 'pArea',
-            interactive: false, // <-- Impede cliques ou pop-ups na área principal
+            interactive: false,
             style: { color: '#00008B', weight: 3, fillOpacity: 0 }
         }).addTo(map);
     }
@@ -678,7 +818,13 @@ function montarCamadas(geoZonas, geoDistritos, geoSedesD, geoSedeM) {
         corBorda: '#000', fillExt: '#fff', campos: ['nome'] });
     if (lsm) overlays['Sede Municipal'] = lsm;
 
-    L.control.layers(null, overlays, { collapsed: true, position: 'topright' }).addTo(map);
+    // Criar o controle do Leaflet descolapsado e sem adicionar a posição padrão
+    var layerControl = L.control.layers(null, overlays, { collapsed: false });
+    layerControl.addTo(map);
+
+    // Extrair o painel HTML gerado pelo Leaflet e movê-lo para o nosso sidebar customizado
+    var containerCamadas = layerControl.getContainer();
+    document.getElementById('layer-sidebar-content').appendChild(containerCamadas);
 }
 
 function novoPane(nome, z) {
@@ -806,7 +952,7 @@ function iniciarDashboard() {
     });
 }
 
-/* ════ Seleção de Bairros (Múltiplos Polígonos) ════ */
+/* ════ Seleção de Bairros ════ */
 function aoSelecionarBairro() {
     var nm = document.getElementById('bairro-select').value;
     if (!nm) { limparFiltro(); return; }
@@ -816,6 +962,11 @@ function aoSelecionarBairro() {
 function selecionarBairro(nmBairro) {
     var sel = document.getElementById('bairro-select');
     if (sel.value !== nmBairro) sel.value = nmBairro;
+
+    // Regra: Ligar a camada de bairros caso esteja desligada pelo usuário
+    if (layerBairros && !map.hasLayer(layerBairros)) {
+        map.addLayer(layerBairros);
+    }
 
     var bounds = L.latLngBounds();
     var encontrouCamada = false;
@@ -860,10 +1011,9 @@ function limparFiltro() {
     mostrarPagina(1);
 }
 
-/* ── LÓGICA DE DADOS OTIMIZADA PARA O JOIN ── */
+/* ── LÓGICA DE DADOS ── */
 function calcularBairro(nmBairro) {
 
-    // 1. ÁREA
     var areaTotalBairro = 0;
     if (geoBairros && geoBairros.features) {
         geoBairros.features.forEach(function(f) {
@@ -879,30 +1029,24 @@ function calcularBairro(nmBairro) {
     document.getElementById('bairro-area-valor').textContent =
         areaTotalBairro > 0 ? areaTotalBairro.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}) : '—';
 
-    // 2. O RASTREAMENTO DE SETORES DO BAIRRO (Filtro por Junção Espacial)
     var codigos = new Set();
     if (geoSetores && geoSetores.features) {
         geoSetores.features.forEach(function(f) {
             var p = f.properties || {};
             var bSetor = getProp(p, 'nm_bairro');
-            if (bSetor !== nmBairro) return; // Se não for do bairro, descarta.
+            if (bSetor !== nmBairro) return; 
 
-            // Limpa e armazena o código encontrado.
             var cod = limparCodigo(getProp(p, 'cod_setor'));
             if (cod !== '' && cod !== 'undefined' && cod !== 'null') codigos.add(cod);
         });
     }
 
-    // 3. O JOIN TABULAR COM SOMA POPULACIONAL 
     var popT = 0, popM = 0, popF = 0;
     dadosPop.forEach(function(row) {
-        // Limpa o código da tabela da mesma forma para o cruzamento exato
         var codRow = limparCodigo(getProp(row, 'cod_setor'));
         
-        // Verifica se a tabela possui o setor identificado no bairro
         if (!codigos.has(codRow)) return; 
 
-        // Se houver "match", assegura ser inteiro ignorando textos sujos e realiza a soma
         popT += parseInt(getProp(row, 'populacao'), 10)     || 0;
         popM += parseInt(getProp(row, 'pop_masculina'), 10) || 0;
         popF += parseInt(getProp(row, 'pop_feminina'), 10)  || 0;
@@ -911,7 +1055,6 @@ function calcularBairro(nmBairro) {
     document.getElementById('bairro-pop-valor').textContent = popT > 0 ? popT.toLocaleString('pt-BR') : '0';
     document.getElementById('bairro-pop-sub').textContent = nmBairro + ' · ' + codigos.size + ' setor(es) censitário(s)';
 
-    // 4. GRÁFICO 
     var tot = popT || 1; 
     document.getElementById('leg-masc').textContent = popM.toLocaleString('pt-BR') + ' hab. (' + ((popM / tot) * 100).toFixed(1) + '%)';
     document.getElementById('leg-fem').textContent = popF.toLocaleString('pt-BR') + ' hab. (' + ((popF / tot) * 100).toFixed(1) + '%)';

@@ -1,25 +1,25 @@
 {
-  "type": "Feature",
-  "geometry": "Polygon",
-  "title": "Área dos setores censitários do município de São Gonçalo, RJ",
-  "name": "setores_censitarios",
-  "year": 2026,
-  "original year": 2022,
-  "author": "Instituto Brasileiro de Geografia e Estatística (IBGE)",
-  "editor": "Eduardo Sacramento",
-  "category": [
+  "tipo": "Feature",
+  "geometria": "Polygon",
+  "título": "Área dos setores censitários do município de São Gonçalo, RJ",
+  "nome": "setores_censitarios",
+  "última atualização": "2026-03-31",
+  "ano original": 2022,
+  "autor": "Instituto Brasileiro de Geografia e Estatística (IBGE)",
+  "edição": "Eduardo Sacramento",
+  "categoria": [
     "político-administrativo",
     "gestão territorial"
   ],
   "crs": "EPSG:4674",
-  "bbox": [
+  "área": [
     -43.1209538,
     -22.9092362,
     -42.8859505,
     -22.7340701
   ],
-  "features": 2413,
-  "fields": [
+  "vetores": 2413,
+  "campos": [
     "id",
     "cod_setor",
     "tp_zona",
@@ -36,11 +36,11 @@
     "sig_uf",
     "geometry"
   ],
-  "description": "Camada vetorial representando apenas a área dos setores censitários do município de São Gonçalo, RJ, obtida a partir da camada geoespacial de limites municipais do IBGE \"CGMAT:qg_2022_600_setcensitario__v02\" e posterior inclusão de dados e tratamento.",
-  "keywords": [
+  "descrição": "Camada vetorial representando os setores censitários do município de São Gonçalo, RJ, obtida a partir da camada geoespacial de limites municipais do IBGE \"CGMAT:qg_2022_600_setcensitario__v02\" e posterior inclusão de dados e tratamento.",
+  "palavras-chave": [
     "São Gonçalo",
     "setor censitário",
     "censo 2022"
   ],
-  "language": "Português"
+  "língua": "Português"
 }
