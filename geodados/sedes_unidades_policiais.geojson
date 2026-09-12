@@ -1,0 +1,14 @@
+{
+"type": "FeatureCollection",
+"name": "sedes_unidades_policiais",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4674" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 0, "sede": "73ª Delegacia Policial", "unidade": "73ª DP", "endereco": "Rua Oliveira Botelho, s/nº, Neves", "risp": 4, "aisp": "AISP 1" }, "geometry": { "type": "Point", "coordinates": [ -43.097411, -22.852217 ] } },
+{ "type": "Feature", "properties": { "id": 3, "sede": "72ª Delegacia Policial", "unidade": "72ª DP", "endereco": "Av. 18 do Forte, 578, Centro", "risp": 4, "aisp": "AISP 1" }, "geometry": { "type": "Point", "coordinates": [ -43.043703, -22.820735 ] } },
+{ "type": "Feature", "properties": { "id": 4, "sede": "Delegacia Especial de Atendimento à Mulher - São Gonçalo", "unidade": "DEAM", "endereco": "Av. 18 do Forte, 578, Centro", "risp": 4, "aisp": "AISP 1" }, "geometry": { "type": "Point", "coordinates": [ -43.043643, -22.820584 ] } },
+{ "type": "Feature", "properties": { "id": 6, "sede": "1º Batalhão da Polícia Militar", "unidade": "1º BPM", "endereco": "Rua Doutor Porciúncula, 395, Venda Da Cruz", "risp": 4, "aisp": "AISP 1" }, "geometry": { "type": "Point", "coordinates": [ -43.086534300016289, -22.85818124487955 ] } },
+{ "type": "Feature", "properties": { "id": 1, "sede": "7º Batalhão da Polícia Militar", "unidade": "7º BPM", "endereco": "Rua Doutor Alfredo Backer, 367, Mutondo", "risp": 4, "aisp": "AISP 7" }, "geometry": { "type": "Point", "coordinates": [ -43.010946, -22.817684 ] } },
+{ "type": "Feature", "properties": { "id": 2, "sede": "74ª Delegacia Policial", "unidade": "74ª DP", "endereco": "Praça Carlos Gianely, 15, Alcântara", "risp": 4, "aisp": "AISP 7" }, "geometry": { "type": "Point", "coordinates": [ -43.003604, -22.819778 ] } },
+{ "type": "Feature", "properties": { "id": 5, "sede": "75ª Delegacia Policial", "unidade": "75ª DP", "endereco": "Estrada Velha de Maricá, s/nº, Rio do Ouro", "risp": 4, "aisp": "AISP 7" }, "geometry": { "type": "Point", "coordinates": [ -42.993662, -22.887679 ] } }
+]
+}

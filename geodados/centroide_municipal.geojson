@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "centroide_municipal",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4674" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 0, "cod_uf": "33", "sig_uf": "RJ", "cod_munic": "3304904", "nm_munic": "São Gonçalo", "area_km2": 248.16 }, "geometry": { "type": "Point", "coordinates": [ -42.997005359759072, -22.8256179940038 ] } }
+]
+}

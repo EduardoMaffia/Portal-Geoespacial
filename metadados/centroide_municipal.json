@@ -1,0 +1,36 @@
+{
+  "tipo": "Feature",
+  "geometria": "Point",
+  "título": "Centróide da área municipal de São Gonçalo, RJ",
+  "nome": "centroide_municipal",
+  "última atualização": "2026-04-07",
+  "ano original": 2024,
+  "autor": "Eduardo Sacramento",
+  "categoria": [
+    "gestão territorial"
+  ],
+  "crs": "EPSG:4674",
+  "area": [
+    -42.99700535975907,
+    -22.8256179940038,
+    -42.99700535975907,
+    -22.8256179940038
+  ],
+  "vetores": 1,
+  "campos": [
+    "id",
+    "cod_uf",
+    "sig_uf",
+    "cod_munic",
+    "nm_munic",
+    "area_km2",
+    "geometry"
+  ],
+  "descrição": "Camada vetorial representando o ponto central do município de São Gonçalo, RJ, obtido a partir de cálculo sobre a camada geoespacial da área municipal",
+  "palavras-chave": [
+    "São Gonçalo",
+    "ponto central",
+    "área municipal"
+  ],
+  "língua": "Português"
+}

@@ -132,6 +132,33 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* --- Estilos da Bibliografia (ABNT NBR 6023) --- */
+        .bib-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 5px;
+        }
+
+        .bib-item {
+            text-align: left !important;
+            font-size: 0.95rem;
+            line-height: 1.45;
+            color: #333333;
+            word-break: break-word;
+        }
+
+        .bib-item a {
+            color: #0056b3;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .bib-item a:hover {
+            text-decoration: underline;
+            color: #003366;
+        }
+
         @media (max-width: 768px) {
             .history-wrapper {
                 padding: 30px 20px;
@@ -154,7 +181,7 @@
         <img src="imagens/logotipo.png" alt="Logotipo de São Gonçalo" class="site-logo">
         <nav class="main-nav">
             <ul>
-                <li><a href="index.html">PAINEL</a></li>
+                <li><a href="home.html">PAINEL</a></li>
                 <li><a href="geografia.html">GEOGRAFIA</a></li>
                 <li><a href="historia.html" class="active">HISTÓRIA</a></li>
                 <li><a href="simbolos.html">SÍMBOLOS</a></li>
@@ -200,7 +227,7 @@
                         <summary>O Desenvolvimento da Região</summary>
                         <div class="topic-content">
                             <p>O desenvolvimento de São Gonçalo ao longo dos séculos pode ser compreendido através de diferentes fases econômicas que transformaram o perfil produtivo e social da cidade. Desde a economia agrícola colonial até a industrialização do século XX, cada período deixou marcas profundas na configuração urbana e na vida dos moradores.</p>
-                            <p>No século XVII e XVIII, a economia local era baseada principalmente na agricultura de subsistência e na produção de açúcar. Os engenhos de cana-de-açúcar e as destilarias de aguardente eram atividades predominantes, ao lado das lavouras de mandioca, feijão, milho e arroz. O comércio desenvolvia-se em proporção similar às atividades agrícolas, com dezenas de barcos transportando produtos e passageiros pelo litoral, mantendo constante intercâmbio com outros portos da região e com a cidade do Rio de Janeiro. O Leste da Guanabara possuía vários rios navegáveis, o que explica atualmente o grande número de bairros com o nome de porto.</p>
+                            <p>No século XVII e XVIII, a economia local era baseada principalmente na agricultura de subsistência e na produção de açúcar. Os engenhos de cana-de-açúcar e as destilarias de aguardente eram atividades predominantes, ao lado das lavouras de mandioca, feijão, milho e arroz. O comércio desenvolvia-se em proporção similar às atividades agrícolas, com dezenas de barcos transportando produtos e passageiros pelo litoral, mantendo constante intercâmbio com outros portos da região e com a cidade do Rio de Janeiro. O Leste da Guanabara possuía vários rios navegáveis, com vários portos na região hoje gonçalense, o que explica atualmente o grande número de bairros com "porto" em seu nome.</p>
                             <p>No século XIX, a introdução do café trouxe novas perspectivas econômicas. Embora o cultivo do café não tenha se consolidado de forma expressiva em São Gonçalo devido às características do solo, a cidade teve o mérito histórico de ser o primeiro local do Brasil a receber mudas da planta, vindas da Guiana Francesa. O padre João Lopes foi o responsável por essa iniciativa em 1780, e embora o café não tenha vingado localmente, a experiência de São Gonçalo contribuiu para a expansão do cultivo em direção à Serra do Mar, Minas Gerais e São Paulo, transformando-se posteriormente na maior riqueza agrícola do Brasil Império.</p>
                         </div>
                     </details>
@@ -253,26 +280,61 @@
                     </details>
 
                     <details class="history-topic" name="history-accordion">
-                        <summary>Alcântara como Centro Comercial</summary>
+                        <summary>Alcântara, o Centro Comercial Regional</summary>
                         <div class="topic-content">
-                            <p>A história de Alcântara está diretamente ligada ao desenvolvimento dos meios de transporte e à expansão urbana da cidade. O nome Alcântara é uma homenagem ao imperador brasileiro Dom Pedro de Alcântara. O bairro surgiu junto a uma estação de trem e se desenvolveu no cruzamento da rodovia estadual RJ-104, construída na década de 1940. Essa via fazia a ligação da capital Niterói com o norte fluminense, utilizando o antigo traçado da Estrada Geral, ferrovia que ligava as antigas fazendas do extremo oeste do município (Pacheco e Santa Isabel) à sede e aos antigos portos.</p>
+                            <p>O bairro de Alcântara, de real nome Pedro de Alcântara, é um dos principais bairros de São Gonçalo. Sua história está diretamente ligada ao desenvolvimento dos meios de transporte e à expansão urbana da cidade.</p>
+                            <p>A origem histórica do núcleo urbano de Alcântara remonta ao último quartel do século XIX, estando diretamente atrelada às atividades agrícolas do fazendeiro e próspero comerciante de fumo e tabaco da praça do Rio de Janeiro João Gonçalves de Menezes. Fixado nas terras planas irrigadas pelas águas do Rio Alcântara e seus afluentes, o latifúndio dos Menezes abrigava plantações, matas e engenhos de beneficiamento. A família desempenhou papel tão marcante na estruturação fundiária daquela baixada que seu sobrenome foi imortalizado na toponímia da Estrada dos Menezes, tradicional via arterial que até os dias presentes interliga os bairros de Alcântara, Mutondo e Colubandê.</p>
+                            <p>O salto germinal de povoamento ocorreu com a penetração dos eixos ferroviários nas terras da Fazenda Menezes. A implantação da Estação Ferroviária de Alcântara pela Rede Ferroviária Leopoldina/Estrada de Ferro Maricá transformou o sossego daquele rincão campestre. O terminal férreo tornou-se o ponto imediato de transbordo e escoamento de toda a produção agrícola do interior gonçalense em direção ao Porto de Neves e aos atracadouros que rumavam à capital da província e da República. Pouco depois, com a implantação das linhas eletrificadas da Tramway Rural Fluminense, Alcântara passou a abrigar o ponto terminal dos bondes que vinham de Niterói e da sede gonçalense, configurando-se como um ponto nodal estratégico indispensável de confluência de passageiros, cargueiros e carretas.</p>
+                            <p>Na década de 1940, a exemplo do que ocorria no restante do município, os herdeiros da Fazenda de João Gonçalves de Menezes e os grandes latifundiários vizinhos deflagraram o massivo processo de desmembramento e loteamento do solo rural. As antigas plantações de fumo e os laranjais cederam lugar a quadrículas e arruamentos populares. O desenvolvimento do núcleo deu-se de forma fulminante no entroncamento geográfico onde a histórica "Estrada Geral" — via colonial que comunicava as fazendas e engenhos do extremo oeste municipal (como Pacheco e Santa Izabel) à sede e aos velhos portos de mar — cruzou com a recém-aberta rodovia estadual RJ-104. Alcântara, assim se desenvolveu com o cruzamento da rodovia. Essa via fazia a ligação da capital Niterói com o norte fluminense, utilizando o antigo traçado da Estrada Geral, ferrovia que ligava as antigas fazendas do extremo oeste do município (Pacheco e Santa Isabel) à sede e aos antigos portos.</p>
                             <p>Na década de 1970, foi construído um viaduto sobre o cruzamento da RJ-104, e logo depois foi instalado o Terminal Rodoviário Jayme Mendonça Campos sob o viaduto. O terminal foi reformado em 2008 e continua sendo um importante ponto de chegada e partida de ônibus intermunicipais e municipais, facilitando o acesso de moradores de outras regiões ao polo comercial.</p>
-                            <p>Alcântara consolidou-se, a partir da segunda metade do século XX, como o principal centro comercial de São Gonçalo, concentrando agências bancárias, supermercados, lojas de eletrodomésticos, lojas de móveis, shopping centers, clínicas, hospitais, escolas e muitos edifícios comerciais. O destaque fica para a Rua João Caetano, mais conhecida como "Rua da Feira", onde existe um forte comércio de têxteis e outros produtos. Sua influência foi além, se tornando um centro regional, exercendo forte influência econômica, social e logística sobre São Gonçalo e seus vizinhos devido a sua localização estratégica, fazendo do bairro um importante entroncamento viário, o que facilita o fluxo de pessoas e mercadorias entre São Gonçalo, Niterói, Itaboraí, Maricá, Tanguá, Rio Bonito, Guapimirim, Magé e a capital fluminense.</p>
+                            <p>Se a região central histórica tradicional (o eixo Zé Garoto - Igreja Matriz - Rôdo de São Gonçalo) ficou consolidada como o polo institucional, burocrático e religioso do município, Alcântara ascendeu e se mantém como o verdadeiro coração pulsante do comércio, dos serviços e das trocas populares não apenas no próprio município, como exercendo forte influência econômica, social e logística em toda a região oriental do recôncavo fluminense a partir da segunda metade do século XX. O destaque fica para a Rua João Caetano, mais conhecida como "Rua da Feira", onde existe intenso comércio popular de rua compartilhando espaço com escritórios, lojas comerciais e estabelecimentos para lazer.</p>
                         </div>
                     </details>
 
                     <details class="history-topic" name="history-accordion">
                         <summary>Considerações Finais</summary>
                         <div class="topic-content">
+                            <p>O exame aprofundado da trajetória histórica de São Gonçalo elucida as razões estruturais que explicam sua atual configuração física, socioeconômica e espacial no seio da metrópole fluminense. Longe de ser fruto do acaso ou de uma vocação natural à carência, a condição contemporânea de São Gonçalo como um dos maiores agregados urbanos do país é o resultado dialético de sucessivos ciclos de modernização periférica, de opções governamentais assimétricas e de um modelo predatório de parcelamento do solo.</p>
                             <p>A história de São Gonçalo reflete resiliência, de sesmaria colonial a metrópole industrial e comercial. Processos de emancipação múltipla forjaram identidade independente, enquanto industrialização como Manchester Fluminense e expansão de Alcântara moldaram seu perfil atual. O desenvolvimento urbano desordenado e o crescimento populacional acelerado, especialmente entre 1950 e 1970, criaram desafios que persistem até hoje. A mobilidade urbana, a infraestrutura viária, o acesso a serviços públicos de qualidade e a redução das desigualdades sociais são questões que demandam atenção constante dos gestores públicos e da sociedade civil.</p>
-                            <p>A história de mais de quatro séculos de São Gonçalo mostra que o município tem capacidade de superar desafios e se reinventar. Dos engenhos de açúcar às grandes fábricas, dos bondes a vapor ao transporte coletivo contemporâneo, da sesmaria colonial à metrópole moderna, São Gonçalo construiu uma identidade própria, marcada pela trabalho, pela diversidade e pela resiliência de seu povo. Essa herança histórica é o fundamento sobre o qual se constrói o futuro da cidade, que continua sendo uma das mais importantes do Estado do Rio de Janeiro e do Brasil.</p>
+                            <p>As consequências atuais desse modelo de desenvolvimento excludente são sentidas cotidianamente pela população gonçalense. O déficit crônico de saneamento básico universalizado, a vulnerabilidade das encostas e várzeas a inundações nas épocas de temporais e os gravíssimos gargalos de mobilidade urbana impõem uma rotina extenuante ao cidadão. A saturação permanente da rodovia BR-101 (trecho Niterói-Manilha) e da RJ-104 escancara a insustentabilidade da dependência quase que absoluta dos modais rodoviários de ônibus e vans particulares. Projetos históricos estruturantes, como a lendária implantação da Linha 3 do Metrô sobre o antigo leito ferroviário, permanecem como promessas eleitorais jamais concretizadas pelo Estado, penalizando milhões de trabalhadores com horas perdidas em engarrafamentos intermináveis.</p>
+                            <p>Compreender a história de São Gonçalo é, em última análise, um imperativo cívico e acadêmico para desmistificar visões estigmatizantes e fornecer os alicerces teóricos e políticos indispensáveis à reconstrução de um planejamento urbano humanizado, justo e emancipador para as futuras gerações gonçalenses.</p>
                         </div>
                     </details>
 
                     <details class="history-topic" name="history-accordion">
                         <summary>Bibliografia</summary>
                         <div class="topic-content">
-                            <p><i>Em construção...</i></p>
+                            <div class="bib-list">
+                                <p class="bib-item">131 ANOS de emancipação: entenda a data que marca a 'independência' de São Gonçalo. <strong>O São Gonçalo</strong>, [<em>s. l.</em>], 21 set. 2021. Geral. Disponível em: <a href="https://www.osaogoncalo.com.br/geral/112564/131-anos-de-emancipacao-entenda-a-data-que-marca-a-independencia-de-sao-goncalo" target="_blank" rel="noopener noreferrer">https://www.osaogoncalo.com.br/geral/112564/131-anos-de-emancipacao-entenda-a-data-que-marca-a-independencia-de-sao-goncalo</a>. Acesso em: 27 fev. 2026.</p>
+
+                                <p class="bib-item">ARAÚJO, Jefferson Thomaz. A centralidade de Alcântara e a história urbana de São Gonçalo-RJ: a atuação dos agentes sociais na consolidação de um núcleo urbano e na transformação de um espaço público. <em>In</em>: ENCONTRO NACIONAL DA ASSOCIAÇÃO NACIONAL DE PÓS-GRADUAÇÃO E PESQUISA EM PLANEJAMENTO URBANO E REGIONAL, 18., 2019, Natal. <strong>Anais [...]</strong>. Natal: ANPUR, 2019. Disponível em: <a href="http://xviiienanpur.anpur.org.br/anaisadmin/capapdf.php?reqid=79" target="_blank" rel="noopener noreferrer">http://xviiienanpur.anpur.org.br/anaisadmin/capapdf.php?reqid=79</a>. Acesso em: 27 fev. 2026.</p>
+
+                                <p class="bib-item">ARAÚJO, Victor Leonardo de; MELO, Hildete Pereira de. O processo de esvaziamento industrial em São Gonçalo no século XX: auge e declínio da “Manchester Fluminense”. <strong>Cadernos do Desenvolvimento Fluminense</strong>, Rio de Janeiro, n. 4, p. 65-87, maio 2014. DOI: 10.12957/cdf.2014.11532. Disponível em: <a href="https://www.e-publicacoes.uerj.br/cdf/article/view/11532/9081" target="_blank" rel="noopener noreferrer">https://www.e-publicacoes.uerj.br/cdf/article/view/11532/9081</a>. Acesso em: 28 fev. 2026.</p>
+
+                                <p class="bib-item">DELPHI, Hugo. As fazendas e os portos desaparecidos de Niterói e São Gonçalo-RJ. <strong>O Belo e Histórico Rio de Janeiro</strong>, [<em>s. l.</em>], [<em>s. d.</em>]. Facebook: obeloehistoricoriodejaneiro. Disponível em: <a href="https://www.facebook.com/obeloehistoricoriodejaneiro/posts/as-fazendas-e-os-portos-desaparecidos-de-niter%C3%B3i-e-s%C3%A3o-gon%C3%A7alo-rjpor-hugo-delphi/984679507010626/" target="_blank" rel="noopener noreferrer">https://www.facebook.com/obeloehistoricoriodejaneiro/posts/as-fazendas-e-os-portos-desaparecidos-de-niter%C3%B3i-e-s%C3%A3o-gon%C3%A7alo-rjpor-hugo-delphi/984679507010626/</a>. Acesso em: 28 fev. 2026.</p>
+
+                                <p class="bib-item">DIA de São Gonçalo: conheça a origem do santo protetor dos violeiros. <strong>O São Gonçalo</strong>, [<em>s. l.</em>], 10 jan. 2023. Geral. Disponível em: <a href="https://www.osaogoncalo.com.br/geral/129786/dia-de-sao-goncalo-conheca-a-origem-do-santo-protetor-dos-violeiros" target="_blank" rel="noopener noreferrer">https://www.osaogoncalo.com.br/geral/129786/dia-de-sao-goncalo-conheca-a-origem-do-santo-protetor-dos-violeiros</a>. Acesso em: 28 fev. 2026.</p>
+
+                                <p class="bib-item">GRACIANO, Matheus. <strong>Alcântara</strong>: a história do bairro mais famoso de São Gonçalo. Sim São Gonçalo, 11 dez. 2023. Disponível em: <a href="https://simsaogoncalo.com.br/alcantara" target="_blank" rel="noopener noreferrer">https://simsaogoncalo.com.br/alcantara</a>. Acesso em: 27 fev. 2026.</p>
+
+                                <p class="bib-item">GRACIANO, Matheus. <strong>Itaipu já foi de São Gonçalo</strong>. Sim São Gonçalo, 20 jul. 2020. Disponível em: <a href="https://simsaogoncalo.com.br/itaipu-ja-foi-de-sao-goncalo" target="_blank" rel="noopener noreferrer">https://simsaogoncalo.com.br/itaipu-ja-foi-de-sao-goncalo</a>. Acesso em: 27 fev. 2026.</p>
+
+                                <p class="bib-item">INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA (IBGE). <strong>São Gonçalo (RJ)</strong>: histórico. Rio de Janeiro: IBGE, 2014. Disponível em: <a href="https://cidades.ibge.gov.br/brasil/rj/sao-goncalo/historico" target="_blank" rel="noopener noreferrer">https://cidades.ibge.gov.br/brasil/rj/sao-goncalo/historico</a>. Acesso em: 27 fev. 2026.</p>
+
+                                <p class="bib-item">LESSA, José Luís Honorato. “Tens usinas com muitas chaminés”. <strong>Cadernos do Desenvolvimento Fluminense</strong>, Rio de Janeiro, n. 27, 2024. Disponível em: <a href="https://www.e-publicacoes.uerj.br/cdf/article/view/87288/53739" target="_blank" rel="noopener noreferrer">https://www.e-publicacoes.uerj.br/cdf/article/view/87288/53739</a>. Acesso em: 28 fev. 2026.</p>
+
+                                <p class="bib-item">OLIVEIRA, Raiane Almeida de. <strong>O mundo dos fundos</strong>: o Barão de São Gonçalo e seus escravos. 2014. Dissertação (Mestrado em História) – Centro de Ciências Humanas e Sociais, Universidade Federal do Estado do Rio de Janeiro, Rio de Janeiro, 2014. Disponível em: <a href="https://www.unirio.br/cchs/ppgh/producao-academica/dissertacoes-de-mestrado-e-egressos-pasta/arquivos/RAIANEALMEIDADEOLIVEIRAPPGHUNIRIOD.pdf" target="_blank" rel="noopener noreferrer">https://www.unirio.br/cchs/ppgh/producao-academica/dissertacoes-de-mestrado-e-egressos-pasta/arquivos/RAIANEALMEIDADEOLIVEIRAPPGHUNIRIOD.pdf</a>. Acesso em: 2 mar. 2026.</p>
+
+                                <p class="bib-item">PALMIER, Luiz. <strong>São Gonçalo cinquentenário</strong>: história, geografia, estatística. Rio de Janeiro: Serviço Gráfico do Instituto Brasileiro de Geografia e Estatística (IBGE), 1940. 237 p. Disponível em: <a href="https://biblioteca.ibge.gov.br/index.php/biblioteca-catalogo?view=detalhes&id=254809" target="_blank" rel="noopener noreferrer">https://biblioteca.ibge.gov.br/index.php/biblioteca-catalogo?view=detalhes&id=254809</a>. Acesso em: 27 fev. 2026.</p>
+
+                                <p class="bib-item">RICARDO, Zé. <strong>História de São Gonçalo</strong>. Blog do Professor Zé Ricardo, 17 mar. 2011. Disponível em: <a href="http://professorzericardo.blogspot.com/2011/03/historia-de-sao-goncalo.html" target="_blank" rel="noopener noreferrer">http://professorzericardo.blogspot.com/2011/03/historia-de-sao-goncalo.html</a>. Acesso em: 28 fev. 2026.</p>
+
+                                <p class="bib-item">SÃO GONÇALO (Prefeitura). <strong>História de São Gonçalo</strong>. São Gonçalo: Prefeitura Municipal de São Gonçalo, [2022]. Disponível em: <a href="https://www.saogoncalo.rj.gov.br/sao-goncalo/historia-de-sao-goncalo/" target="_blank" rel="noopener noreferrer">https://www.saogoncalo.rj.gov.br/sao-goncalo/historia-de-sao-goncalo/</a>. Acesso em: 27 fev. 2026.</p>
+
+                                <p class="bib-item">TAFULHAR, Wilson. <strong>Indústrias Gonçalenses</strong>: Cerâmica Olaria Porto do Rosa. Sim São Gonçalo, 27 abr. 2015. Disponível em: <a href="https://simsaogoncalo.com.br/industrias-goncalenses-ceramica-olaria-porto-do-rosa/" target="_blank" rel="noopener noreferrer">https://simsaogoncalo.com.br/industrias-goncalenses-ceramica-olaria-porto-do-rosa/</a>. Acesso em: 27 fev. 2026.</p>
+
+                                <p class="bib-item">TAFULHAR, Wilson. <strong>Vila Operária Neves, Vila Lage, São Gonçalo</strong>. Sim São Gonçalo, 4 fev. 2014. Disponível em: <a href="https://simsaogoncalo.com.br/vila-operaria-neves-vila-lage-sao-goncalo/" target="_blank" rel="noopener noreferrer">https://simsaogoncalo.com.br/vila-operaria-neves-vila-lage-sao-goncalo/</a>. Acesso em: 27 fev. 2026.</p>
+                            </div>
                         </div>
                     </details>
                 </div>

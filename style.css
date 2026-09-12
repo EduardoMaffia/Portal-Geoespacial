@@ -424,3 +424,44 @@ input[type="range"]::-moz-range-thumb {
         max-width: 280px; /* Impede que a caixa do clima estique por toda a tela */
     }
 }
+
+/* =========================================
+   SEÇÃO HERO (CAPA MINIMALISTA MODERNA)
+   ========================================= */
+.story-hero {
+    height: calc(100vh - 80px);
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+    border-bottom: 1px solid #e5e9f0;
+    box-sizing: border-box;
+}
+
+.hero-title {
+    font-family: 'Audiowide', sans-serif;
+    font-size: clamp(2.5rem, 5.2vw, 4.0rem);
+    color: #003366;
+    line-height: 1.18;
+    margin-bottom: 25px;
+    max-width: 920px;
+    letter-spacing: -0.5px;
+}
+
+.hero-subtitle {
+    font-family: 'National Park', sans-serif;
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    color: #4a5568;
+    max-width: 780px;
+    line-height: 1.55;
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.1rem;
+    }
+}

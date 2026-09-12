@@ -5,15 +5,470 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geografia - São Gonçalo</title>
     
+    <!-- Chamada das fontes do Google (Audiowide e National Park) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=National+Park:wght@400;700&display=swap" rel="stylesheet">
+
     <!-- Chamada do CSS externo -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Estilos específicos do StoryMap Geográfico -->
+    <style>
+        /* --- Container Principal do StoryMap --- */
+        .story-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 120px;
+            padding-bottom: 80px;
+        }
+
+        .story-section {
+            scroll-margin-top: 60px;
+        }
+
+        /* --- Seção de Introdução (Texto Oficial Compacto) --- */
+        .story-intro-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .section-main-title {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 1.9rem;
+            color: #003366;
+            margin-bottom: 12px;
+        }
+
+        .section-divider {
+            width: 80px;
+            height: 3px;
+            background-color: #87CEFA;
+            margin: 0 auto 25px auto;
+            border-radius: 2px;
+        }
+
+        .intro-text p {
+            font-family: 'National Park', sans-serif;
+            text-align: justify;
+            line-height: 1.45;
+            color: #2b2b2b;
+            font-size: 1.0rem;
+            margin-bottom: 14px;
+        }
+
+        .intro-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Letra Capitular (Drop Cap) */
+        .intro-text > p:first-of-type::first-letter {
+            font-size: 3.2rem;
+            font-weight: bold;
+            color: #003366;
+            float: left;
+            margin-right: 8px;
+            line-height: 0.9;
+            font-family: 'Audiowide', sans-serif;
+        }
+
+        /* --- Seção 3: Fisiografia (Abas Transparentes + Carrossel) --- */
+        .fisiografia-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .fisiografia-subtitle {
+            font-family: 'National Park', sans-serif;
+            font-size: 1.05rem;
+            color: #666666;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Barra de Abas (Pílulas Transparentes) */
+        .pills-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .pill-btn {
+            background: transparent;
+            border: 1.5px solid #003366;
+            color: #003366;
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-family: 'National Park', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            outline: none;
+        }
+
+        .pill-btn:hover {
+            background: rgba(0, 51, 102, 0.06);
+            transform: translateY(-2px);
+        }
+
+        .pill-btn.active {
+            background-color: #003366;
+            color: #ffffff;
+            border-color: #003366;
+            box-shadow: 0 4px 14px rgba(0, 51, 102, 0.25);
+        }
+
+        /* Carrossel Deslizante */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            background-color: #fafbfc;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 51, 102, 0.04);
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+            width: 100%;
+        }
+
+        .carousel-card {
+            flex: 0 0 100%;
+            min-width: 100%;
+            padding: 45px 55px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .card-tag {
+            display: inline-block;
+            align-self: flex-start;
+            font-family: 'Audiowide', sans-serif;
+            font-size: 0.75rem;
+            color: #003366;
+            background-color: #edf5fc;
+            padding: 4px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-title {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 1.5rem;
+            color: #003366;
+            margin: 0;
+            border-bottom: 2px solid #87CEFA;
+            padding-bottom: 10px;
+        }
+
+        .card-description {
+            font-family: 'National Park', sans-serif;
+            font-size: 1.0rem;
+            line-height: 1.6;
+            color: #333333;
+            text-align: justify;
+            margin: 0;
+        }
+
+        .card-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .highlight-item {
+            background-color: #ffffff;
+            border: 1px solid #edf2f7;
+            border-radius: 10px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .highlight-label {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 0.75rem;
+            color: #718096;
+            text-transform: uppercase;
+        }
+
+        .highlight-value {
+            font-family: 'National Park', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #003366;
+        }
+
+        /* Setas de Navegação do Carrossel */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            border: 1.5px solid #87CEFA;
+            color: #003366;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.25s ease;
+            z-index: 10;
+        }
+
+        .carousel-btn:hover {
+            background-color: #003366;
+            color: #ffffff;
+            border-color: #003366;
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .carousel-btn.prev {
+            left: 12px;
+        }
+
+        .carousel-btn.next {
+            right: 12px;
+        }
+
+        .carousel-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(1);
+        }
+
+        /* --- Estilo dos Placeholders dos Demais Capítulos --- */
+        .placeholder-section {
+            border-top: 1px solid #e5e9f0;
+            padding-top: 55px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .placeholder-section h2 {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 1.6rem;
+            color: #003366;
+            margin-bottom: 12px;
+        }
+
+        .placeholder-hint {
+            font-size: 1.05rem;
+            color: #718096;
+            font-style: italic;
+        }
+
+        /* --- Navegação Vertical por Pontos à Esquerda (Linha Contínua) --- */
+        .story-dot-nav {
+            position: fixed;
+            left: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+
+        /* Linha contínua conectando todos os 12 pontos */
+        .story-dot-nav::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background-color: #c2e2fa;
+            z-index: 1;
+        }
+
+        .story-dot-nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .dot-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            text-decoration: none;
+        }
+
+        .dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            border: 2.5px solid #87CEFA;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: block;
+        }
+
+        .dot-item:hover .dot {
+            transform: scale(1.35);
+            background-color: #003366;
+            border-color: #003366;
+        }
+
+        .dot-item.active .dot {
+            width: 13px;
+            height: 13px;
+            background-color: #003366;
+            border-color: #003366;
+            box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px #87CEFA;
+        }
+
+        /* Tooltip que se abre para a direita */
+        .dot-tooltip {
+            position: absolute;
+            left: 34px;
+            top: 50%;
+            transform: translateY(-50%) translateX(-10px);
+            background-color: #003366;
+            color: #ffffff;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-family: 'National Park', sans-serif;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(0, 51, 102, 0.25);
+            z-index: 10;
+        }
+
+        .dot-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -6px;
+            transform: translateY(-50%);
+            border-width: 6px 6px 6px 0;
+            border-style: solid;
+            border-color: transparent #003366 transparent transparent;
+        }
+
+        .dot-item:hover .dot-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        /* --- Botão Circular Flutuante de Retorno ao Topo --- */
+        .back-to-top-btn {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background-color: #003366;
+            color: #ffffff;
+            border: 2px solid #87CEFA;
+            box-shadow: 0 4px 15px rgba(0, 51, 102, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            line-height: 1;
+            padding: 0;
+            text-decoration: none;
+            z-index: 1000;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .back-to-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top-btn:hover {
+            transform: scale(1.12);
+            background-color: #00BFFF;
+            border-color: #ffffff;
+            box-shadow: 0 6px 20px rgba(0, 191, 255, 0.4);
+        }
+
+        /* Responsividade */
+        @media (max-width: 1080px) {
+            .story-dot-nav {
+                left: 15px;
+            }
+            .story-container {
+                padding-left: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .story-dot-nav {
+                left: 8px;
+            }
+
+            .dot-tooltip {
+                display: none;
+            }
+
+            .story-container {
+                padding-left: 22px;
+                gap: 80px;
+            }
+
+            .carousel-card {
+                padding: 30px 20px;
+            }
+
+            .carousel-btn {
+                display: none; /* No mobile, foca na navegação por abas/toque */
+            }
+
+            .back-to-top-btn {
+                right: 18px;
+                bottom: 18px;
+                width: 36px;
+                height: 36px;
+                font-size: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="site-header">
         <img src="imagens/logotipo.png" alt="Logotipo de São Gonçalo" class="site-logo">
         <nav class="main-nav">
             <ul>
-                <li><a href="index.html">PAINEL</a></li>
+                <li><a href="home.html">PAINEL</a></li>
                 <li><a href="geografia.html" class="active">GEOGRAFIA</a></li>
                 <li><a href="historia.html">HISTÓRIA</a></li>
                 <li><a href="simbolos.html">SÍMBOLOS</a></li>
@@ -36,7 +491,277 @@
         </div>
     </header>
 
+    <!-- Navegação Vertical por Pontos à Esquerda (Os 12 Tópicos Oficiais) -->
+    <nav class="story-dot-nav" id="story-dot-nav" aria-label="Navegação pelos capítulos">
+        <ul>
+            <li><a href="#introducao" class="dot-item active" title="Introdução"><span class="dot"></span><span class="dot-tooltip">Introdução</span></a></li>
+            <li><a href="#localizacao" class="dot-item" title="Localização"><span class="dot"></span><span class="dot-tooltip">Localização</span></a></li>
+            <li><a href="#fisiografia" class="dot-item" title="Fisiografia"><span class="dot"></span><span class="dot-tooltip">Fisiografia</span></a></li>
+            <li><a href="#demografia" class="dot-item" title="Demografia"><span class="dot"></span><span class="dot-tooltip">Demografia</span></a></li>
+            <li><a href="#socioeconomia" class="dot-item" title="Socioeconomia & Indústria"><span class="dot"></span><span class="dot-tooltip">Socioeconomia & Indústria</span></a></li>
+            <li><a href="#educacao" class="dot-item" title="Educação"><span class="dot"></span><span class="dot-tooltip">Educação</span></a></li>
+            <li><a href="#cultura" class="dot-item" title="Cultura, Lazer & Turismo"><span class="dot"></span><span class="dot-tooltip">Cultura, Lazer & Turismo</span></a></li>
+            <li><a href="#mobilidade" class="dot-item" title="Mobilidade urbana"><span class="dot"></span><span class="dot-tooltip">Mobilidade urbana</span></a></li>
+            <li><a href="#riscos" class="dot-item" title="Suscetibilidades e Riscos Ambientais"><span class="dot"></span><span class="dot-tooltip">Suscetibilidades e Riscos Ambientais</span></a></li>
+            <li><a href="#violencia" class="dot-item" title="Violência Urbana"><span class="dot"></span><span class="dot-tooltip">Violência Urbana</span></a></li>
+            <li><a href="#consideracoes" class="dot-item" title="Considerações Finais"><span class="dot"></span><span class="dot-tooltip">Considerações Finais</span></a></li>
+            <li><a href="#bibliografia" class="dot-item" title="Bibliografia"><span class="dot"></span><span class="dot-tooltip">Bibliografia</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Botão Circular Flutuante de Retorno ao Topo -->
+    <button class="back-to-top-btn" id="back-to-top-btn" title="Voltar ao início da capa" aria-label="Voltar ao topo">
+        ↑
+    </button>
+
     <main class="content-area">
+        <div class="story-container">
+            <!-- Seção Hero: Capa Minimalista -->
+            <header id="hero" class="story-hero">
+                <h1 class="hero-title">A Construção do Espaço Geográfico de São Gonçalo</h1>
+                <p class="hero-subtitle">Uma síntese integrada de características geográficas sobre o processo constante de transformação da sociedade e do território gonçalense.</p>
+            </header>
+
+            <!-- Introdução -->
+            <section id="introducao" class="story-section">
+                <div class="story-intro-header">
+                    <h2 class="section-main-title">Introdução</h2>
+                    <div class="section-divider"></div>
+                </div>
+                <div class="intro-text">
+                    <p>O município de São Gonçalo se localiza no Estado do Rio de Janeiro (RJ) em área territorial de aproximadamente 248,4 km² com média diversidade de paisagens, desde planícies litorâneas e manguezais até morros e serras interiores, configurando um mosaico de ambientes naturais que condicionaram a ocupação humana ao longo dos séculos. A população, segundo o Censo Demográfico de 2022 do IBGE, é de 896.744 habitantes, o que representa uma densidade demográfica de 3.613,57 hab/km², evidenciando a intensa pressão antrópica sobre o território.</p>
+                    
+                    <p>São Gonçalo é um dos municípios mais expressivos do RJ, não apenas pela sua dimensão demográfica — a segunda maior do estado, atrás apenas da capital fluminense —, mas também pela complexidade dos processos socioespaciais que moldaram sua paisagem ao longo de mais de quatro séculos de ocupação, condensando em seu território um conjunto de contradições típicas das grandes periferias urbanas brasileiras, surgidas em processos de sobreposição de construção histórica do espaço gonçalense, desde a ocupação ancestral por povos originários e o subsequente processo de colonização portuguesa até a explosão populacional decorrente dos fluxos migratórios do século XX e consequente urbanização, que não foi acompanhada de maneira uniforme pela expansão da infraestrutura urbana e, com isso, passou a apresentar contrastes entre áreas dotadas de comércio, serviços e equipamentos urbanos e áreas caracterizadas por precariedades ambientais e sociais.</p>
+                    
+                    <p>Além disso, é necessário compreender a construção do espaço geográfico gonçalense sob uma abordagem integrada, que articule a dimensão física do território — seu relevo, sua geologia, seus solos, seu clima, sua biogeografia e sua hidrografia, resultados de sua posição no bioma Mata Atlântica — à dimensão humana, expressa não apenas na distribuição da população e sua situação socioeconômica, como também, nas condições educacionais, nas manifestações culturais e turísticas, nas transformações da mobilidade urbana e nos riscos ambientais e sociais que atravessam o município. Essa perspectiva dialoga diretamente com a tradição da Geografia enquanto ciência que estuda a produção do espaço como resultado da relação dialética entre sociedade e natureza, na qual cada fixo geográfico (o relevo, os rios, as vias, os bairros) é também o registro de um fluxo histórico de decisões econômicas, políticas e culturais.</p>
+                </div>
+            </section>
+
+            <!-- Localização -->
+            <section id="localizacao" class="story-section placeholder-section">
+                <h2>Localização</h2>
+                <p class="placeholder-hint">Em desenvolvimento: Mapa municipal e inserção territorial metropolitana.</p>
+            </section>
+
+            <!-- Fisiografia (Abas Transparentes + Carrossel) -->
+            <section id="fisiografia" class="story-section">
+                <div class="fisiografia-header">
+                    <h2 class="section-main-title">Fisiografia</h2>
+                    <div class="section-divider"></div>
+                    <p class="fisiografia-subtitle">Compartimentação dos ambientes naturais e sistemas biofísicos que estruturam o relevo, as águas, o clima e os ecossistemas do território gonçalense.</p>
+                </div>
+
+                <!-- Barra de Abas (Pílulas Transparentes) -->
+                <nav class="pills-nav" aria-label="Navegação pelos eixos fisiográficos">
+                    <button class="pill-btn active" data-slide="0">Geomorfologia</button>
+                    <button class="pill-btn" data-slide="1">Geologia</button>
+                    <button class="pill-btn" data-slide="2">Pedologia</button>
+                    <button class="pill-btn" data-slide="3">Clima</button>
+                    <button class="pill-btn" data-slide="4">Biogeografia</button>
+                    <button class="pill-btn" data-slide="5">Hidrografia</button>
+                </nav>
+
+                <!-- Carrossel de Mostruário Deslizante -->
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev" id="carousel-prev" aria-label="Tema anterior">‹</button>
+                    <button class="carousel-btn next" id="carousel-next" aria-label="Próximo tema">›</button>
+
+                    <div class="carousel-track" id="carousel-track">
+                        <!-- Slide 0: Geomorfologia -->
+                        <article class="carousel-card">
+                            <span class="card-tag">Compartimento 01</span>
+                            <h3 class="card-title">Geomorfologia e Relevo</h3>
+                            <p class="card-description">
+                                O relevo gonçalense exibe marcante transição topográfica entre as baixadas litorâneas flúvio-marinhas da Baía de Guanabara e os contrafortes serranos. Destacam-se os maciços costeiros do Engenho Pequeno e Serra do Malheiro, intercalados por amplos mares de colinas suavemente dissecadas e morros isolados (*inselbergs* / colinas residuais) que orientaram as frentes de expansão urbana e a densificação das várzeas.
+                            </p>
+                            <div class="card-highlights">
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Domínio Principal</span>
+                                    <span class="highlight-value">Colinas Dissecadas & Baixadas</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Pontos Notáveis</span>
+                                    <span class="highlight-value">Serra do Malheiro / Engenho Pequeno</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Feições de Transição</span>
+                                    <span class="highlight-value">Planícies de Maré & Morros Isolados</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Slide 1: Geologia -->
+                        <article class="carousel-card">
+                            <span class="card-tag">Compartimento 02</span>
+                            <h3 class="card-title">Geologia e Estrutura Tectônica</h3>
+                            <p class="card-description">
+                                A base litoestrutural de São Gonçalo integra o Cinturão Móvel Ribeira, estruturado durante a Orogênese Brasiliana (Neoproterozóico). O arcabouço geológico compõe-se de gnaisses facoidais, biotita gnaisses e granitóides intrusivos, capeados nas calhas fluviais e bordas litorâneas por coberturas sedimentares inconsolidadas de idade quaternária e depósitos de mangue.
+                            </p>
+                            <div class="card-highlights">
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Província Geológica</span>
+                                    <span class="highlight-value">Cinturão Ribeira (Neoproterozóico)</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Litolitologias Típicas</span>
+                                    <span class="highlight-value">Ortognaisses & Granitóides</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Sedimentação Recente</span>
+                                    <span class="highlight-value">Depósitos Quaternários Flúvio-Marinhos</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Slide 2: Pedologia -->
+                        <article class="carousel-card">
+                            <span class="card-tag">Compartimento 03</span>
+                            <h3 class="card-title">Pedologia e Classes de Solos</h3>
+                            <p class="card-description">
+                                A pedogênese local reflete a interação do embasamento ígneo-metamórfico com o clima tropical quente e úmido. Predominam os Latossolos Vermelho-Amarelos e Argissolos nas encostas colinosas, apresentando espesso manto de alteração, enquanto as áreas de baixada e de influência hidromórfica abrigam Gleissolos, Neossolos Flúvicos e Solos Tiomórficos enriquecidos de matéria orgânica.
+                            </p>
+                            <div class="card-highlights">
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Solos de Encosta</span>
+                                    <span class="highlight-value">Latossolos & Argissolos V-A</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Solos Hidromórficos</span>
+                                    <span class="highlight-value">Gleissolos & Tiomórficos</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Vulnerabilidade</span>
+                                    <span class="highlight-value">Suscetibilidade à erosão em cortes</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Slide 3: Clima -->
+                        <article class="carousel-card">
+                            <span class="card-tag">Compartimento 04</span>
+                            <h3 class="card-title">Clima e Condições Atmosféricas</h3>
+                            <p class="card-description">
+                                Classificado no sistema Köppen como Tropical Quente e Úmido (Aw com setores de transição Af), com verões quentes e chuvosos e invernos brandos. A posição em orla interior da Baía de Guanabara modula um microclima com circulação diária de brisas terra-mar, com episódios de precipitações orográficas concentradas causadas pela barreira dos maciços costeiros.
+                            </p>
+                            <div class="card-highlights">
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Classificação Köppen</span>
+                                    <span class="highlight-value">Tropical Úmido (Aw / Af)</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Regime Pluviométrico</span>
+                                    <span class="highlight-value">1.100 a 1.400 mm anuais</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Fatores Moduladores</span>
+                                    <span class="highlight-value">Brisas da Baía & Efeito Orográfico</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Slide 4: Biogeografia -->
+                        <article class="carousel-card">
+                            <span class="card-tag">Compartimento 05</span>
+                            <h3 class="card-title">Biogeografia e Cobertura Vegetal</h3>
+                            <p class="card-description">
+                                O território insere-se integralmente no bioma Mata Atlântica. Seus ecossistemas abrangem a Floresta Ombrófila Densa (submontana e de terras baixas), refúgios florestais em unidades de conservação e o vasto ecossistema de manguezal ao fundo da Baía de Guanabara, fundamental como berçário estuarino e área de proteção da avifauna aquática.
+                            </p>
+                            <div class="card-highlights">
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Bioma Central</span>
+                                    <span class="highlight-value">Mata Atlântica</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Formações Marcantes</span>
+                                    <span class="highlight-value">Floresta Ombrófila Densa & Manguezais</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Áreas de Refúgio</span>
+                                    <span class="highlight-value">APA Guapimirim & APA Engenho Pequeno</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Slide 5: Hidrografia -->
+                        <article class="carousel-card">
+                            <span class="card-tag">Compartimento 06</span>
+                            <h3 class="card-title">Hidrografia e Bacias Hidrográficas</h3>
+                            <p class="card-description">
+                                A drenagem gonçalense pertence à Região Hidrográfica da Baía de Guanabara (lado Leste). Os eixos hidrográficos mestres são os rios Alcântara, Guaxindiba e Imboassu, caracterizados por calhas meândricas em áreas de planície que desembocam em estuários manguescos, fortemente influenciados pelo pulso das marés e por pressões de assoreamento.
+                            </p>
+                            <div class="card-highlights">
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Bacia Receptora</span>
+                                    <span class="highlight-value">Baía de Guanabara (Setor Leste)</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Rios Principais</span>
+                                    <span class="highlight-value">Rio Alcântara, Guaxindiba & Imboassu</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-label">Dinâmica Hídrica</span>
+                                    <span class="highlight-value">Regime Flúvio-Estuarino com Marés</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Demografia -->
+            <section id="demografia" class="story-section placeholder-section">
+                <h2>Demografia</h2>
+                <p class="placeholder-hint">Em desenvolvimento: Dinâmica censitária, densidades e transição demográfica.</p>
+            </section>
+
+            <!-- Socioeconomia & Indústria -->
+            <section id="socioeconomia" class="story-section placeholder-section">
+                <h2>Socioeconomia & Indústria</h2>
+                <p class="placeholder-hint">Em desenvolvimento: Histórico industrial, serviços, comércio e renda média.</p>
+            </section>
+
+            <!-- Educação -->
+            <section id="educacao" class="story-section placeholder-section">
+                <h2>Educação</h2>
+                <p class="placeholder-hint">Em desenvolvimento: Rede de ensino, distribuição de escolas e alfabetização.</p>
+            </section>
+
+            <!-- Cultura, Lazer & Turismo -->
+            <section id="cultura" class="story-section placeholder-section">
+                <h2>Cultura, Lazer & Turismo</h2>
+                <p class="placeholder-hint">Em desenvolvimento: Patrimônio histórico, praças, pontos de visitação e identidades locais.</p>
+            </section>
+
+            <!-- Mobilidade urbana -->
+            <section id="mobilidade" class="story-section placeholder-section">
+                <h2>Mobilidade urbana</h2>
+                <p class="placeholder-hint">Em desenvolvimento: Redes de transporte, BR-101, RJ-104, conexões metropolitanas e deslocamentos pendulares.</p>
+            </section>
+
+            <!-- Suscetibilidades e Riscos Ambientais -->
+            <section id="riscos" class="story-section placeholder-section">
+                <h2>Suscetibilidades e Riscos Ambientais</h2>
+                <p class="placeholder-hint">Em desenvolvimento: Mapeamento de áreas de inundação, corridas de massa e deslizamentos em encostas.</p>
+            </section>
+
+            <!-- Violência Urbana -->
+            <section id="violencia" class="story-section placeholder-section">
+                <h2>Violência Urbana</h2>
+                <p class="placeholder-hint">Em desenvolvimento: Indicadores de segurança pública (ISP), áreas de BPM/DP e dinâmicas territoriais.</p>
+            </section>
+
+            <!-- Considerações Finais -->
+            <section id="consideracoes" class="story-section placeholder-section">
+                <h2>Considerações Finais</h2>
+                <p class="placeholder-hint">Em desenvolvimento: Síntese crítica, desafios de ordenamento territorial e perspectivas para São Gonçalo.</p>
+            </section>
+
+            <!-- Bibliografia -->
+            <section id="bibliografia" class="story-section placeholder-section">
+                <h2>Bibliografia</h2>
+                <p class="placeholder-hint">Em desenvolvimento: Fontes cartográficas, bases do IBGE, INEA, SGB/CPRM e referências bibliográficas.</p>
+            </section>
+        </div>
     </main>
 
     <footer class="site-footer">
@@ -47,5 +772,129 @@
 
     <!-- Chamada do JavaScript externo -->
     <script src="script.js"></script>
+
+    <!-- Script de Interatividade do StoryMap -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. Navegação Vertical por Pontos (Scrollspy) ---
+            const sections = document.querySelectorAll('.story-section');
+            const navDots = document.querySelectorAll('.dot-item');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-20% 0px -40% 0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.getAttribute('id');
+                        navDots.forEach(dot => {
+                            if (dot.getAttribute('href') === `#${activeId}`) {
+                                dot.classList.add('active');
+                            } else {
+                                dot.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+
+            // Rolagem suave ao clicar nos pontos da lateral
+            navDots.forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = dot.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // --- 2. Botão Flutuante de Retorno ao Topo ---
+            const backToTopBtn = document.getElementById('back-to-top-btn');
+
+            window.addEventListener('scroll', () => {
+                // Exibe o botão após rolar 350px além do topo
+                if (window.scrollY > 350) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // --- 3. Carrossel Deslizante de Fisiografia com Abas ---
+            const track = document.getElementById('carousel-track');
+            const cards = document.querySelectorAll('.carousel-card');
+            const pillBtns = document.querySelectorAll('.pill-btn');
+            const prevBtn = document.getElementById('carousel-prev');
+            const nextBtn = document.getElementById('carousel-next');
+
+            let currentSlide = 0;
+            const totalSlides = cards.length;
+
+            function goToSlide(index) {
+                if (index < 0) index = 0;
+                if (index >= totalSlides) index = totalSlides - 1;
+
+                currentSlide = index;
+
+                // Move o trilho suavemente
+                track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+                // Atualiza o estado visual das pílulas
+                pillBtns.forEach((btn, i) => {
+                    if (i === currentSlide) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+
+                // Atualiza os botões anterior/próximo
+                if (prevBtn && nextBtn) {
+                    prevBtn.disabled = currentSlide === 0;
+                    nextBtn.disabled = currentSlide === totalSlides - 1;
+                }
+            }
+
+            // Clique nas pílulas transparentes
+            pillBtns.forEach((btn, i) => {
+                btn.addEventListener('click', () => {
+                    goToSlide(i);
+                });
+            });
+
+            // Clique nas setas do carrossel
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    goToSlide(currentSlide - 1);
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    goToSlide(currentSlide + 1);
+                });
+            }
+
+            // Inicializa no primeiro slide
+            goToSlide(0);
+        });
+    </script>
 </body>
 </html>
