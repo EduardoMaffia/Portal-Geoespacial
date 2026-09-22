@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Não Encontrada (404) - Portal Geoespacial de São Gonçalo</title>
+
+    <!-- Compatibilidade de rota para GitHub Pages em subpastas -->
+    <script>
+        if (window.location.pathname.includes('/Portal-Geoespacial/')) {
+            const base = document.createElement('base');
+            base.href = window.location.origin + '/Portal-Geoespacial/';
+            document.head.appendChild(base);
+        }
+    </script>
+
+    <!-- Fontes do Google (Audiowide e National Park) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=National+Park:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Externo com cache busting -->
+    <link rel="stylesheet" href="style.css?v=1.1">
+
+    <style>
+        .error-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        .error-card {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #d9e2ec;
+            box-shadow: 0 10px 30px rgba(0, 51, 102, 0.08);
+            max-width: 620px;
+            width: 100%;
+            padding: 45px 35px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .error-badge {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 5.5rem;
+            line-height: 1;
+            color: #003366;
+            margin-bottom: 8px;
+            text-shadow: 3px 3px 0px #87CEFA;
+            letter-spacing: 2px;
+        }
+
+        .error-heading {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 1.35rem;
+            color: #003366;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #87CEFA;
+            padding-bottom: 10px;
+            width: 100%;
+        }
+
+        .error-message {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #486581;
+            margin-bottom: 30px;
+        }
+
+        .btn-return-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #003366;
+            color: #ffffff;
+            font-family: 'Audiowide', sans-serif;
+            font-size: 0.95rem;
+            padding: 13px 26px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 51, 102, 0.2);
+        }
+
+        .btn-return-home:hover {
+            background-color: #004d99;
+            color: #FFD700;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 51, 102, 0.3);
+        }
+
+        .btn-return-home svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        @media (max-width: 600px) {
+            .error-card {
+                padding: 30px 20px;
+            }
+            .error-badge {
+                font-size: 4rem;
+            }
+            .error-heading {
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <img src="imagens/logotipo.png" alt="Logotipo de São Gonçalo" class="site-logo">
+        <nav class="main-nav">
+            <ul>
+                <li><a href="home.html">PAINEL</a></li>
+                <li><a href="geografia.html">GEOGRAFIA</a></li>
+                <li><a href="historia.html">HISTÓRIA</a></li>
+                <li><a href="simbolos.html">SÍMBOLOS</a></li>
+            </ul>
+        </nav>
+        
+        <div class="weather-widget">
+            <div class="weather-location">Em São Gonçalo</div>
+            <div class="weather-main-info">
+                <div class="weather-graphic">
+                    <img class="weather-icon" id="weather-icon" src="" alt="Clima">
+                    <span id="condition-text">...</span>
+                </div>
+                <div class="weather-stats">
+                    <span id="temp-value">--°C</span>
+                    <span id="precip-value">Chuva: -- mm</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-area">
+        <div class="error-wrapper">
+            <div class="error-card">
+                <div class="error-badge">404</div>
+                <h1 class="error-heading">Página Não Encontrada</h1>
+                <p class="error-message">
+                    O endereço que você tentou acessar não foi localizado ou foi movido. Navegue pelo menu superior ou retorne diretamente ao mapa interativo no painel.
+                </p>
+                <a href="home.html" class="btn-return-home">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    Retornar ao Painel Principal
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Portal Geoespacial de São Gonçalo. Desenvolvido para pesquisa educacional geográfica e histórica do município.</p>
+        <a href="sobre.html" class="footer-btn">Sobre o Portal</a>
+        <span class="footer-credit">Elaborado por Eduardo Sacramento</span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

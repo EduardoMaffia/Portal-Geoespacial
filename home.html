@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Geoespacial - São Gonçalo</title>
 
-    <link rel="stylesheet" href="style.css">
+    <!-- Chamada das fontes do Google (Audiowide e National Park) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=National+Park:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Chamada do CSS externo com cache busting -->
+    <link rel="stylesheet" href="style.css?v=1.1">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
@@ -64,6 +70,10 @@
         @media (max-width: 768px) {
             .hero-arrow-left { left: 16px; bottom: 16px; }
             .hero-arrow-right { right: 16px; bottom: 16px; }
+            .map-section {
+                height: 90vh;
+                min-height: 400px;
+            }
         }
 
         /* ── Seção do Mapa (Overlay) ── */
@@ -1217,17 +1227,38 @@ var coresRaca = {
     indigena: '#c62828'
 };
 
+// Permite que a escala gráfica do Leaflet utilize múltiplos de 4 (ex: 4 km)
+L.Control.Scale.prototype._getRoundNum = function (num) {
+    var pow10 = Math.pow(10, (Math.floor(num) + '').length - 1),
+        d = num / pow10;
+
+    d = d >= 10 ? 10 :
+        d >= 5 ? 5 :
+        d >= 4 ? 4 :
+        d >= 3 ? 3 :
+        d >= 2 ? 2 : 1;
+
+    return pow10 * d;
+};
+
 /* ════ Instância do Mapa ════ */
+var isMobileScreen = window.innerWidth <= 768;
+var initialZoom = isMobileScreen ? 12 : 12.3;
+
 var map = L.map('map', {
     center: [-22.83, -43.05],
-    zoom: 12,
+    zoom: initialZoom,
+    zoomSnap: 0.1,
     zoomControl: false 
 });
 
 L.control.zoom({ position: 'bottomright' }).addTo(map);
 
 L.control.scale({
-    position: 'bottomleft', metric: true, imperial: false, maxWidth: 200
+    position: 'bottomleft',
+    metric: true,
+    imperial: false,
+    maxWidth: isMobileScreen ? 200 : 160
 }).addTo(map);
 
 var RosaDosVentosControl = L.Control.extend({
