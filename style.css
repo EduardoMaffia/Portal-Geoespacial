@@ -1,5 +1,10 @@
-/* Importação centralizada das fontes */
-@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=National+Park:wght@400;700&display=swap');
+/* ══════════════════════════════════════════════════════════
+   style.css — Estilos GLOBAIS do site (todas as páginas)
+   Contém: reset, corpo, cabeçalho, menu, widget de clima, área de
+   conteúdo, rodapé e hero. Estilos de cada página ficam em css/.
+   As fontes (Audiowide, National Park) são carregadas por <link>
+   em cada página (não usar @import aqui: atrasa o carregamento).
+══════════════════════════════════════════════════════════ */
 
 * {
     margin: 0;
@@ -140,220 +145,6 @@ body {
     padding: 40px 20px;
 }
 
-.workspace {
-    width: 100%;
-    max-width: 1000px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border-radius: 8px;
-}
-
-/* Coluna da Esquerda: Imagens */
-.symbols-column {
-    padding: 40px 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 50px;
-    align-items: center;
-    background-color: #fff;
-    border-right: 1px solid #eee;
-    border-radius: 8px 0 0 8px;
-}
-
-.symbol-item {
-    text-align: center;
-    width: 100%;
-}
-
-.symbol-item img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 15px;
-    transition: transform 0.3s ease;
-}
-
-.symbol-item img:hover {
-    transform: scale(1.05);
-}
-
-.symbol-item figcaption {
-    font-weight: bold;
-    font-size: 22px;
-    text-decoration: underline;
-    color: #555;
-}
-
-/* Coluna da Direita: Hino */
-.hymn-column {
-    padding: 40px 30px;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    border-radius: 0 8px 8px 0;
-}
-
-.hymn-column h2 {
-    font-family: 'Audiowide', sans-serif;
-    font-size: 1.4rem;
-    color: #003366;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #87CEFA;
-    padding-bottom: 10px;
-}
-
-.hymn-lyrics {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #333;
-    margin-bottom: 25px;
-    white-space: pre-line;
-}
-
-.hymn-credits {
-    font-size: 12px;
-    color: #666;
-    margin-bottom: 20px;
-    font-style: italic;
-}
-
-/* Reprodutor de Áudio Customizado */
-.floating-player {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #ffffff;
-    border-radius: 30px;
-    padding: 10px 20px;
-    gap: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    margin-top: auto;
-    width: 100%;
-}
-
-.player-btn {
-    background: none;
-    border: none;
-    color: #0000CD;
-    font-size: 18px;
-    cursor: pointer;
-    outline: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    transition: transform 0.2s;
-}
-
-.player-btn:hover {
-    transform: scale(1.1);
-}
-
-.player-text {
-    font-size: 13px;
-    font-family: sans-serif;
-    font-weight: bold;
-    min-width: 85px;
-    text-align: center;
-    white-space: nowrap;
-}
-
-.current-time-text {
-    color: #FF0000;
-}
-
-.total-time-text {
-    color: #0000CD;
-}
-
-/* Estilização dos sliders */
-input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-    cursor: pointer;
-    outline: none;
-}
-
-#progress-bar {
-    flex: 1;
-}
-
-#volume-bar {
-    width: 60px;
-}
-
-#progress-bar::-webkit-slider-runnable-track {
-    background: #FF0000;
-    height: 4px;
-    border-radius: 2px;
-}
-
-#progress-bar::-moz-range-track {
-    background: #FF0000;
-    height: 4px;
-    border-radius: 2px;
-}
-
-#volume-bar::-webkit-slider-runnable-track {
-    background: #0000CD;
-    height: 4px;
-    border-radius: 2px;
-}
-
-#volume-bar::-moz-range-track {
-    background: #0000CD;
-    height: 4px;
-    border-radius: 2px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 14px;
-    width: 14px;
-    border-radius: 50%;
-    background: #0000CD;
-    margin-top: -5px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-}
-
-input[type="range"]::-moz-range-thumb {
-    height: 14px;
-    width: 14px;
-    border-radius: 50%;
-    background: #0000CD;
-    border: none;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-}
-
-@media (max-width: 768px) {
-    .workspace {
-        grid-template-columns: 1fr;
-    }
-    .symbols-column {
-        border-right: none;
-        border-bottom: 1px solid #eee;
-        border-radius: 8px 8px 0 0;
-    }
-    .hymn-column {
-        border-radius: 0 0 8px 8px;
-    }
-    .floating-player {
-        flex-wrap: wrap;
-        height: auto;
-    }
-    #progress-bar {
-        order: 4;
-        width: 100%;
-        flex: none;
-        margin-top: 5px;
-    }
-}
-
 /* --- Rodapé --- */
 .site-footer {
     background-color: #87CEFA;
@@ -393,39 +184,6 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* =========================================
-   RESPONSIVIDADE DO CABEÇALHO (CELULARES)
-   ========================================= */
-@media (max-width: 768px) {
-    .site-header {
-        flex-direction: column; /* Transforma a linha horizontal em coluna vertical */
-        justify-content: center;
-        padding: 15px;
-        gap: 15px; /* Cria um espaço uniforme entre logotipo, menu e widget */
-    }
-
-    .site-logo {
-        margin-right: 0; /* Remove a margem direita que empurrava o menu no computador */
-        height: 50px; /* Reduz levemente o logotipo para economizar espaço de tela */
-    }
-
-    .main-nav ul {
-        flex-wrap: wrap; /* Permite que os links do menu pulem para a linha de baixo se faltar espaço */
-        justify-content: center;
-        gap: 12px;
-    }
-
-    .main-nav a {
-        font-size: 13px; /* Reduz levemente a fonte dos botões no celular */
-    }
-
-    .weather-widget {
-        margin-left: 0; /* Remove o alinhamento forçado à direita (auto) */
-        width: 100%;
-        max-width: 280px; /* Impede que a caixa do clima estique por toda a tela */
-    }
-}
-
-/* =========================================
    SEÇÃO HERO (CAPA MINIMALISTA MODERNA)
    ========================================= */
 .story-hero {
@@ -461,7 +219,42 @@ input[type="range"]::-moz-range-thumb {
     margin-bottom: 0;
 }
 
+/* =========================================
+   RESPONSIVIDADE (CELULARES)
+   Bloco único, ao FINAL do arquivo: como media queries não aumentam
+   a especificidade, ele só vence as regras base se vier depois delas.
+   ========================================= */
 @media (max-width: 768px) {
+    /* Cabeçalho */
+    .site-header {
+        flex-direction: column; /* Transforma a linha horizontal em coluna vertical */
+        justify-content: center;
+        padding: 15px;
+        gap: 15px; /* Cria um espaço uniforme entre logotipo, menu e widget */
+    }
+
+    .site-logo {
+        margin-right: 0; /* Remove a margem direita que empurrava o menu no computador */
+        height: 50px; /* Reduz levemente o logotipo para economizar espaço de tela */
+    }
+
+    .main-nav ul {
+        flex-wrap: wrap; /* Permite que os links do menu pulem para a linha de baixo se faltar espaço */
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .main-nav a {
+        font-size: 13px; /* Reduz levemente a fonte dos botões no celular */
+    }
+
+    .weather-widget {
+        margin-left: 0; /* Remove o alinhamento forçado à direita (auto) */
+        width: 100%;
+        max-width: 280px; /* Impede que a caixa do clima estique por toda a tela */
+    }
+
+    /* Hero */
     .hero-title {
         font-size: 2.1rem;
     }

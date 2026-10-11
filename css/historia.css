@@ -1,0 +1,165 @@
+/* ══════════════════════════════════════════════════════════
+   historia.css — Estilos de historia.html
+   Extraído do <style> inline sem alterar nenhuma regra (ordem preservada).
+   Carregar DEPOIS de style.css.
+══════════════════════════════════════════════════════════ */
+
+.history-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 50px 60px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #eeeeee;
+}
+
+.history-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.history-content h1 {
+    font-family: 'Audiowide', sans-serif;
+    font-size: 2.2rem;
+    color: #003366;
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #87CEFA;
+    padding-bottom: 15px;
+}
+
+.history-content p {
+    text-align: justify;
+    line-height: 1.5; /* Espaçamento entre linhas aumentado */
+    color: #333333;
+    font-size: 1.05rem;
+}
+
+/* Destaque para a primeira letra do artigo (Drop Cap) */
+.history-content > p:first-of-type::first-letter {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #003366;
+    float: left;
+    margin-right: 8px;
+    line-height: 1;
+    font-family: 'Audiowide', sans-serif;
+}
+
+/* --- Estilos do Acordeão de Tópicos --- */
+.topics-container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.history-topic {
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    background-color: #fafafa;
+    padding: 0 20px;
+    transition: all 0.3s ease;
+}
+
+.history-topic summary {
+    font-family: 'Allura', cursive; /* Fonte alterada */
+    font-size: 1.8rem; /* Tamanho compensado para a fonte cursiva */
+    color: #FF0000; /* Cor vermelha */
+    cursor: pointer;
+    list-style: none; /* Remove a seta padrão */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    outline: none;
+    user-select: none;
+    font-weight: bold;
+}
+
+.history-topic summary::-webkit-details-marker {
+    display: none; /* Remove a seta no Safari/Chrome mais antigos */
+}
+
+.history-topic summary::after {
+    content: '+';
+    font-family: sans-serif;
+    font-weight: normal;
+    font-size: 1.8rem;
+    color: #003366;
+    line-height: 0.5;
+    transition: transform 0.3s ease;
+}
+
+.history-topic[open] {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    background-color: #ffffff;
+}
+
+.history-topic[open] summary {
+    border-bottom: 1px solid #eeeeee;
+}
+
+.history-topic[open] summary::after {
+    content: '−'; /* Sinal de menos */
+    color: #FF0000;
+}
+
+.topic-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 15px 0 20px 0;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Estilos da Bibliografia (ABNT NBR 6023) --- */
+.bib-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 5px;
+}
+
+.bib-item {
+    text-align: left !important;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: #333333;
+    word-break: break-word;
+}
+
+.bib-item a {
+    color: #0056b3;
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.bib-item a:hover {
+    text-decoration: underline;
+    color: #003366;
+}
+
+@media (max-width: 768px) {
+    .history-wrapper {
+        padding: 30px 20px;
+    }
+    .history-content h1 {
+        font-size: 1.8rem;
+    }
+    .history-topic summary {
+        font-size: 1.8rem;
+    }
+    .history-content > p:first-of-type::first-letter {
+        font-size: 3rem;
+        margin-right: 6px;
+    }
+}

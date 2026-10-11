@@ -5,8 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Símbolos Municipais - São Gonçalo</title>
     
+    <!-- Chamada das fontes do Google (Audiowide e National Park) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=National+Park:wght@400;700&display=swap" rel="stylesheet">
+
     <!-- Chamada do CSS externo com cache busting -->
-    <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="style.css?v=1.2">
+
+    <!-- Estilos específicos desta página (depois de style.css) -->
+    <link rel="stylesheet" href="css/simbolos.css?v=1.0">
 </head>
 <body>
     <header class="site-header">
@@ -21,7 +29,7 @@
         </nav>
         
         <div class="weather-widget">
-            <div class="weather-location">Em São Gonçalo:</div>
+            <div class="weather-location">Em São Gonçalo</div>
             <div class="weather-main-info">
                 <div class="weather-graphic">
                     <img class="weather-icon" id="weather-icon" src="" alt="Clima">
@@ -112,6 +120,7 @@
     </footer>
 
     <!-- Chamada do JavaScript externo -->
-    <script src="script.js"></script>
+    <script type="module" src="js/comum/clima.js"></script>
+    <script type="module" src="js/simbolos/player_hino.js"></script>
 </body>
 </html>

@@ -1,0 +1,508 @@
+/* ══════════════════════════════════════════════════════════
+   home_dashboard.css — Estilos do painel analítico (dashboard) em home.html
+   Extraído do <style> inline de home.html sem alterar nenhuma regra.
+   A ordem das regras foi preservada (a cascata depende dela).
+   Carregar DEPOIS de home_mapa.css.
+══════════════════════════════════════════════════════════ */
+
+.sig-faixa { background: #87CEFA; height: 5px; width: 100%; flex-shrink: 0; }
+
+#dashboard { background: #fff; width: 100%; }
+
+.dash-barra {
+    background: #003366;
+    display: flex;
+    align-items: stretch;
+    padding: 0 30px;
+    height: 48px;
+    gap: 0;
+}
+.dash-titulo {
+    display: flex; align-items: center; gap: 10px;
+    color: #fff;
+    font-family: 'Audiowide', sans-serif;
+    font-size: .7rem; letter-spacing: .1em;
+    text-transform: uppercase; white-space: nowrap;
+    margin-right: 24px; flex-shrink: 0;
+}
+.dash-titulo svg { opacity: .65; flex-shrink: 0; }
+
+.dash-tabs { display: flex; align-items: stretch; margin-left: auto; }
+.dash-tab {
+    display: flex; align-items: center; gap: 7px;
+    padding: 0 22px;
+    font-family: 'Audiowide', sans-serif;
+    font-size: .62rem; letter-spacing: .09em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.5);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid transparent;
+    transition: color .2s, background .2s, border-color .2s;
+    user-select: none; white-space: nowrap;
+}
+.dash-tab:hover { color: rgba(255,255,255,.85); background: rgba(255,255,255,.06); }
+.dash-tab.ativa { color: #FFD700; border-bottom-color: #FFD700; background: rgba(255,255,255,.07); }
+
+.dash-pagina { display: none; padding: 26px 30px 30px; animation: surgir .22s ease; }
+.dash-pagina.ativa { display: block; }
+@keyframes surgir { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+
+.cards-grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px; margin-bottom: 22px;
+}
+.card {
+    background: #f4f8fd;
+    border-radius: 10px;
+    padding: 18px 20px 16px;
+    border-top: 4px solid #87CEFA;
+    box-shadow: 0 2px 10px rgba(0,51,102,.06);
+    display: flex; flex-direction: column; gap: 4px;
+    transition: transform .15s, box-shadow .2s;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,51,102,.1); }
+.card.ouro  { border-top-color: #FFD700; }
+.card.verde { border-top-color: #27ae60; }
+.card.azul  { border-top-color: #2980b9; }
+
+.card-icone { font-size: 1.2rem; margin-bottom: 2px; }
+.card-label {
+    font-family: 'National Park', sans-serif;
+    font-size: .63rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .08em; color: #6b8ba4;
+}
+.card-valor {
+    font-family: 'Audiowide', sans-serif;
+    font-size: 1.5rem; color: #003366; line-height: 1.15;
+}
+.card-sub {
+    font-size: .68rem; color: #95afc0; margin-top: 2px;
+    font-family: 'National Park', sans-serif;
+}
+
+.btn-acao {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #003366; color: #fff;
+    font-family: 'Audiowide', sans-serif;
+    font-size: .62rem; letter-spacing: .09em;
+    text-transform: uppercase;
+    padding: 10px 22px; border-radius: 6px;
+    cursor: pointer; border: none;
+    transition: background .2s, color .2s;
+}
+.btn-acao:hover { background: #87CEFA; color: #003366; }
+
+/* ── PÁGINA 2: Análise por Bairro ── */
+.p2-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr 310px; 
+    gap: 20px; align-items: start;
+}
+
+.painel-bairro { display: flex; flex-direction: column; gap: 12px; }
+.campo-label {
+    font-family: 'National Park', sans-serif;
+    font-size: .65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .08em; color: #6b8ba4;
+}
+
+.select-wrap { position: relative; }
+.select-wrap select {
+    width: 100%;
+    padding: 10px 36px 10px 13px;
+    border-radius: 8px;
+    border: 1.5px solid #c7d5e8;
+    font-family: 'National Park', sans-serif;
+    font-size: .84rem; font-weight: 700;
+    color: #003366; background: #f4f8fd;
+    appearance: none; cursor: pointer; outline: none;
+    transition: border-color .2s, box-shadow .2s;
+}
+.select-wrap select:focus { border-color: #87CEFA; box-shadow: 0 0 0 3px rgba(135,206,250,.3); }
+.select-wrap::after {
+    content: '▾'; position: absolute; right: 12px; top: 50%;
+    transform: translateY(-50%); color: #87CEFA;
+    pointer-events: none; font-size: 1.05rem;
+}
+
+.btn-limpar {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 9px 14px; border-radius: 8px;
+    border: 1.5px solid #dce8f0; background: #fff;
+    color: #6b8ba4;
+    font-family: 'National Park', sans-serif;
+    font-size: .74rem; font-weight: 700;
+    cursor: pointer; transition: all .2s;
+}
+.btn-limpar:hover { background: #f4f8fd; border-color: #87CEFA; color: #003366; }
+
+.dica-mapa {
+    font-size: .68rem;
+    font-family: 'National Park', sans-serif;
+    color: #95afc0; line-height: 1.55; margin-top: 4px;
+}
+
+#bairro-placeholder {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 200px; color: #b0c4d8;
+    text-align: center; gap: 12px; grid-column: 2 / 4;
+}
+#bairro-placeholder svg { opacity: .28; }
+#bairro-placeholder p {
+    font-size: .8rem;
+    font-family: 'National Park', sans-serif;
+    color: #95afc0; max-width: 260px; line-height: 1.6;
+}
+
+#p2-col-center {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#bairro-dados { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.card-pop-bairro {
+    background: #003366;
+    border-radius: 12px;
+    padding: 22px 22px 20px;
+    color: #fff;
+    display: flex; flex-direction: column; gap: 5px;
+    box-shadow: 0 4px 16px rgba(0,51,102,.2);
+}
+.card-pop-bairro.area-card { background: #2980b9; }
+.card-pop-bairro .rotulo {
+    font-family: 'National Park', sans-serif;
+    font-size: .63rem; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase; color: #87CEFA;
+}
+.card-pop-bairro .numero {
+    font-family: 'Audiowide', sans-serif;
+    font-size: 1.9rem; color: #FFD700; line-height: 1.1;
+}
+.card-pop-bairro .sub {
+    font-size: .72rem; color: rgba(135,206,250,.7);
+    font-family: 'National Park', sans-serif;
+}
+
+.wrap-chart {
+    background: #f4f8fd;
+    border-radius: 12px;
+    padding: 18px 18px 14px;
+    box-shadow: 0 2px 8px rgba(0,51,102,.06);
+    display: flex; flex-direction: column; gap: 10px;
+}
+.wrap-chart-titulo {
+    font-family: 'National Park', sans-serif;
+    font-size: .65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .08em; color: #6b8ba4;
+    border-bottom: 1px solid #dce8f0;
+    padding-bottom: 8px;
+}
+
+.wrap-chart-canvas { display: flex; justify-content: center; }
+.wrap-chart-canvas canvas { max-height: 185px; max-width: 185px; }
+
+/* ══════════════════════════════════════════════════════════
+   PIRÂMIDE RACIAL HORIZONTAL
+   Estrutura: [label raça] [barra masc ←] [centro] [→ barra fem] [label raça]
+══════════════════════════════════════════════════════════ */
+
+.piramide-racial {
+    width: 100%;
+    overflow-x: auto;
+    padding: 4px 0 8px;
+}
+
+/* Cabeçalho com os títulos de sexo e coluna central */
+.piramide-header {
+    display: grid;
+    grid-template-columns: 130px 1fr 72px 1fr 130px;
+    align-items: center;
+    margin-bottom: 6px;
+    padding: 0 4px;
+}
+
+.piramide-header-masc {
+    text-align: right;
+    padding-right: 8px;
+    font-family: 'Audiowide', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: var(--cor-masc, #00BFFF);
+    text-transform: uppercase;
+}
+
+.piramide-header-centro {
+    text-align: center;
+    font-family: 'National Park', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: #6b8ba4;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    line-height: 1.3;
+}
+
+.piramide-header-fem {
+    text-align: left;
+    padding-left: 8px;
+    font-family: 'Audiowide', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: var(--cor-fem, #FF00FF);
+    text-transform: uppercase;
+}
+
+.piramide-header-rotulo {
+    /* Ocupa o espaço das labels laterais */
+}
+
+/* Uma linha da pirâmide por raça */
+.pir-linha {
+    display: grid;
+    grid-template-columns: 130px 1fr 72px 1fr 130px;
+    align-items: center;
+    margin-bottom: 7px;
+    min-height: 36px;
+}
+
+/* Label lateral (raça) */
+.pir-rotulo {
+    font-family: 'National Park', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #003366;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.2;
+}
+
+.pir-rotulo.dir {
+    justify-content: flex-start;
+    padding-left: 10px;
+}
+
+.pir-rotulo.esq {
+    justify-content: flex-end;
+    padding-right: 10px;
+    text-align: right;
+}
+
+.pir-emoji { font-size: 1.2rem; }
+
+/* Zona das barras (um lado) */
+.pir-zona-masc {
+    display: flex;
+    justify-content: flex-end;   /* barras crescem da direita para a esquerda */
+    align-items: center;
+    height: 36px;
+    padding-right: 3px;
+    position: relative;
+}
+
+.pir-zona-fem {
+    display: flex;
+    justify-content: flex-start;   /* barras crescem da esquerda para a direita */
+    align-items: center;
+    height: 36px;
+    padding-left: 3px;
+    position: relative;
+}
+
+/* A barra em si */
+.pir-barra {
+    height: 28px;
+    border-radius: 3px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: width 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+    min-width: 0%; /* Pode zerar perfeitamente */
+    overflow: visible;
+}
+
+/* Barra masculina: cresce para a esquerda. A extremidade final é a esquerda. */
+.pir-barra-masc .pir-barra-texto {
+    position: absolute;
+    left: 6px;  /* texto na ponta final esquerda da barra */
+    right: auto;
+    white-space: nowrap;
+    font-family: 'National Park', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.15;
+    text-align: left;
+    text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+
+/* Barra masculina fora: Se a barra é muito curta, ele pula para o lado esquerdo de fora da barra */
+.pir-barra-masc.pir-texto-fora .pir-barra-texto {
+    left: auto;
+    right: calc(100% + 5px);
+    color: #003366;
+    text-shadow: none;
+    text-align: right;
+}
+
+/* Barra feminina: cresce para a direita. A extremidade final é a direita. */
+.pir-barra-fem .pir-barra-texto {
+    position: absolute;
+    right: 6px; /* texto na ponta final direita da barra */
+    left: auto;
+    white-space: nowrap;
+    font-family: 'National Park', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.15;
+    text-align: right;
+    text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+
+/* Barra feminina fora: Se a barra é muito curta, ele pula para o lado direito de fora da barra */
+.pir-barra-fem.pir-texto-fora .pir-barra-texto {
+    right: auto;
+    left: calc(100% + 5px);
+    color: #003366;
+    text-shadow: none;
+    text-align: left;
+}
+
+/* Coluna central: total racial + percentual sobre o município */
+.pir-centro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    padding: 0 3px;
+    border-left: 1.5px solid #dce8f0;
+    border-right: 1.5px solid #dce8f0;
+}
+
+/* Fonte alterada conforme pedido para combinar com os outros dados */
+.pir-centro-total {
+    font-family: 'National Park', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: #003366;
+    white-space: nowrap;
+}
+
+.pir-centro-pct {
+    font-family: 'National Park', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #6b8ba4;
+    white-space: nowrap;
+}
+
+/* ── Barras Horizontais de Raça (Página 2 – bairro) ── */
+.bairro-racial-bars {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 2px 0;
+}
+
+.brb-linha {
+    display: grid;
+    grid-template-columns: 110px 1fr 70px;
+    align-items: center;
+    gap: 8px;
+    min-height: 30px;
+}
+
+.brb-rotulo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'National Park', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #003366;
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.brb-emoji { font-size: 1.1rem; }
+
+.brb-barra-wrap {
+    position: relative;
+    height: 26px;
+    background: #eef2f7;
+    border-radius: 4px;
+    /* overflow: hidden; foi removido para que o "0" possa ser escrito fora */
+}
+
+.brb-barra-fill {
+    height: 100%;
+    border-radius: 4px;
+    position: relative; /* Container de referência para o span absoluto interno */
+    transition: width 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+    display: flex;
+    align-items: center;
+}
+
+.brb-barra-label {
+    position: absolute;
+    right: 6px; /* ancorado na extremidade final dentro da barra */
+    font-family: 'National Park', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: #fff;
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0,0,0,.4);
+}
+
+/* Fallback: texto pula para a direita da barra quando é muito curta ou zero */
+.brb-barra-label.fora {
+    right: auto;
+    left: calc(100% + 6px);
+    color: #003366;
+    text-shadow: none;
+}
+
+.brb-valor-abs {
+    font-family: 'Audiowide', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #003366;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.legenda-sexo { display: flex; flex-direction: column; gap: 5px; }
+.legenda-item {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'National Park', sans-serif;
+    font-size: .74rem; font-weight: 700; color: #003366;
+}
+.legenda-cor { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+.legenda-pct { margin-left: auto; font-size: .68rem; color: #6b8ba4; font-weight: normal; }
+
+@media (max-width: 920px) {
+    .p2-layout { grid-template-columns: 1fr; }
+    #bairro-placeholder { grid-column: 1; }
+    #bairro-dados { grid-template-columns: 1fr; }
+    .piramide-racial { overflow-x: auto; }
+    .piramide-header, .pir-linha { min-width: 500px; }
+}
+@media (max-width: 600px) {
+    .dash-barra { padding: 0 14px; }
+    .dash-pagina { padding: 18px 14px 22px; }
+    .cards-grade { grid-template-columns: 1fr 1fr; gap: 10px; }
+}

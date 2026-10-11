@@ -1,32 +1,8 @@
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- Lógica do Widget de Clima ---
-    async function fetchWeather() {
-            try {
-                const url = 'https://api.weatherapi.com/v1/current.json?key=5b0efbae2b8049a1ad4224136262802&q=-22.824932845750787,-43.049169269427146&aqi=no&lang=pt';
-                const response = await fetch(url);
-                
-                if (!response.ok) throw new Error(`HTTP: ${response.status}`);
-                
-                const data = await response.json();
-                
-                // Atualização dos elementos
-                document.getElementById('temp-value').textContent = `${Math.round(data.current.temp_c)}°C`;
-                document.getElementById('condition-text').textContent = data.current.condition.text;
-                document.getElementById('precip-value').textContent = `Chuva: ${data.current.precip_mm} mm`;
-                
-                const iconElement = document.getElementById('weather-icon');
-                let iconUrl = data.current.condition.icon;
-                iconElement.src = iconUrl.startsWith('//') ? 'https:' + iconUrl : iconUrl;
-                iconElement.style.display = 'block';
+/* ════ player_hino.js — Reprodutor de áudio do hino (simbolos.html) ════
+   Extraído de script.js sem alterar a lógica. Executa apenas se o player
+   existir na página. Carregar com <script type="module" src="js/simbolos/player_hino.js"> */
 
-            } catch (error) {
-                console.error("Erro na meteorologia:", error);
-                document.getElementById('condition-text').textContent = "Erro";
-            }
-        }
-    
-    fetchWeather();
+document.addEventListener('DOMContentLoaded', () => {
 
     // --- Lógica do Reprodutor de Áudio (Executa apenas se o player existir na página) ---
     const audio = document.getElementById('hino-audio');
