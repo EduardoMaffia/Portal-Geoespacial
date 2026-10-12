@@ -80,8 +80,8 @@ main.content-area {
    realmente visível (com a barra do navegador exibida). */
 @media (max-width: 768px) {
     .map-section {
-        height: 85vh;
-        height: 85svh;
+        height: 88vh;
+        height: 88svh;
         min-height: 400px;
     }
 }
@@ -259,6 +259,8 @@ main.content-area {
     gap: 6px;
     pointer-events: none;
 }
+/* Estado inicial (HTML nasce com .oculto); o JS alterna via classList */
+#weather-legend-container.oculto { display: none; }
 .weather-legend-card {
     background: transparent;
     width: 170px;
@@ -267,6 +269,8 @@ main.content-area {
     box-sizing: border-box;
     padding: 0;
 }
+#legend-temp, #legend-precip { display: none; }
+#legend-temp.visivel, #legend-precip.visivel { display: block; }
 .weather-legend-bar {
     width: 100%;
     height: 7px;
@@ -380,7 +384,7 @@ main.content-area {
     transition: opacity .4s ease;
     pointer-events: none;
 }
-#map-loader.oculto { opacity: 0; }
+#map-loader.oculto { opacity: 0; visibility: hidden; }
 
 .loader-ring {
     width: 42px; height: 42px;
@@ -408,4 +412,12 @@ main.content-area {
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     max-width: 80%;
     display: none;
+}
+.alerta-cors.visivel { display: block; }
+
+/* Conteúdo dos popups das camadas (gerado em mapa_camadas.js) */
+.leaflet-popup-campos {
+    font-family: 'National Park', sans-serif;
+    font-size: .8rem;
+    line-height: 1.5;
 }

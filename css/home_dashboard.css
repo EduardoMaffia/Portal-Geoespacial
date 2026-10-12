@@ -81,6 +81,10 @@
     font-size: .68rem; color: #95afc0; margin-top: 2px;
     font-family: 'National Park', sans-serif;
 }
+/* Variante textual do valor (ex.: nome do basemap): mesma base, tipografia corrida menor */
+.card-valor--legenda {
+    font-size: .84rem; font-family: 'National Park', sans-serif; font-weight: 700;
+}
 
 .btn-acao {
     display: inline-flex; align-items: center; gap: 8px;
@@ -93,6 +97,7 @@
     transition: background .2s, color .2s;
 }
 .btn-acao:hover { background: #87CEFA; color: #003366; }
+#btn-ir-bairro { margin-top: 20px; }
 
 /* ── PÁGINA 2: Análise por Bairro ── */
 .p2-layout {
@@ -156,12 +161,14 @@
     font-family: 'National Park', sans-serif;
     color: #95afc0; max-width: 260px; line-height: 1.6;
 }
+#bairro-placeholder.oculto { display: none; }
 
 #p2-col-center {
     display: none;
     flex-direction: column;
     gap: 15px;
 }
+#p2-col-center.visivel { display: flex; }
 
 #bairro-dados { 
     display: grid; 
@@ -206,9 +213,27 @@
     border-bottom: 1px solid #dce8f0;
     padding-bottom: 8px;
 }
+/* Variante municipal: título em linha com espaço entre os extremos */
+.wrap-chart--muni { margin-top: 20px; width: 100%; }
+.wrap-chart-titulo--linha {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 10px;
+}
 
-.wrap-chart-canvas { display: flex; justify-content: center; }
+.wrap-chart-canvas { display: flex; justify-content: center; align-items: center; position: relative; height: 220px; }
 .wrap-chart-canvas canvas { max-height: 185px; max-width: 185px; }
+
+/* Caixa central da proporção de gênero (sobre o doughnut) */
+#gender-ratio-box {
+    position: absolute; text-align: center; width: 140px;
+    pointer-events: none; line-height: 1.25;
+}
+/* Tipografia da proporção (cores = paleta institucional, idênticas a config.js) */
+.gr-destaque-fem { font-size: .70rem; font-weight: 900; color: #FF00FF; }
+.gr-destaque-masc { font-size: .70rem; font-weight: 900; color: #00BFFF; }
+.gr-meio { font-size: .7rem; color: #003366; font-weight: 700; letter-spacing: .04em; }
+.gr-exata { font-size: .72rem; font-weight: bold; color: #003366; }
+.gr-vazio { font-size: .68rem; font-weight: bold; color: #6b8ba4; }
 
 /* ══════════════════════════════════════════════════════════
    PIRÂMIDE RACIAL HORIZONTAL
@@ -417,6 +442,9 @@
     gap: 8px;
     padding: 2px 0;
 }
+#chart-racial-bairro-piramide { min-height: 160px; padding: 6px 0; }
+#bairro-chart-wrap { display: none; }
+#bairro-chart-wrap.visivel { display: flex; }
 
 .brb-linha {
     display: grid;
@@ -492,6 +520,8 @@
     font-size: .74rem; font-weight: 700; color: #003366;
 }
 .legenda-cor { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+.legenda-cor.masc { background: #00BFFF; }
+.legenda-cor.fem { background: #FF00FF; }
 .legenda-pct { margin-left: auto; font-size: .68rem; color: #6b8ba4; font-weight: normal; }
 
 @media (max-width: 920px) {

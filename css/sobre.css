@@ -46,23 +46,6 @@
     margin-bottom: 15px;
 }
 
-.about-text .contact {
-    margin-top: 2em;
-    font-weight: bold;
-    color: #003366;
-}
-
-.about-text .contact a {
-    color: #00BFFF;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.about-text .contact a:hover {
-    color: #FFD700;
-    text-decoration: underline;
-}
-
 .author-box {
     border: 1px solid #cccccc;
     padding: 20px;
@@ -92,24 +75,6 @@
     text-align: justify;
     line-height: 1.2;
     margin-bottom: 15px;
-}
-
-.about-text .author-box .author-contact {
-    margin-bottom: 0;
-    line-height: normal;
-    font-weight: bold;
-    color: #003366;
-}
-
-.about-text .author-box .author-contact a {
-    color: #00BFFF;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.about-text .author-box .author-contact a:hover {
-    color: #FFD700;
-    text-decoration: underline;
 }
 
 .author-contact-wrapper {

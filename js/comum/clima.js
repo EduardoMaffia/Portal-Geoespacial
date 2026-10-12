@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const iconElement = document.getElementById('weather-icon');
             let iconUrl = data.current.condition.icon;
             iconElement.src = iconUrl.startsWith('//') ? 'https:' + iconUrl : iconUrl;
-            iconElement.style.display = 'block';
+            iconElement.classList.add('visivel');
 
         } catch (error) {
             console.error("Erro na meteorologia:", error);

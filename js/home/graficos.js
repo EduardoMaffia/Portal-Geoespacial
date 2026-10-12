@@ -19,9 +19,9 @@ export function renderizarRacialMunicipal(dados) {
 
     var html = '<div class="piramide-header">' +
         '<div class="piramide-header-rotulo"></div>' +
-        '<div class="piramide-header-masc" style="--cor-masc:' + corMasc + '">Masculino</div>' +
+        '<div class="piramide-header-masc">Masculino</div>' +
         '<div class="piramide-header-centro">Total<br>racial</div>' +
-        '<div class="piramide-header-fem" style="--cor-fem:' + corFem + '">Feminino</div>' +
+        '<div class="piramide-header-fem">Feminino</div>' +
         '<div class="piramide-header-rotulo"></div>' +
     '</div>';
 
@@ -96,18 +96,18 @@ export function renderizarPizzaGeral(masc, fem) {
     var html = '';
     if (fem > masc && masc > 0) {
         var r = (fem / masc).toFixed(1).replace('.', ',');
-        html = '<span style="font-size:.70rem;font-weight:900;color:' + corFem + ';">' + r + ' mulheres</span>' +
-               '<br><span style="font-size:.7rem;color:#003366;font-weight:700;letter-spacing:.04em;">para cada</span>' +
-               '<br><span style="font-size:.70rem;font-weight:900;color:' + corMasc + ';">homem</span>';
+        html = '<span class="gr-destaque-fem">' + r + ' mulher</span>' +
+               '<br><span class="gr-meio">para cada</span>' +
+               '<br><span class="gr-destaque-masc">homem</span>';
     } else if (masc > fem && fem > 0) {
         var r = (masc / fem).toFixed(1).replace('.', ',');
-        html = '<span style="font-size:.70rem;font-weight:900;color:' + corMasc + ';">' + r + ' homens</span>' +
-               '<br><span style="font-size:.7rem;color:#003366;font-weight:700;letter-spacing:.04em;">para cada</span>' +
-               '<br><span style="font-size:.70rem;font-weight:900;color:' + corFem + ';">mulher</span>';
+        html = '<span class="gr-destaque-masc">' + r + ' homem</span>' +
+               '<br><span class="gr-meio">para cada</span>' +
+               '<br><span class="gr-destaque-fem">mulher</span>';
     } else if (masc > 0 && fem > 0 && masc === fem) {
-        html = '<span style="font-size:.72rem;font-weight:bold;color:#003366;">Proporção<br>Exata</span>';
+        html = '<span class="gr-exata">Proporção<br>Exata</span>';
     } else {
-        html = '<span style="font-size:.68rem;font-weight:bold;color:#6b8ba4;">Sem Dados</span>';
+        html = '<span class="gr-vazio">Sem Dados</span>';
     }
     box.innerHTML = html;
 }

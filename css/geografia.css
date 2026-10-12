@@ -275,6 +275,15 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    /* Sem transition: a opacidade é atualizada a cada frame via JS (rAF) */
+}
+
+.story-dot-nav.visible {
+    visibility: visible;
+    /* Opacidade e pointer-events controlados via JS (progresso linear da hero) */
 }
 
 /* Linha contínua conectando todos os 12 pontos */

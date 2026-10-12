@@ -57,18 +57,18 @@ export function selecionarBairro(nmBairro, leafletLayer) {
 
     if (encontrouCamada) { try { map.fitBounds(bounds, { padding: [40, 40] }); } catch(e) {} }
 
-    document.getElementById('bairro-placeholder').style.display = 'none';
-    document.getElementById('p2-col-center').style.display = 'flex'; 
-    document.getElementById('bairro-chart-wrap').style.display = 'flex';
+    document.getElementById('bairro-placeholder').classList.add('oculto');
+    document.getElementById('p2-col-center').classList.add('visivel');
+    document.getElementById('bairro-chart-wrap').classList.add('visivel');
 
     calcularBairro(nmBairro);
 }
 
 export function limparFiltro() {
     document.getElementById('bairro-select').value = '';
-    document.getElementById('bairro-placeholder').style.display = 'flex';
-    document.getElementById('p2-col-center').style.display = 'none';
-    document.getElementById('bairro-chart-wrap').style.display = 'none';
+    document.getElementById('bairro-placeholder').classList.remove('oculto');
+    document.getElementById('p2-col-center').classList.remove('visivel');
+    document.getElementById('bairro-chart-wrap').classList.remove('visivel');
 
     if (estado.layerDestacado) { try { estado.layerDestacado.setStyle(estiloNormal()); } catch(e) {} estado.layerDestacado = null; }
     if (estado.layerBairros) { estado.layerBairros.eachLayer(l => l.setStyle(estiloNormal())); }

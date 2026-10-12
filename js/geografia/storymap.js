@@ -46,6 +46,62 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- 1b. Opacidade progressiva da navegação conforme a hero sai da tela (linear) ---
+    const dotNav = document.getElementById('story-dot-nav');
+    const hero = document.getElementById('hero');
+    const LIMIAR_CLIQUE = 0.25;
+    const reduzirMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function aplicarProgressoNav(prog) {
+        if (!dotNav) return;
+        const progresso = Math.min(1, Math.max(0, prog));
+        const visivel = progresso > 0;
+        const ativa = progresso >= LIMIAR_CLIQUE;
+        dotNav.classList.toggle('visible', visivel);
+        dotNav.style.opacity = progresso.toFixed(3);
+        dotNav.style.pointerEvents = ativa ? 'auto' : 'none';
+        dotNav.setAttribute('aria-hidden', String(!ativa));
+        navDots.forEach(dot => {
+            if (ativa) {
+                dot.removeAttribute('tabindex');
+            } else {
+                dot.setAttribute('tabindex', '-1');
+            }
+        });
+    }
+
+    function definirVisibilidadeNav(visivel) {
+        aplicarProgressoNav(visivel ? 1 : 0);
+    }
+
+    if (dotNav && hero && !reduzirMovimento) {
+        let ticking = false;
+        function atualizarNavPeloScroll() {
+            ticking = false;
+            const alturaHero = hero.offsetHeight || 1;
+            const fundoHero = hero.getBoundingClientRect().bottom;
+            aplicarProgressoNav(1 - fundoHero / alturaHero);
+        }
+        function agendarAtualizacaoNav() {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(atualizarNavPeloScroll);
+            }
+        }
+        window.addEventListener('scroll', agendarAtualizacaoNav, { passive: true });
+        window.addEventListener('resize', agendarAtualizacaoNav);
+        atualizarNavPeloScroll();
+    } else if (dotNav && hero) {
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                definirVisibilidadeNav(!entry.isIntersecting);
+            });
+        }, { threshold: 0 });
+        heroObserver.observe(hero);
+    } else {
+        definirVisibilidadeNav(true);
+    }
+
     // --- 2. Botão Flutuante de Retorno ao Topo ---
     const backToTopBtn = document.getElementById('back-to-top-btn');
 

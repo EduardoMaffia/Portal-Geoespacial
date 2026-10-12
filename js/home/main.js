@@ -11,6 +11,12 @@ import { iniciarControlesBairro } from './bairros.js';
 iniciarAbas();
 iniciarControlesBairro();
 
+/* Fallback do logotipo (substitui o onerror inline do HTML) */
+(function() {
+    var logo = document.querySelector('.site-logo');
+    if (logo) logo.addEventListener('error', function() { logo.classList.add('oculto'); });
+})();
+
 /* ════ Busca Assíncrona ════ */
 Promise.all([
     carregarJSON(BASE_GEO + 'area_municipal.geojson'),
@@ -27,7 +33,7 @@ Promise.all([
     estado.geoAreaMunicipal = res[0]; estado.geoBairros = res[1]; estado.geoSetores = res[2];
     var geoZonas = res[3], geoDistritos = res[4], geoSedesD = res[5], geoSedeM = res[6];
     
-    if (!estado.geoBairros && !estado.geoSetores) document.getElementById('alerta-cors').style.display = 'block';
+    if (!estado.geoBairros && !estado.geoSetores) document.getElementById('alerta-cors').classList.add('visivel');
 
     estado.dadosPop = parsePandasJSON(res[7]);
     estado.dadosRaciais = parsePandasJSON(res[8]);

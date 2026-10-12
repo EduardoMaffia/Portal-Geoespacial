@@ -118,14 +118,9 @@ export function montarCamadas(geoZonas, geoDistritos, geoSedesD, geoSedeM) {
 
         if (!legendContainer || !cardTemp || !cardPrecip) return;
 
-        cardTemp.style.display = hasTemp ? 'block' : 'none';
-        cardPrecip.style.display = hasPrecip ? 'block' : 'none';
-
-        if (hasTemp || hasPrecip) {
-            legendContainer.style.display = 'flex';
-        } else {
-            legendContainer.style.display = 'none';
-        }
+        cardTemp.classList.toggle('visivel', hasTemp);
+        cardPrecip.classList.toggle('visivel', hasPrecip);
+        legendContainer.classList.toggle('oculto', !(hasTemp || hasPrecip));
     }
 
     map.on('layeradd layerremove', atualizarLegendasClima);
@@ -150,7 +145,7 @@ function camadaPonto(data, opts) {
 
 function bindPopupCampos(feature, layer, campos) {
     if (!campos || !campos.length) return;
-    var html = '<div style="font-family:\'National Park\',sans-serif;font-size:.8rem;line-height:1.5">';
+    var html = '<div class="leaflet-popup-campos">';
     campos.forEach(c => { var val = getProp(feature.properties || {}, c); if (val != null) html += '<b>' + c + '</b>: ' + val + '<br>'; });
     html += '</div>';
     layer.bindPopup(html, { maxWidth: 240 });

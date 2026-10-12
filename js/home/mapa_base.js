@@ -128,5 +128,5 @@ if (window.ResizeObserver) {
 export function ocultarLoader() {
     var l = document.getElementById('map-loader');
     l.classList.add('oculto');
-    setTimeout(() => { l.style.display = 'none'; map.invalidateSize(); }, 420);
+    setTimeout(() => { map.invalidateSize(); }, 420);
 }

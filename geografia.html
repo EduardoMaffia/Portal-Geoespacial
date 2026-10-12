@@ -11,10 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=National+Park:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Chamada do CSS externo com cache busting -->
-    <link rel="stylesheet" href="style.css?v=1.2">
+    <link rel="stylesheet" href="style.css?v=1.3">
 
     <!-- Estilos específicos do StoryMap Geográfico (depois de style.css) -->
-    <link rel="stylesheet" href="css/geografia.css?v=1.0">
+    <link rel="stylesheet" href="css/geografia.css?v=1.2">
+    <noscript><style>.story-dot-nav{opacity:1 !important;visibility:visible !important;pointer-events:auto !important;}</style></noscript>
 </head>
 <body>
     <header class="site-header">
@@ -45,7 +46,7 @@
     </header>
 
     <!-- Navegação Vertical por Pontos à Esquerda (Os 12 Tópicos Oficiais) -->
-    <nav class="story-dot-nav" id="story-dot-nav" aria-label="Navegação pelos capítulos">
+    <nav class="story-dot-nav" id="story-dot-nav" aria-label="Navegação pelos capítulos" aria-hidden="true">
         <ul>
             <li><a href="#introducao" class="dot-item active" title="Introdução"><span class="dot"></span><span class="dot-tooltip">Introdução</span></a></li>
             <li><a href="#localizacao" class="dot-item" title="Localização"><span class="dot"></span><span class="dot-tooltip">Localização</span></a></li>
